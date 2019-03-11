@@ -1,0 +1,40 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px solid #d8d8d8;
+  .footerIcon {
+    flex: 1;
+    text-align: center;
+    padding: 0;
+    background-color: #fff;
+    line-height: normal;
+    .footerTxt {
+      color: #999;
+      font-size: 30px;
+    }
+  }
+  .footerIcon::after {
+    border: none;
+  }
+  .footerIconActive {
+    flex: 1;
+    text-align: center;
+    color: #2083e4;
+    padding: 0;
+    background-color: #fff;
+    line-height: normal;
+    .footerTxt {
+      color: #2083e4;
+      font-size: 30px;
+    }
+  }
+  .footerIconActive::after {
+    border: none;
+  }
+}
