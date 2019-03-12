@@ -19,24 +19,11 @@ class App extends Component {
       'pages/index/index',
     ],
     window: {
-      backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '商城',
       navigationBarTextStyle: 'black'
     }
   };
-
-  componentDidMount() {
-  }
-
-  componentDidShow() {
-  }
-
-  componentDidHide() {
-  }
-
-  componentDidCatchError() {
-  }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数

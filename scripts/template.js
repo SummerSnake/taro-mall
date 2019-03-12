@@ -82,7 +82,9 @@ export default {
 // service页面模版
 const serviceTep = `import { postRequest } from '../../utils/api';
 
-export const data = async(url, params) => await postRequest(url, params);
+export const homepage = async(params) =>{
+  return await postRequest('/homePage/getHomePageMsg', params);
+};
 `;
 
 

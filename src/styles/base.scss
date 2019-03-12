@@ -1,8 +1,7 @@
 @import './mixin';
 @import './iconfont';
 
-page,
-body {
+page, body {
   font-size: 32px;
   height: 100%;
   background-color: $bg-color-base;
@@ -10,17 +9,7 @@ body {
   box-sizing: border-box;
 }
 
-@media screen and (min-width: 500px) {
-  html,
-  body {
-    max-width: 1500px;
-    margin: 0 auto;
-    position: relative;
-  }
-}
-
-.taro-img,
-image {
+.taro-img, image {
   width: 100%;
 }
 
