@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import '@tarojs/async-await';
 import { Provider } from '@tarojs/redux';
-import Index from './pages/index';
+import Home from './pages/home';
 import dva from './utils/dva';
 import models from './models';
 import './styles/base.scss';
@@ -16,7 +16,7 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index',
+      'pages/home/index',
     ],
     window: {
       navigationBarBackgroundColor: '#fff',
@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Index />
+        <Home />
       </Provider>
     );
   }

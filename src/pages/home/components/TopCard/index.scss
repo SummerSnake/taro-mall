@@ -1,0 +1,87 @@
+@import '../../../../styles/mixin';
+
+.topCardWrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 20px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  .topCardTit {
+    color: #000;
+    padding-bottom: 24px;
+    font-size: 36px;
+    font-weight: 600;
+    .moreArrow {
+      float: right;
+      > text {
+        font-size: 28px;
+        font-weight: 400;
+        color: #999;
+        padding-right: 12px;
+      }
+      .moreArrowImg {
+        display: inline-block;
+        @include wh(16px, 26px);
+        vertical-align: middle;
+      }
+    }
+  }
+  .topCardBanner {
+    @include wh(100%, 184px);
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .topItemWrap {
+    display: flex;
+    .topItemDom {
+      flex: 1;
+      .topItemImgWrap {
+        @include wh(346px, 364px);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .topItemTxtWrap {
+        box-sizing: border-box;
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
+        border-radius: 10px;
+        .txtTop {
+          height: 30px;
+          line-height: 30px;
+          > text:first-child {
+            float: left;
+            @include wh(62px, 30px);
+            line-height: 30px;
+            margin-right: 12px;
+            background: rgba(232, 14, 39, 1);
+            border-radius: 16px;
+            font-size: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+          }
+          > text:last-child {
+            float: left;
+            font-size: 28px;
+            color: rgba(51, 51, 51, 1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .txtMid {
+          font-size: 32px;
+          color: rgba(232, 14, 39, 1);
+        }
+        .txtBot {
+          font-size: 28px;
+          color: rgba(153, 153, 153, 1);
+        }
+      }
+    }
+    .topItemDom:first-child {
+      margin-right: 20px;
+    }
+  }
+}

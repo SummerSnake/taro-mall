@@ -4,6 +4,10 @@ export default {
   namespace: 'home',
   state: {
     imgList: [],
+    iconList: [],
+    topCardObj: {},
+    midCardObj: {},
+    botCardObj: {},
   },
   effects: {
     *load(_, { call, put }) {
@@ -12,7 +16,11 @@ export default {
         yield put({
           type: 'save',
           payload: {
-            imgList: data.data.rotationList,
+            imgList: data.data.imgList,
+            iconList: data.data.iconList,
+            topCardObj: data.data.topCardObj,
+            midCardObj: data.data.midCardObj,
+            botCardObj: data.data.botCardObj,
           },
         });
       }

@@ -1,8 +1,10 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
-// import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
-import Loading from '../../components/Loading/index';
+import IconList from './components/IconList/index';
+import TopCard from './components/TopCard/index';
+import MidCard from './components/MidCard/index';
+import BotCard from './components/BotCard/index';
 import GlobalFooter from '../../components/GlobalFooter/index';
 import './index.scss';
 
@@ -26,7 +28,7 @@ export default class Index extends Component {
   };
 
   render() {
-    const { imgList } = this.props;
+    const { imgList, iconList, topCardObj, midCardObj, botCardObj } = this.props;
     return (
       <View className='homeWrap'>
         <Swiper
@@ -40,16 +42,20 @@ export default class Index extends Component {
             Array.isArray(imgList) && imgList.length > 0 && imgList.map((img) => {
               return (
                 <SwiperItem key={img.id}>
-                  <Image mode='widthFix' src={img.imgUrl} />
+                  <Image src={img.imgUrl} />
                 </SwiperItem>
               );
             })
           }
         </Swiper>
 
-        <View className='iconfont icon-more arrow' />
+        <IconList iconList={iconList} />
 
-        <Loading isLoading={this.state.isLoading} />
+        <TopCard topCardObj={topCardObj} />
+
+        <MidCard midCardObj={midCardObj} />
+
+        <BotCard botCardObj={botCardObj} />
 
         <GlobalFooter isActive='01' />
       </View>

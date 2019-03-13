@@ -1,0 +1,105 @@
+.midCardWrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 20px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  .midCardTit {
+    color: #000;
+    padding-bottom: 24px;
+    font-size: 36px;
+    font-weight: 600;
+    .moreArrow {
+      float: right;
+      > text {
+        font-size: 28px;
+        font-weight: 400;
+        color: #999;
+        padding-right: 12px;
+      }
+      .moreArrowImg {
+        display: inline-block;
+        @include wh(16px, 26px);
+        vertical-align: middle;
+      }
+    }
+  }
+  .midCardBanner {
+    float: left;
+    @include wh(466px, 262px);
+    margin: 0 20px 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .midItemWrap {
+    .midItemDom {
+      float: left;
+      width: 224px;
+      .midItemImgWrap {
+        position: relative;
+        @include wh(224px, 180px);
+        border-radius: 16px;
+        overflow: hidden;
+        .midImgBot {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 8px 8px;
+          background-color: rgba(0, 0, 0, 0.7);
+          > text:first-child {
+            display: inline-block;
+            @include wh(62px, 30px);
+            line-height: 30px;
+            margin-right: 12px;
+            background: rgba(232, 14, 39, 1);
+            border-radius: 16px;
+            font-size: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+          }
+          > text:last-child {
+            display: inline-block;
+            vertical-align: middle;
+            max-width: 130px;
+            font-size: 28px;
+            color: #fff;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+      .midItemTxtWrap {
+        box-sizing: border-box;
+        padding: 6px 20px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
+        border-radius: 10px;
+        .txtTop {
+          font-size: 32px;
+          color: rgba(232, 14, 39, 1);
+        }
+        .txtBot {
+          font-size: 28px;
+          color: rgba(153, 153, 153, 1);
+        }
+      }
+    }
+    .midItemDom:first-child {
+      margin-bottom: 20px;
+    }
+    .midItemDom:nth-of-type(2), .midItemDom:nth-of-type(3) {
+      margin-right: 19px;
+    }
+  }
+  .midItemWrap:after {
+    clear: both;
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
+}
