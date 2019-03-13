@@ -41,7 +41,7 @@ export default class MidCard extends Component {
             <Text>更多</Text>
             <Image
               className='moreArrowImg'
-              src='https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/more_arrow.png'
+              src='https://gitee.com/summersnake/images/raw/master/others/arrow_right.png'
             />
           </View>
         </View>

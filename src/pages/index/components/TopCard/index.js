@@ -39,7 +39,7 @@ export default class TopCard extends Component {
           <View className='moreArrow'>
             <Text>更多</Text>
             <Image className='moreArrowImg'
-              src='https://gitee.com/summersnake/images/blob/master/others/arrow_right.png'
+              src='https://gitee.com/summersnake/images/raw/master/others/arrow_right.png'
             />
           </View>
         </View>

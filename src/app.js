@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import '@tarojs/async-await';
 import { Provider } from '@tarojs/redux';
-import Home from './pages/home';
+import Index from './pages/index';
 import dva from './utils/dva';
 import models from './models';
 import './styles/base.scss';
@@ -16,10 +16,10 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/home/index',
+      'pages/index/index',
     ],
     window: {
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: 'white',
       navigationBarTitleText: '商城',
       navigationBarTextStyle: 'black'
     }
@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Home />
+        <Index />
       </Provider>
     );
   }

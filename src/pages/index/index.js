@@ -5,6 +5,7 @@ import IconList from './components/IconList/index';
 import TopCard from './components/TopCard/index';
 import MidCard from './components/MidCard/index';
 import BotCard from './components/BotCard/index';
+import Loading from '../../components/Loading/index';
 import GlobalFooter from '../../components/GlobalFooter/index';
 import './index.scss';
 
@@ -17,8 +18,8 @@ export default class Index extends Component {
 
   config = {
     navigationBarTitleText: '首页',
-    navigationBarBackgroundColor: 'black',
-    navigationBarTextStyle: "white",
+    navigationBarBackgroundColor: 'white',
+    navigationBarTextStyle: "black",
   };
 
   componentDidMount = () => {
@@ -28,7 +29,7 @@ export default class Index extends Component {
   };
 
   render() {
-    const { imgList, iconList, topCardObj, midCardObj, botCardObj } = this.props;
+    const { imgList, iconList, topCardObj, midCardObj, botCardObj, effects } = this.props;
     return (
       <View className='homeWrap'>
         <Swiper
@@ -56,6 +57,8 @@ export default class Index extends Component {
         <MidCard midCardObj={midCardObj} />
 
         <BotCard botCardObj={botCardObj} />
+
+        <Loading isLoading={effects['home/load']} />
 
         <GlobalFooter isActive='01' />
       </View>

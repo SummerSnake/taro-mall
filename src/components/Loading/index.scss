@@ -1,20 +1,20 @@
+@import '../../styles/mixin';
+
 .loadingWrap {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  @include wh(100%, 100%);
   background-color: rgba(255, 255, 255, 0.6);
 }
 
 .sk-circle {
-  margin: 40px auto;
-  width: 80px;
-  height: 80px;
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @include wh(80px, 80px);
+  margin: 40px auto;
   .sk-circle1,
   .sk-circle2,
   .sk-circle3,
@@ -27,11 +27,10 @@
   .sk-circle10,
   .sk-circle11,
   .sk-circle12 {
-    width: 100%;
-    height: 100%;
     position: absolute;
     left: 0;
     top: 0;
+    @include wh(100%, 100%);
   }
   .sk-circle1:before,
   .sk-circle2:before,
@@ -47,9 +46,8 @@
   .sk-circle12:before {
     content: ' ';
     display: block;
+    @include wh(15%, 15%);
     margin: 0 auto;
-    width: 15%;
-    height: 15%;
     background-color: #25476a;
     border-radius: 100%;
     -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;

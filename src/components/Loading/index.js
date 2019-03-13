@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import './index.less';
+import './index.scss';
 
 export default class GoodsList extends Component {
   constructor() {

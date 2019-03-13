@@ -1,3 +1,5 @@
+@import '../../../../styles/mixin';
+
 .midCardWrap {
   width: 100%;
   box-sizing: border-box;
@@ -26,7 +28,7 @@
   }
   .midCardBanner {
     float: left;
-    @include wh(466px, 262px);
+    @include wh(466px, 264px);
     margin: 0 20px 20px 0;
     border-radius: 8px;
     overflow: hidden;
