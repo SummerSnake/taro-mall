@@ -49,7 +49,7 @@ npm run dev:weapp
     │   ├── pages                  // 页面文件目录
     │   │   └── index
     │   │       ├── index.js           // 页面逻辑
-    │   │       ├── index.less         // 页面样式
+    │   │       ├── index.scss         // 页面样式
     │   ├── utils              // 常用工具类
     │   ├── app.js             // 入口文件
     │   └── index.html
