@@ -22,13 +22,13 @@ export default class IconList extends Component {
   render() {
     const { iconList } = this.props;
     return (
-        <View className='iconList'>
+        <View className='iconList clearfix'>
           {
             Array.isArray(iconList) && iconList.length > 0 && iconList.map((icon) => {
               return (
-                <View className='iconItem' key={icon.id} onClick={this.goGoodList.bind(this, icon.id)}>
+                <View className='iconItem left' key={icon.id} onClick={this.goGoodList.bind(this, icon.id)}>
                   <View className='iconWrap'>
-                    <Image className='iconImg' src={icon.imgUrl} />
+                    <Image src={icon.imgUrl} />
                   </View>
                   <View className='iconTitle'>{icon.title}</View>
                 </View>

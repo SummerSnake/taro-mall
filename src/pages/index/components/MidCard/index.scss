@@ -1,23 +1,22 @@
-@import '../../../../styles/mixin';
+@import '../../../../styles/base';
 
 .midCardWrap {
   width: 100%;
   box-sizing: border-box;
   padding: 24px 20px;
-  background-color: #fff;
   margin-bottom: 20px;
+  background-color: #fff;
   .midCardTit {
-    color: #000;
     padding-bottom: 24px;
+    color: #000;
     font-size: 36px;
     font-weight: 600;
     .moreArrow {
-      float: right;
       > text {
+        padding-right: 12px;
         font-size: 28px;
         font-weight: 400;
         color: #999;
-        padding-right: 12px;
       }
       .moreArrowImg {
         display: inline-block;
@@ -27,7 +26,6 @@
     }
   }
   .midCardBanner {
-    float: left;
     @include wh(466px, 264px);
     margin: 0 20px 20px 0;
     border-radius: 8px;
@@ -35,7 +33,6 @@
   }
   .midItemWrap {
     .midItemDom {
-      float: left;
       width: 224px;
       .midItemImgWrap {
         position: relative;
@@ -55,21 +52,18 @@
             @include wh(62px, 30px);
             line-height: 30px;
             margin-right: 12px;
-            background: rgba(232, 14, 39, 1);
-            border-radius: 16px;
             font-size: 24px;
-            text-align: center;
             color: rgba(255, 255, 255, 1);
+            background: rgba(232, 14, 39, 1);
+            text-align: center;
+            border-radius: 16px;
           }
           > text:last-child {
             display: inline-block;
-            vertical-align: middle;
             max-width: 130px;
-            font-size: 28px;
             color: #fff;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            font-size: 28px;
+            vertical-align: middle;
           }
         }
       }
@@ -95,13 +89,5 @@
     .midItemDom:nth-of-type(2), .midItemDom:nth-of-type(3) {
       margin-right: 19px;
     }
-  }
-  .midItemWrap:after {
-    clear: both;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    visibility: hidden;
   }
 }

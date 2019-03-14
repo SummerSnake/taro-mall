@@ -37,7 +37,7 @@ export default class MidCard extends Component {
     return (
       <View className='midCardWrap'>
         <View className='midCardTit' onClick={this.goHref.bind(this, '01')}>{title}
-          <View className='moreArrow'>
+          <View className='moreArrow right'>
             <Text>更多</Text>
             <Image
               className='moreArrowImg'
@@ -45,15 +45,15 @@ export default class MidCard extends Component {
             />
           </View>
         </View>
-        <View className='midCardBanner'>
+        <View className='midCardBanner left'>
           <Image src={picture} />
         </View>
-        <View className='midItemWrap'>
+        <View className='midItemWrap clearfix'>
           {
             imgList.map((item) => {
               return (
                 <View
-                  className='midItemDom'
+                  className='midItemDom left'
                   key={item.id}
                   onClick={this.goHref.bind(this, '02', item.id)}
                 >
@@ -61,7 +61,7 @@ export default class MidCard extends Component {
                     <Image src={item.goodPic} />
                     <View className='midImgBot'>
                       <Text>热销</Text>
-                      <Text>{item.name}</Text>
+                      <Text className='ellipsis'>{item.name}</Text>
                     </View>
                   </View>
                   <View className='midItemTxtWrap'>

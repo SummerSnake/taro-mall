@@ -4,17 +4,17 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  @include wh(100%, 100px);
   display: flex;
   align-items: center;
+  @include wh(100%, 100px);
   background-color: #fff;
   border-top: 1px solid #d8d8d8;
   .footerIcon {
     flex: 1;
-    text-align: center;
     padding: 0;
-    background-color: #fff;
     line-height: normal;
+    text-align: center;
+    background-color: #fff;
     .footerTxt {
       color: #999;
       font-size: 28px;
@@ -25,11 +25,11 @@
   }
   .footerIconActive {
     flex: 1;
-    text-align: center;
-    color: #2083e4;
-    padding: 0;
-    background-color: #fff;
     line-height: normal;
+    padding: 0;
+    color: #2083e4;
+    background-color: #fff;
+    text-align: center;
     .footerTxt {
       color: #2083e4;
       font-size: 28px;

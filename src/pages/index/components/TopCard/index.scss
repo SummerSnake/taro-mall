@@ -1,23 +1,22 @@
-@import '../../../../styles/mixin';
+@import '../../../../styles/base';
 
 .topCardWrap {
   width: 100%;
   box-sizing: border-box;
   padding: 24px 20px;
-  background-color: #fff;
   margin-bottom: 20px;
+  background-color: #fff;
   .topCardTit {
-    color: #000;
     padding-bottom: 24px;
+    color: #000;
     font-size: 36px;
     font-weight: 600;
     .moreArrow {
-      float: right;
       > text {
+        padding-right: 12px;
+        color: #999;
         font-size: 28px;
         font-weight: 400;
-        color: #999;
-        padding-right: 12px;
       }
       .moreArrowImg {
         display: inline-block;
@@ -51,32 +50,27 @@
           height: 30px;
           line-height: 30px;
           > text:first-child {
-            float: left;
             @include wh(62px, 30px);
             line-height: 30px;
             margin-right: 12px;
-            background: rgba(232, 14, 39, 1);
-            border-radius: 16px;
+            color: rgba(255, 255, 255, 1);
             font-size: 24px;
             text-align: center;
-            color: rgba(255, 255, 255, 1);
+            background: rgba(232, 14, 39, 1);
+            border-radius: 16px;
           }
           > text:last-child {
-            float: left;
-            font-size: 28px;
             color: rgba(51, 51, 51, 1);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 28px;
           }
         }
         .txtMid {
-          font-size: 32px;
           color: rgba(232, 14, 39, 1);
+          font-size: 32px;
         }
         .txtBot {
-          font-size: 28px;
           color: rgba(153, 153, 153, 1);
+          font-size: 28px;
         }
       }
     }

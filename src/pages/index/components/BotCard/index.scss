@@ -1,17 +1,17 @@
-@import '../../../../styles/mixin';
+@import '../../../../styles/base';
 
 .botCardWrap {
   width: 100%;
   box-sizing: border-box;
   padding: 24px 20px 98px;
-  background-color: #fff;
   margin-bottom: 20px;
+  background-color: #fff;
   .botCardTit {
-    text-align: center;
-    color: #999;
     padding-bottom: 24px;
+    color: #999;
     font-size: 36px;
     font-weight: 600;
+    text-align: center;
     > text {
       padding: 0 20px;
     }
@@ -21,13 +21,11 @@
     padding: 12px 0;
     border-bottom: 1px solid #f4f4f4;
     .botItemImgWrap {
-      float: left;
       @include wh(180px, 180px);
       border-radius: 16px;
       overflow: hidden;
     }
     .botItemTxtWrap {
-      float: left;
       padding: 0 20px;
       box-sizing: border-box;
       background: rgba(255, 255, 255, 1);
@@ -35,23 +33,18 @@
         height: 60px;
         line-height: 60px;
         > text:first-child {
-          float: left;
           @include wh(62px, 30px);
           line-height: 30px;
           margin: 20px 12px 0 0;
-          background: rgba(232, 14, 39, 1);
-          border-radius: 16px;
           font-size: 24px;
-          text-align: center;
           color: rgba(255, 255, 255, 1);
+          background: rgba(232, 14, 39, 1);
+          text-align: center;
+          border-radius: 16px;
         }
         > text:last-child {
-          float: left;
           font-size: 28px;
           color: rgba(51, 51, 51, 1);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
         }
       }
       .txtMid {
@@ -70,13 +63,5 @@
     .botItemTxtWrap:first-child {
       margin-right: 20px;
     }
-  }
-  .botCardItemWrap:after {
-    clear: both;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    visibility: hidden;
   }
 }

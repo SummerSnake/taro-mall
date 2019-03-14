@@ -42,17 +42,17 @@ export default class BotCard extends Component {
           Array.isArray(imgList) && imgList.length > 0 && imgList.map((item) => {
             return (
               <View
-                className='botCardItemWrap'
+                className='botCardItemWrap clearfix'
                 key={item.id}
                 onClick={this.goHref.bind(this, '02', item.id)}
               >
-                <View className='botItemImgWrap'>
+                <View className='botItemImgWrap left'>
                   <Image src={item.goodPic} />
                 </View>
-                <View className='botItemTxtWrap'>
+                <View className='botItemTxtWrap left'>
                   <View className='txtTop'>
-                    <Text>热销</Text>
-                    <Text>{item.name}</Text>
+                    <Text className='left'>热销</Text>
+                    <Text className='left ellipsis'>{item.name}</Text>
                   </View>
                   <View className='txtMid'>￥{item.price}</View>
                   <View className='txtBot'>销量：10000</View>

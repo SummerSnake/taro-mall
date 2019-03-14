@@ -36,7 +36,7 @@ export default class TopCard extends Component {
     return (
       <View className='topCardWrap'>
         <View className='topCardTit' onClick={this.goHref.bind(this, '01')}>{title}
-          <View className='moreArrow'>
+          <View className='moreArrow right'>
             <Text>更多</Text>
             <Image className='moreArrowImg'
               src='https://gitee.com/summersnake/images/raw/master/others/arrow_right.png'
@@ -60,8 +60,8 @@ export default class TopCard extends Component {
                   </View>
                   <View className='topItemTxtWrap'>
                     <View className='txtTop'>
-                      <Text>热销</Text>
-                      <Text>{item.name}</Text>
+                      <Text className='left'>热销</Text>
+                      <Text className='left ellipsis'>{item.name}</Text>
                     </View>
                     <View className='txtMid'>￥{item.price}</View>
                     <View className='txtBot'>销量：100</View>
