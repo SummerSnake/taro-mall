@@ -2,11 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import '../../styles/iconfont.scss';
 
-export default class GoodsList extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
+export default class NoData extends Component {
 
   render() {
     const { isVisible } = this.props;

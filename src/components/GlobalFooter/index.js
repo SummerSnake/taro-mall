@@ -4,10 +4,6 @@ import { AtIcon } from 'taro-ui';
 import './index.scss';
 
 export default class GlobalFooter extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
 
   /**
    * 跳转页面

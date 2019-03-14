@@ -3,10 +3,6 @@ import { View, Image } from '@tarojs/components';
 import './index.scss';
 
 export default class IconList extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
 
   /**
    * 跳转商品列表

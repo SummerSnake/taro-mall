@@ -3,10 +3,6 @@ import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
 export default class BotCard extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
 
   /**
    * 跳转活动列表或商品详情

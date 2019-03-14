@@ -3,9 +3,6 @@ import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
 export default class TopCard extends Component {
-  constructor() {
-    super(...arguments);
-  }
 
   /**
    * 跳转活动列表或商品详情
