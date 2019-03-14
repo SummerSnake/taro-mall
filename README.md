@@ -25,13 +25,13 @@ git clone https://github.com/SummerSnake/taro-mall.git
 cd taro-mall
 
 # 全局安装taro脚手架
-npm install -g @tarojs/cli
+yarn global add @tarojs/cli
 
 # 安装项目依赖
-npm install
+yarn -i
 
 # 微信小程序
-npm run dev:weapp
+yarn dev:weapp
 
 ```
 

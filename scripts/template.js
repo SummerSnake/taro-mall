@@ -1,5 +1,5 @@
 /**
- * pages模版快速生成脚本,执行命令 npm run tep `文件名`
+ * pages模板快速生成脚本,执行命令 yarn tep `文件名`
  */
 
 const fs = require('fs');
@@ -8,7 +8,7 @@ const dirName = process.argv[2];
 
 if (!dirName) {
   console.log('文件夹名称不能为空！');
-  console.log('示例：npm run tep test');
+  console.log('示例：yarn tep test');
   process.exit(0);
 }
 
@@ -23,7 +23,7 @@ import './index.scss';
 }))
 export default class ${titleCase(dirName)} extends Component {
   config = {
-    navigationBarTitleText: '${dirName}',
+    navigationBarTitleText: '${dirName}'
   };
 
   componentDidMount = () => {
@@ -32,7 +32,7 @@ export default class ${titleCase(dirName)} extends Component {
 
   render() {
     return (
-      <View className='${dirName}-page'>
+      <View className='${dirName}Wrap'>
         ${dirName}
       </View>
     );
@@ -41,9 +41,9 @@ export default class ${titleCase(dirName)} extends Component {
 `;
 
 // scss文件模版
-const scssTep = `@import "../../styles/mixin";
+const scssTep = `@import "../../styles/base";
 
-.${dirName}-page {
+.${dirName}Wrap {
   @include wh(100%, 100%);
 }
 `;
@@ -59,12 +59,14 @@ export default {
 
   effects: {
     * effectsDemo(_, { call, put }) {
-      const { status, data } = yield call(${dirName}Api.demo, {});
-      if (status === 'ok') {
-        yield put({ type: 'save',
+      const data = yield call(${dirName}Api.demo, {});
+      if (data.code === 0) {
+        yield put({ 
+          type: 'save',
           payload: {
-            topData: data,
-          } });
+            data: data.data
+          }
+        });
       }
     },
   },
@@ -82,9 +84,11 @@ export default {
 // service页面模版
 const serviceTep = `import { postRequest } from '../../utils/api';
 
-export const homepage = async(params) =>{
-  return await postRequest('/homePage/getHomePageMsg', params);
+const ${dirName} = async(params) => {
+  return await postRequest('/${dirName}', params);
 };
+
+export default ${dirName};
 `;
 
 

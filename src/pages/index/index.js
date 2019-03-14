@@ -18,8 +18,6 @@ export default class Index extends Component {
 
   config = {
     navigationBarTitleText: '首页',
-    navigationBarBackgroundColor: 'white',
-    navigationBarTextStyle: "black",
   };
 
   componentDidMount = () => {

@@ -19,9 +19,9 @@ class App extends Component {
       'pages/index/index',
     ],
     window: {
-      navigationBarBackgroundColor: 'white',
       navigationBarTitleText: '商城',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      navigationBarBackgroundColor: 'white'
     }
   };
 
