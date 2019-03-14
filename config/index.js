@@ -1,6 +1,6 @@
 const config = {
-  projectName: 'haifeng_mini',
-  date: '2019-1-17',
+  projectName: 'taro-mall',
+  date: '2019-03-01',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
