@@ -17,6 +17,7 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
+      'pages/user/index',
     ],
     window: {
       navigationBarTitleText: '商城',
