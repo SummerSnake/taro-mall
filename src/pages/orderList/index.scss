@@ -1,0 +1,84 @@
+@import '../../styles/base';
+
+.orderListWrap {
+  position: relative;
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding-bottom: 24px;
+  background: linear-gradient(180deg, rgba(242, 242, 242, 1), rgba(242, 242, 242, 1));
+  .scrollDom {
+    height: calc(100vh - 132px);
+    overflow: auto;
+  }
+  .tabsHeader {
+    display: flex;
+    align-items: center;
+    @include wh(100%, 88px);
+    margin-bottom: 24px;
+    background-color: #fff;
+    > view {
+      flex: 1;
+      font-size: 32px;
+      text-align: center;
+      > text {
+        display: inline-block;
+        @include wh(120px, 88px);
+        line-height: 88px;
+      }
+      .tabTag {
+        color: #999;
+        font-size: 26px;
+      }
+      .tabTagActive {
+        color: #e80e27;
+        font-size: 30px;
+        font-weight: 600;
+        border-bottom: 4px solid #e80e27;
+      }
+    }
+  }
+  .tabsCon {
+    .tabsItem {
+      position: relative;
+      width: 690px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 20px;
+      margin-bottom: 24px;
+      background-color: #fff;
+      box-shadow: 2px 2px 6px 2px rgba(181, 181, 181, 0.5);
+      border-radius: 12px;
+      overflow: hidden;
+      .tabTitle {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        color: #e80e27;
+        font-size: 32px;
+        font-weight: 600;
+        border-bottom: 2px dashed #dbdbdb;
+        > text {
+          font-size: 28px;
+        }
+      }
+      .tabCon {
+        padding: 10px 0;
+        color: #999;
+        font-size: 28px;
+        .goodImg {
+          @include wh(80px, 80px);
+          margin-right: 10px;
+        }
+      }
+      .tabCon:nth-of-type(2) {
+        padding-bottom: 20px;
+        border-bottom: 2px dashed #dbdbdb;
+      }
+      .tabCon:last-child {
+        float: right;
+        > text {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

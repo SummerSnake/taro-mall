@@ -74,19 +74,18 @@ export default class User extends Component {
   //   }
   // };
 
-  // /**
-  //  * 跳转订单列表
-  //  * @param type
-  //  */
-  // goOrderList = (type) => {
-  //   this.$preload({
-  //     memId: this.state.fetchData.id,
-  //     current: type
-  //   });
-  //   Taro.navigateTo({
-  //     url: '/pages/orderList/index'
-  //   });
-  // };
+  /**
+   * 跳转订单列表
+   * @param type
+   */
+  goOrderList = (type) => {
+    this.$preload({
+      current: type
+    });
+    Taro.navigateTo({
+      url: '/pages/orderList/index'
+    });
+  };
 
   render() {
     const { userInfo } = this.state;
@@ -129,14 +128,14 @@ export default class User extends Component {
             </View>
           </View>
           <View>
-            <View onClick={this.goOrderList.bind(this, '')}>
+            <View onClick={this.goOrderList.bind(this, "00")}>
               <Image
                 className='orderImg_01'
                 src='https://gitee.com/summersnake/images/raw/master/others/all_order.png'
               />
               <View>全部订单</View>
             </View>
-            <View onClick={this.goOrderList.bind(this, 0)}>
+            <View onClick={this.goOrderList.bind(this, "01")}>
               <Image
                 className='orderImg_02'
                 src='https://gitee.com/summersnake/images/raw/master/others/unpay.png'
@@ -144,7 +143,7 @@ export default class User extends Component {
               <View>待付款</View>
               <View className='badgeDom'>{fetchData.unPay}</View>
             </View>
-            <View onClick={this.goOrderList.bind(this, 1)}>
+            <View onClick={this.goOrderList.bind(this, "02")}>
               <Image
                 className='orderImg_03'
                 src='https://gitee.com/summersnake/images/raw/master/others/express.png'
@@ -152,7 +151,7 @@ export default class User extends Component {
               <View>待发货</View>
               <View className='badgeDom'>{fetchData.unSend}</View>
             </View>
-            <View onClick={this.goOrderList.bind(this, 3)}>
+            <View onClick={this.goOrderList.bind(this, "03")}>
               <Image
                 className='orderImg_04'
                 src='https://gitee.com/summersnake/images/raw/master/others/completed.png'

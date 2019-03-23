@@ -1,7 +1,7 @@
 import { postRequest } from '../../utils/api';
 
-const homepage = async(params) =>{
+const user = async(params) =>{
   return await postRequest('/userInfo', params);
 };
 
-export default homepage;
+export default user;

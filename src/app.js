@@ -18,6 +18,7 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/user/index',
+      'pages/orderList/index',
     ],
     window: {
       navigationBarTitleText: '商城',
