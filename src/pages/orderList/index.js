@@ -14,7 +14,6 @@ export default class Coupon extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      isLoading: false,
       tabHeader: [
         { id: "00", title: "全部订单" },
         { id: "01", title: "待付款" },
@@ -90,7 +89,7 @@ export default class Coupon extends Component {
   // };
 
   render() {
-    const { tabHeader, curTab, tabList, toastOpen } = this.state;
+    const { tabHeader, curTab, tabList, toastOpen, effects } = this.state;
     return (
       <View className='orderListWrap'>
         <View className='tabsHeader'>
@@ -149,7 +148,7 @@ export default class Coupon extends Component {
 
         <AtToast isOpened={toastOpen} text='下边没有了' icon='close-circle' />
 
-        <Loading isLoading={this.state.isLoading} />
+        <Loading isLoading={effects['orderList/load']} />
       </View>
     );
   }
