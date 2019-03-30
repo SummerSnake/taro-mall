@@ -1,11 +1,10 @@
 @import './mixin';
-@import './iconfont';
 
 page, body {
   font-size: 32px;
   height: 100%;
-  background-color: $bg-color-light;
-  color: $color-dark;
+  background-color: #f4f4f4;
+  color: #333;
   box-sizing: border-box;
 }
 
