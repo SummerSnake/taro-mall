@@ -22,3 +22,21 @@ export function postRequest(url, params) {
       });
   });
 }
+
+export function getRequest(url, params) {
+  return new Promise((resolve, reject) => {
+    Taro.request({
+      url: apiUrl + url,
+      data: {
+        ...params
+      },
+      method: 'GET',
+    })
+      .then(res => {
+        resolve(res.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
