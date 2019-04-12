@@ -1,7 +1,7 @@
-import { postRequest } from '../../utils/api';
+import { getRequest } from '../../utils/api';
 
 const orderList = async(params) =>{
-  return await postRequest('/orderList', params);
+  return await getRequest('/orderList', params);
 };
 
 export default orderList;

@@ -1,7 +1,7 @@
-import { postRequest } from '../../utils/api';
+import { getRequest } from '../../utils/api';
 
 const user = async(params) =>{
-  return await postRequest('/userInfo', params);
+  return await getRequest('/userInfo', params);
 };
 
 export default user;
