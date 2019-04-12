@@ -10,7 +10,7 @@ import './index.scss';
   ...orderList,
   ...loading,
 }))
-export default class Coupon extends Component {
+export default class OrderList extends Component {
   constructor() {
     super(...arguments);
     this.state = {

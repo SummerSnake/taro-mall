@@ -8,7 +8,7 @@ export default {
   effects: {
     *load(_, { call, put }) {
       const data = yield call(user, {});
-      if (data.code === 0) {
+      if (data.status === 200) {
         yield put({
           type: 'save',
           payload: {
