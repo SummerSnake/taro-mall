@@ -31,8 +31,7 @@
     background-color: #fff;
     text-align: center;
     .footerTxt {
-      color: #2083e4;
-      font-size: 28px;
+      @include sc(28px, #2083e4);
     }
   }
   .footerIconActive::after {
