@@ -1,0 +1,88 @@
+@import '../../../../styles/base';
+
+.classifyWrap {
+  .classifySelect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include wh(100%, 128px);
+    box-sizing: border-box;
+    padding: 14px 30px 20px;
+    background-color: #fff;
+    .classifyItem {
+      flex: 1;
+      max-width: 166px;
+      height: 60px;
+      line-height: 60px;
+      margin: 0 auto;
+      font-size: 26px;
+      text-align: center;
+      color: rgba(51, 51, 51, 1);
+      background: rgba(240, 240, 240, 1);
+      border-radius: 30px;
+    }
+    .itemActive {
+      flex: 1;
+      margin: 0 auto;
+      max-width: 166px;
+      height: 60px;
+      line-height: 60px;
+      box-sizing: border-box;
+      border: 2px solid rgba(231, 6, 39, 1);
+      font-size: 26px;
+      text-align: center;
+      color: rgba(232, 11, 35, 1);
+      background-color: rgba(255, 242, 242, 1);
+      border-radius: 30px;
+    }
+  }
+  .shadeDom {
+    position: absolute;
+    z-index: 99;
+    top: 312px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 312px);
+    background-color: rgba(0, 0, 0, 0.7);
+    .classifyList {
+      width: 100%;
+      background-color: #fff;
+      .listItem {
+        display: inline-block;
+        width: 48%;
+        box-sizing: border-box;
+        padding: 20px;
+        font-size: 28px;
+      }
+      .listItemActive {
+        display: inline-block;
+        width: 48%;
+        box-sizing: border-box;
+        border-bottom: 2px solid #d82b2f;
+        padding: 20px;
+        font-size: 28px;
+        background-color: #f4f4f4;
+      }
+      .btnGroup {
+        display: flex;
+        .cancelDom {
+          flex: 1;
+          line-height: 60px;
+          box-sizing: border-box;
+          border-top: 2px solid #dbdbdb;
+          font-size: 32px;
+          text-align: center;
+          color: #dbdbdb;
+        }
+        .submitDom {
+          flex: 1;
+          line-height: 60px;
+          font-size: 36px;
+          text-align: center;
+          color: #fff;
+          background-color: #d82b2f;
+        }
+      }
+    }
+  }
+}

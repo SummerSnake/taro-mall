@@ -1,0 +1,61 @@
+@import '../../../../styles/base';
+
+.goodCardWrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 20px 98px;
+  background-color: #fff;
+  .scrollDom {
+    height: calc(100vh - 426px);
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .botCardItemWrap {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid #f4f4f4;
+    .botItemImgWrap {
+      @include wh(180px, 180px);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .botItemTxtWrap {
+      padding: 0 20px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 1);
+      .txtTop {
+        height: 60px;
+        line-height: 60px;
+        > text:first-child {
+          @include wh(62px, 30px);
+          line-height: 30px;
+          margin: 20px 12px 0 0;
+          font-size: 24px;
+          color: rgba(255, 255, 255, 1);
+          background: rgba(232, 14, 39, 1);
+          text-align: center;
+          border-radius: 16px;
+        }
+        > text:last-child {
+          font-size: 28px;
+          color: rgba(51, 51, 51, 1);
+        }
+      }
+      .txtMid {
+        height: 60px;
+        line-height: 60px;
+        font-size: 32px;
+        color: rgba(232, 14, 39, 1);
+      }
+      .txtBot {
+        height: 60px;
+        line-height: 60px;
+        font-size: 28px;
+        color: rgba(153, 153, 153, 1);
+      }
+    }
+    .botItemTxtWrap:first-child {
+      margin-right: 20px;
+    }
+  }
+}

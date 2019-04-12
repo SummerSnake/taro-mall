@@ -18,11 +18,12 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
+      'pages/category/index',
       'pages/user/index',
       'pages/orderList/index',
     ],
     window: {
-      navigationBarTitleText: '商城',
+      navigationBarTitleText: '泰罗商城',
       navigationBarTextStyle: 'black',
       navigationBarBackgroundColor: 'white'
     }

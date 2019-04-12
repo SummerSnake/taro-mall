@@ -18,7 +18,7 @@ export default class GlobalFooter extends Component {
         break;
       case '02':
         Taro.redirectTo({
-          url: '/pages/goodList/index'
+          url: '/pages/category/index'
         });
         break;
       case '03':
@@ -56,7 +56,7 @@ export default class GlobalFooter extends Component {
           <View className='footerTxt'>首页</View>
         </View>
         <View
-          className='footerIcon'
+          className={isActive === '02' ? 'footerIconActive' : 'footerIcon'}
           onClick={this.goHref.bind(this, '02')}
         >
           <AtIcon value='bullet-list' size='30' color={isActive === '02' ? '#2083e4' : '#999'} />
