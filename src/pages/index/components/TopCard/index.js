@@ -4,6 +4,10 @@ import './index.scss';
 
 export default class TopCard extends Component {
 
+  static defaultProps = {
+    topCardObj: {},
+  };
+
   /**
    * 跳转活动列表或商品详情
    * @param type
@@ -27,8 +31,8 @@ export default class TopCard extends Component {
   // };
 
   render() {
-    const { imgList } = this.props.topCardObj || [];
-    const { picture, title } = this.props.topCardObj || '';
+    const { imgList } = this.props.topCardObj;
+    const { picture, title } = this.props.topCardObj;
     Array.isArray(imgList) && imgList.length > 0 && imgList.splice(2);
     return (
       <View className='topCardWrap'>

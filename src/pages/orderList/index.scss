@@ -1,8 +1,8 @@
 @import '../../styles/base';
 
 .orderListWrap {
+  @include wmh(100vw, 100vh);
   position: relative;
-  @include wh(100%, 100%);
   box-sizing: border-box;
   padding-bottom: 24px;
   background: linear-gradient(180deg, rgba(242, 242, 242, 1), rgba(242, 242, 242, 1));
@@ -11,9 +11,9 @@
     overflow: auto;
   }
   .tabsHeader {
+    @include wh(100%, 88px);
     display: flex;
     align-items: center;
-    @include wh(100%, 88px);
     margin-bottom: 24px;
     background-color: #fff;
     > view {
@@ -21,17 +21,15 @@
       font-size: 32px;
       text-align: center;
       > text {
-        display: inline-block;
         @include wh(120px, 88px);
+        display: inline-block;
         line-height: 88px;
       }
       .tabTag {
-        color: #999;
-        font-size: 26px;
+        @include sc(26px, #999);
       }
       .tabTagActive {
-        color: #e80e27;
-        font-size: 30px;
+        @include sc(30px, #e80e27);
         font-weight: 600;
         border-bottom: 4px solid #e80e27;
       }
@@ -50,10 +48,9 @@
       border-radius: 12px;
       overflow: hidden;
       .tabTitle {
+        @include sc(32px, #e80e27);
         padding-bottom: 20px;
         margin-bottom: 20px;
-        color: #e80e27;
-        font-size: 32px;
         font-weight: 600;
         border-bottom: 2px dashed #dbdbdb;
         > text {
@@ -61,9 +58,8 @@
         }
       }
       .tabCon {
+        @include sc(28px, #999);
         padding: 10px 0;
-        color: #999;
-        font-size: 28px;
         .goodImg {
           @include wh(80px, 80px);
           margin-right: 10px;

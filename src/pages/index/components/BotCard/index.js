@@ -4,6 +4,10 @@ import './index.scss';
 
 export default class BotCard extends Component {
 
+  static defaultProps = {
+    botCardObj: {},
+  };
+
   /**
    * 跳转活动列表或商品详情
    * @param type
@@ -27,8 +31,8 @@ export default class BotCard extends Component {
   // };
 
   render() {
-    const { imgList } = this.props.botCardObj || [];
-    const { title } = this.props.botCardObj || '';
+    const { imgList } = this.props.botCardObj;
+    const { title } = this.props.botCardObj;
     return (
       <View className='botCardWrap'>
         <View className='botCardTit' onClick={this.goHref.bind(this, '01')}>

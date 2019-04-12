@@ -7,20 +7,18 @@
   margin-bottom: 20px;
   background-color: #fff;
   .topCardTit {
+    @include sc(36px, #000);
     padding-bottom: 24px;
-    color: #000;
-    font-size: 36px;
     font-weight: 600;
     .moreArrow {
       > text {
+        @include sc(28px, #999);
         padding-right: 12px;
-        color: #999;
-        font-size: 28px;
         font-weight: 400;
       }
       .moreArrowImg {
-        display: inline-block;
         @include wh(16px, 26px);
+        display: inline-block;
         vertical-align: middle;
       }
     }
@@ -43,34 +41,30 @@
       .topItemTxtWrap {
         box-sizing: border-box;
         padding: 12px 20px;
+        border-radius: 10px;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
-        border-radius: 10px;
         .txtTop {
           height: 30px;
           line-height: 30px;
           > text:first-child {
             @include wh(62px, 30px);
+            @include sc(24px, #fff);
             line-height: 30px;
             margin-right: 12px;
-            color: rgba(255, 255, 255, 1);
-            font-size: 24px;
             text-align: center;
             background: rgba(232, 14, 39, 1);
             border-radius: 16px;
           }
           > text:last-child {
-            color: rgba(51, 51, 51, 1);
-            font-size: 28px;
+            @include sc(28px, rgba(51, 51, 51, 1));
           }
         }
         .txtMid {
-          color: rgba(232, 14, 39, 1);
-          font-size: 32px;
+          @include sc(32px, rgba(232, 14, 39, 1));
         }
         .txtBot {
-          color: rgba(153, 153, 153, 1);
-          font-size: 28px;
+          @include sc(28px, rgba(153, 153, 153, 1));
         }
       }
     }

@@ -22,12 +22,12 @@ export default class OrderList extends Component {
       ],
       tabList: [],
       curTab: "00",
-      toastOpen: false
+      toastOpen: false,
     };
   }
 
   config = {
-    navigationBarTitleText: '订单列表'
+    navigationBarTitleText: '订单列表',
   };
 
   componentDidMount = async () => {
@@ -62,7 +62,7 @@ export default class OrderList extends Component {
         return item.orderState === curTab;
       });
     this.setState({
-      tabList: [...arr]
+      tabList: [...arr],
     });
   };
 

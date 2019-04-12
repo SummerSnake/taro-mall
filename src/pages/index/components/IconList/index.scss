@@ -4,8 +4,8 @@
   width: 100%;
   box-sizing: border-box;
   padding: 30px 30px 0;
-  background-color: #fff;
   margin-bottom: 20px;
+  background-color: #fff;
   .iconItem {
     width: 20%;
     margin-bottom: 30px;
@@ -16,10 +16,9 @@
       text-align: center;
     }
     .iconTitle {
-      font-size: 30px;
-      color: #666;
-      text-align: center;
+      @include sc(30px, #666);
       padding-top: 10px;
+      text-align: center;
     }
   }
 }

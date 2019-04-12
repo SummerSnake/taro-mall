@@ -4,6 +4,10 @@ import './index.scss';
 
 export default class MidCard extends Component {
 
+  static defaultProps = {
+    midCardObj: {},
+  };
+
   /**
    * 跳转活动列表或商品详情
    * @param type
@@ -27,8 +31,8 @@ export default class MidCard extends Component {
   // };
 
   render() {
-    const { imgList } = this.props.midCardObj || [];
-    const { picture, title } = this.props.midCardObj || '';
+    const { imgList } = this.props.midCardObj;
+    const { picture, title } = this.props.midCardObj;
     Array.isArray(imgList) && imgList.length > 0 && imgList.splice(4);
     return (
       <View className='midCardWrap'>

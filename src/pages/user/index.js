@@ -25,7 +25,7 @@ export default class User extends Component {
 
   componentDidMount = async () => {
     const userInfo = Taro.getStorageSync('userInfo');
-    if (Object.keys(userInfo).length > 0){
+    if (Object.keys(userInfo).length > 0) {
       this.setState({ userInfo });
     }
     this.props.dispatch({
@@ -89,7 +89,7 @@ export default class User extends Component {
 
   render() {
     const { userInfo } = this.state;
-    const {  fetchData, effects } = this.props;
+    const { fetchData, effects } = this.props;
     return (
       <View className='userWrap'>
         <View className='userHeader'>
@@ -121,7 +121,7 @@ export default class User extends Component {
         </View>
 
         <View className='myOrder'>
-          <View>
+          <View onClick={this.goOrderList.bind(this, "00")}>
             我的订单
             <View className='right'>
               <AtIcon value='chevron-right' size='18' color='#999' />

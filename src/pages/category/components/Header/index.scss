@@ -11,40 +11,37 @@
     box-sizing: border-box;
     padding: 16px 20px;
     .inputDom {
-      float: left;
       @include wh(614px, 66px);
+      @include sc(28px, rgba(153, 153, 153, 1));
+      float: left;
       line-height: 66px;
       box-sizing: border-box;
       padding: 0 20px;
       margin-right: 28px;
       background: rgba(245, 245, 245, 1);
       border-radius: 12px;
-      font-size: 28px;
-      color: rgba(153, 153, 153, 1);
     }
     .placeClass {
+      @include sc(28px, rgba(153, 153, 153, 1));
       margin-left: 52px;
-      font-size: 28px;
-      color: rgba(153, 153, 153, 1);
     }
     .imgDom {
+      @include wh(32px, 32px);
       position: absolute;
       top: 34px;
       left: 44px;
-      @include wh(32px, 32px);
     }
     > text {
+      @include sc(28px, rgba(56, 56, 56, 1));
       display: inline-block;
       height: 66px;
       line-height: 66px;
-      font-size: 28px;
-      color: rgba(56, 56, 56, 1);
     }
   }
   .sortDom {
+    @include wh(100%, 88px);
     display: flex;
     align-items: center;
-    @include wh(100%, 88px);
     background: rgba(255, 255, 255, 1);
     box-shadow: 0 2px 4px 0 rgba(209, 209, 209, 0.5);
     border: 1px solid rgba(250, 250, 250, 1);
@@ -52,10 +49,9 @@
       flex: 1;
       text-align: center;
       > text {
+        @include sc(30px, rgba(51, 51, 51, 1));
         display: inline-block;
         margin-right: 12px;
-        font-size: 30px;
-        color: rgba(51, 51, 51, 1);
       }
       .sortImg {
         @include wh(16px, 12px);

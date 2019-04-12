@@ -7,20 +7,18 @@
   margin-bottom: 20px;
   background-color: #fff;
   .midCardTit {
+    @include sc(36px, #000);
     padding-bottom: 24px;
-    color: #000;
-    font-size: 36px;
     font-weight: 600;
     .moreArrow {
       > text {
+        @include sc(28px, #999);
         padding-right: 12px;
-        font-size: 28px;
         font-weight: 400;
-        color: #999;
       }
       .moreArrowImg {
-        display: inline-block;
         @include wh(16px, 26px);
+        display: inline-block;
         vertical-align: middle;
       }
     }
@@ -35,8 +33,8 @@
     .midItemDom {
       width: 224px;
       .midItemImgWrap {
-        position: relative;
         @include wh(224px, 180px);
+        position: relative;
         border-radius: 16px;
         overflow: hidden;
         .midImgBot {
@@ -48,21 +46,19 @@
           padding: 0 8px 8px;
           background-color: rgba(0, 0, 0, 0.7);
           > text:first-child {
-            display: inline-block;
             @include wh(62px, 30px);
+            @include sc(24px, #fff);
+            display: inline-block;
             line-height: 30px;
             margin-right: 12px;
-            font-size: 24px;
-            color: rgba(255, 255, 255, 1);
-            background: rgba(232, 14, 39, 1);
             text-align: center;
+            background-color: rgba(232, 14, 39, 1);
             border-radius: 16px;
           }
           > text:last-child {
+            @include sc(28px, #fff);
             display: inline-block;
             max-width: 130px;
-            color: #fff;
-            font-size: 28px;
             vertical-align: middle;
           }
         }
@@ -70,16 +66,14 @@
       .midItemTxtWrap {
         box-sizing: border-box;
         padding: 6px 20px;
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
         border-radius: 10px;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
         .txtTop {
-          font-size: 32px;
-          color: rgba(232, 14, 39, 1);
+          @include sc(32px, rgba(232, 14, 39, 1));
         }
         .txtBot {
-          font-size: 28px;
-          color: rgba(153, 153, 153, 1);
+          @include sc(28px, rgba(153, 153, 153, 1));
         }
       }
     }
