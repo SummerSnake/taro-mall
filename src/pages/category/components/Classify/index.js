@@ -1,23 +1,23 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
+import { verVal } from "../../../../utils/api";
 import './index.scss';
 
 export default class Classify extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      isActiveOne: false,
-      largeTxt: '',
-      isActiveTwo: false,
-      smallTxt: '',
-      isActiveThree: false,
-      weightTxt: '',
-      isActiveFour: false,
-      packTxt: '',
-      shadeVisible: false,
-      listItemActive: '',
-      type: 0,
-      filter: null,
+      titleArr: [
+        { id: 1, title: '神器' },
+        { id: 2, title: '凶器' },
+        { id: 3, title: '鬼斧神工' },
+        { id: 4, title: '日月无光' },
+      ],
+      selectArr: [], // 当前选择的分类数组
+      selectId: 0, // 当前点击的分类 id
+      shadeVisible: false, // 子列表显示与否
+      listItemActive: '', // 子列表所选项
+      filter: null, // 筛选状态
     };
   }
 
@@ -26,187 +26,110 @@ export default class Classify extends Component {
   };
 
   /**
-   * 大类选择
+   * 分类选择
+   * @param id
    */
-  selectOne = async () => {
-    this.setState({
-      type: 0,
-      shadeVisible: true,
-    });
-  };
-
-  /**
-   * 细分类选择
-   */
-  selectTwo = async () => {
-    this.setState({
-      type: 1,
-      shadeVisible: true,
-    });
-  };
-
-  /**
-   * 重量选择
-   */
-  selectThree = async () => {
-    this.setState({
-      type: 2,
-      shadeVisible: true,
-    });
-  };
-
-  /**
-   * 包装选择
-   */
-  selectFour = async () => {
-    this.setState({
-      type: 3,
-      shadeVisible: true,
-    });
-  };
-
-  /**
-   * 关闭类型列表
-   */
-  handleCancel = () => {
-    this.setState({
-      shadeVisible: false,
-    });
-    this.props.onClassifyCall({ filter: this.state.filters });
-    switch (this.state.type) {
-      case 0:
-        this.setState({
-          largeTxt: '',
-          isActiveOne: false,
-        });
-        break;
-      case 1:
-        this.setState({
-          smallTxt: '',
-          isActiveTwo: false,
-        });
-        break;
-      case 2:
-        this.setState({
-          weightTxt: '',
-          isActiveThree: false,
-        });
-        break;
-      case 3:
-        this.setState({
-          packTxt: '',
-          isActiveFour: false,
-        });
-        break;
-      default:
-        this.setState({
-          largeTxt: '',
-          smallTxt: '',
-          weightTxt: '',
-          packTxt: '',
-          isActiveOne: false,
-          isActiveTwo: false,
-          isActiveThree: false,
-          isActiveFour: false,
-        });
+  selectTitle = async (id) => {
+    const arr = [...this.state.selectArr];
+    if (!arr.includes(id)) {
+      arr.push(id);
     }
+    this.setState({
+      selectArr: arr,
+      selectId: id,
+      shadeVisible: true,
+    });
   };
 
   /**
-   * 类型列表项点击事件
+   * 分类列表项点击事件
    * @param id
    * @param title
    * @param e
    */
   listItemClick = async (id, title, e) => {
     e.stopPropagation();
-    switch (this.state.type) {
-      case 0:
-        this.setState({
-          filter: id,
-          isActiveOne: true,
-          largeTxt: title,
-        });
-        break;
-      case 1:
-        this.setState({
-          filter: id,
-          isActiveTwo: true,
-          smallTxt: title,
-        });
-        break;
-      case 2:
-        this.setState({
-          filter: id,
-          isActiveThree: true,
-          weightTxt: title,
-        });
-        break;
-      case 3:
-        this.setState({
-          filter: id,
-          isActiveFour: true,
-          packTxt: title,
-        });
-        break;
-      default:
-        this.setState({
-          largeTxt: '',
-          smallTxt: '',
-          weightTxt: '',
-          packTxt: '',
-          filter: '',
-        });
-    }
+    const arr = [...this.state.titleArr];
+    arr.forEach(item => {
+      if (this.state.selectId === item.id) {
+        item.title = title;
+      }
+    });
     this.setState({
+      filter: id,
       listItemActive: id.toString(),
     });
   };
 
   /**
-   * 确定
+   * 分类列表取消
+   * @param e
+   */
+  handleCancel = (e) => {
+    e.stopPropagation();
+    const arr = [...this.state.titleArr];
+    const { selectId } = this.state;
+    // 改变选中标题文字
+    arr.forEach(item => {
+      if (selectId === item.id) {
+        item.title = selectId === 1 ? '神器' : selectId === 2 ? '凶器'
+          : selectId === 3 ? '鬼斧神工' : '日月无光';
+      }
+    });
+    // 取消选中状态
+    const selectedArr = [...this.state.selectArr];
+    const newArr = selectedArr.filter(item => item !== selectId);
+    this.setState({
+      selectArr: newArr,
+      listItemActive: '',
+      shadeVisible: false,
+    });
+  };
+
+  /**
+   * 分类列表确定
    * @param e
    */
   handleSelect = (e) => {
     e.stopPropagation();
-    const json = {
-      filter: this.state.filter,
-    };
-    this.props.onClassifyCall(json);
-    this.setState({ shadeVisible: false });
+    if (verVal(this.state.filter)) { // 筛选
+      const json = {
+        filter: this.state.filter,
+      };
+      this.props.onClassifyCall(json);
+    } else { // 未筛选取消选中状态
+      const selectedArr = [...this.state.selectArr];
+      const newArr = selectedArr.filter(item => item !== this.state.selectId);
+      this.setState({
+        selectArr: newArr,
+      });
+    }
+    this.setState({
+      shadeVisible: false,
+    });
   };
 
   render() {
     const { classifyList } = this.props;
-    const { listItemActive, shadeVisible } = this.state;
+    const { titleArr, selectArr, listItemActive, shadeVisible } = this.state;
     return (
       <View className='classifyWrap'>
         <View className='classifySelect'>
-          <View
-            className={this.state.isActiveOne ? 'itemActive' : 'classifyItem'}
-            onClick={this.selectOne}
-          >
-            {this.state.largeTxt === '' ? '大类' : this.state.largeTxt}
-          </View>
-          <View
-            className={this.state.isActiveTwo ? 'itemActive' : 'classifyItem'}
-            onClick={this.selectTwo}
-          >
-            {this.state.smallTxt === '' ? '细分类' : this.state.smallTxt}
-          </View>
-          <View
-            className={this.state.isActiveThree ? 'itemActive' : 'classifyItem'}
-            onClick={this.selectThree}
-          >
-            {this.state.weightTxt === '' ? '重量' : this.state.weightTxt}
-          </View>
-          <View
-            className={this.state.isActiveFour ? 'itemActive' : 'classifyItem'}
-            onClick={this.selectFour}
-          >
-            {this.state.packTxt === '' ? '包装' : this.state.packTxt}
-          </View>
+          {
+            titleArr.map(item => {
+              return (
+                <View
+                  key={item.id}
+                  className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
+                  onClick={this.selectTitle.bind(this, item.id)}
+                >
+                  {item.title}
+                </View>
+              );
+            })
+          }
         </View>
+
         <View
           className='shadeDom'
           style={{ display: shadeVisible ? 'block' : 'none' }}

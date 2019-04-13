@@ -11,7 +11,7 @@ export default class IconList extends Component {
   goGoodList = (iconId) => {
     this.$preload({ iconId });
     Taro.navigateTo({
-      url: `/pages/category/index`
+      url: '/pages/category/index',
     });
   };
 

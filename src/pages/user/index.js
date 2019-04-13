@@ -20,7 +20,7 @@ export default class User extends Component {
   }
 
   config = {
-    navigationBarTitleText: '我的'
+    navigationBarTitleText: '我的',
   };
 
   componentDidMount = async () => {
@@ -80,10 +80,10 @@ export default class User extends Component {
    */
   goOrderList = (type) => {
     this.$preload({
-      current: type
+      current: type,
     });
     Taro.navigateTo({
-      url: '/pages/orderList/index'
+      url: '/pages/orderList/index',
     });
   };
 

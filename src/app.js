@@ -25,7 +25,7 @@ class App extends Component {
     window: {
       navigationBarTitleText: '泰罗商城',
       navigationBarTextStyle: 'black',
-      navigationBarBackgroundColor: 'white'
+      navigationBarBackgroundColor: 'white',
     }
   };
 

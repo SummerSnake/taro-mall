@@ -18,7 +18,7 @@ export default class GoodsList extends Component {
   goHref = (id) => {
     this.$preload({ id });
     Taro.navigateTo({
-      url: `/pages/goodInfo/index`,
+      url: '/pages/goodInfo/index',
     });
   };
 
