@@ -17,7 +17,7 @@ export default class Header extends Component {
    */
   inputValChange = (e) => {
     this.setState({
-      inputVal: e.detail.value
+      inputVal: e.detail.value,
     });
   };
 
@@ -79,7 +79,7 @@ export default class Header extends Component {
           <Image
             className='imgDom'
             style={{ display: (isVisible && inputVal === '') ? 'block' : 'none' }}
-            src='https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/sousuo@2x.png'
+            src='https://gitee.com/summersnake/images/raw/master/others/search_icon.png'
           />
           <Text onClick={this.handleSearch}>搜索</Text>
         </View>
@@ -87,21 +87,21 @@ export default class Header extends Component {
           <View className='sortItem' onClick={this.sortFunc.bind(this, 0)}>
             <Text>综合</Text>
             <Image
-              src='https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/xiala@2x.png'
+              src='https://gitee.com/summersnake/images/raw/master/others/arrow_down.png'
               className={isReverse === 0 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>
           <View className='sortItem' onClick={this.sortFunc.bind(this, 1)}>
             <Text>销量</Text>
             <Image
-              src='https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/xiala@2x.png'
+              src='https://gitee.com/summersnake/images/raw/master/others/arrow_down.png'
               className={isReverse === 1 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>
           <View className='sortItem' onClick={this.sortFunc.bind(this, 2)}>
             <Text>价格</Text>
             <Image
-              src='https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/xiala@2x.png'
+              src='https://gitee.com/summersnake/images/raw/master/others/arrow_down.png'
               className={isReverse === 2 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>

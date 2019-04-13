@@ -3,10 +3,6 @@ import { View, Image, Text, ScrollView } from '@tarojs/components';
 import './index.scss';
 
 export default class GoodsList extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
 
   /**
    * 滚动加载
@@ -22,7 +18,7 @@ export default class GoodsList extends Component {
   goHref = (id) => {
     this.$preload({ id });
     Taro.navigateTo({
-      url: `/pages/goodInfo/index`
+      url: `/pages/goodInfo/index`,
     });
   };
 
