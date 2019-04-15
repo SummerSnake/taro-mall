@@ -53,3 +53,10 @@ export function getRequest(url, params) {
 export function verVal(val) {
   return val !== '' && typeof val !== 'undefined' && val !== null;
 }
+
+/**
+ * 验证是否是对象类型
+ */
+export function isObj(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}

@@ -4,6 +4,7 @@ import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
 import GlobalFooter from '@/components/GlobalFooter/index';
+import { isObj } from '@/utils/api';
 import './index.scss';
 
 @connect(({ user, loading }) => ({
@@ -25,7 +26,7 @@ export default class User extends Component {
 
   componentDidMount = async () => {
     const userInfo = Taro.getStorageSync('userInfo');
-    if (Object.keys(userInfo).length > 0) {
+    if (isObj(userInfo) && Object.keys(userInfo).length > 0) {
       this.setState({ userInfo });
     }
     this.props.dispatch({
