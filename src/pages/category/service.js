@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from '../../utils/api';
+import { getRequest, postRequest } from '@/utils/api';
 
 const category = async (params) => {
   return await postRequest('/goodsList', params);

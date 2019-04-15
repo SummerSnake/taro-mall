@@ -1,3 +1,5 @@
+const path = require('path');
+
 const config = {
   projectName: 'taro-mall',
   date: '2019-03-01',
@@ -9,6 +11,10 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
+  alias: {
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils')
+  },
   plugins: {
     babel: {
       sourceMap: true,

@@ -2,8 +2,8 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
-import Loading from '../../components/Loading/index';
-import GlobalFooter from '../../components/GlobalFooter/index';
+import Loading from '@/components/Loading/index';
+import GlobalFooter from '@/components/GlobalFooter/index';
 import './index.scss';
 
 @connect(({ user, loading }) => ({

@@ -2,8 +2,8 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { AtToast } from "taro-ui";
 import { connect } from '@tarojs/redux';
-import NoData from '../../components/NoData/index';
-import Loading from '../../components/Loading/index';
+import NoData from '@/components/NoData/index';
+import Loading from '@/components/Loading/index';
 import './index.scss';
 
 @connect(({ orderList, loading }) => ({

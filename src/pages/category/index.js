@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
+import NoData from '@/components/NoData/index';
+import Loading from '@/components/Loading/index';
+import GlobalFooter from '@/components/GlobalFooter/index';
 import Header from './components/Header/index';
 import Classify from './components/Classify/index';
 import GoodsList from './components/GoodsList/index';
-import Loading from '../../components/Loading/index';
-import NoData from '../../components/NoData/index';
-import GlobalFooter from '../../components/GlobalFooter/index';
 import './index.scss';
 
 @connect(({ category, loading }) => ({

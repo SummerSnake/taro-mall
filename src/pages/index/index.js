@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
+import Loading from '@/components/Loading/index';
+import GlobalFooter from '@/components/GlobalFooter/index';
 import IconList from './components/IconList/index';
 import TopCard from './components/TopCard/index';
 import MidCard from './components/MidCard/index';
 import BotCard from './components/BotCard/index';
-import Loading from '../../components/Loading/index';
-import GlobalFooter from '../../components/GlobalFooter/index';
 import './index.scss';
 
 @connect(({ home, loading }) => ({
