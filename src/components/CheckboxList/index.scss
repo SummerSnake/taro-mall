@@ -1,0 +1,46 @@
+@import '../../styles/base';
+
+.checkboxListWrap {
+  width: 100vw;
+  .checkboxDom {
+    @include wh(46px, 46px);
+    float: left;
+    margin-right: 20px;
+    box-sizing: border-box;
+    border: 2px solid #999;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  .checkboxDomActive {
+    @include wh(46px, 46px);
+    float: left;
+    line-height: 40px;
+    margin-right: 20px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #e80e27;
+  }
+  .itemWrap {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    .checkboxTitle {
+      @include sc(32px ,rgba(51, 51, 51, 1));
+      height: 46px;
+      line-height: 46px;
+    }
+    .parentWrap {
+      padding-bottom: 30px;
+      border-bottom: 2px dashed #dbdbdb;
+    }
+    .childWrap {
+      padding-left: 50px;
+      .childDom {
+        width: 33.33%;
+        margin-top: 30px;
+      }
+    }
+  }
+}
