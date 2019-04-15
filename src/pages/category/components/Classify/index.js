@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import { verVal } from "../../../../utils/api";
+import { verVal } from "@/utils/api";
 import './index.scss';
 
 export default class Classify extends Component {
@@ -69,7 +69,7 @@ export default class Classify extends Component {
     e.stopPropagation();
     const arr = [...this.state.titleArr];
     const { selectId } = this.state;
-    // 改变选中标题文字
+    // 修改选中标题文字
     arr.forEach(item => {
       if (selectId === item.id) {
         item.title = selectId === 1 ? '神器' : selectId === 2 ? '凶器'
