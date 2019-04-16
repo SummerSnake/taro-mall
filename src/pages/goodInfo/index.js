@@ -37,7 +37,7 @@ export default class GoodInfo extends Component {
     const goodsList = Taro.getStorageSync('goodsList');
     if (goodsList && goodsList.length > 0) {
       const list = JSON.parse(JSON.stringify(goodsList));
-      list.map(item => {
+      list.forEach(item => {
         if (item.id === this.$router.preload.id) {
           this.setState({
             totalNum: item.num,
@@ -86,7 +86,7 @@ export default class GoodInfo extends Component {
       if (goodsList && goodsList.length > 0) {
         const list = JSON.parse(JSON.stringify(goodsList));
         let flag = true;
-        list.map(item => { // 如果缓存在该商品，则添加数量
+        list.forEach(item => { // 如果缓存在该商品，则添加数量
           if (item.id === this.props.goodInfo.id) {
             item.num = this.state.totalNum;
             flag = false;

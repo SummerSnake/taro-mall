@@ -18,10 +18,10 @@ export default class CheckboxList extends Component {
     if (Array.isArray(list) && list.length > 0) {
       const { parentIds, childIds } = this.state;
       // 存储 parentIds childIds 数组供 checkbox 使用
-      list.map(item => {
+      list.forEach(item => {
         const { itemList } = item;
         parentIds.push(item.id);
-        itemList.map(child => {
+        itemList.forEach(child => {
           childIds.push(child.id);
         });
       });
@@ -43,20 +43,20 @@ export default class CheckboxList extends Component {
     const { parentIds, childIds, checkboxList } = this.state;
     if (parentIds.indexOf(id) > -1) { // parentIds 数组中是否存在当前点击的 checkbox id
       parentIds.splice(parentIds.indexOf(id), 1); // 如果存在，则删除
-      checkboxList.map(item => { // 取消当前点击的 checkbox 其所有子级 checkbox 选中状态
+      checkboxList.forEach(item => { // 取消当前点击的 checkbox 其所有子级 checkbox 选中状态
         if (item.id === id && item.itemList.length > 0) {
           const { itemList } = item;
-          itemList.map(child => {
+          itemList.forEach(child => {
             childIds.splice(childIds.indexOf(child.id), 1);
           });
         }
       });
     } else {
       parentIds.push(id); // 如果 parentIds 数组中不存在当前点击的 checkbox id，则将其加入数组
-      checkboxList.map(item => {// 为当前点击的 checkbox 其所有子级 checkbox 添加选中状态
+      checkboxList.forEach(item => {// 为当前点击的 checkbox 其所有子级 checkbox 添加选中状态
         if (item.id === id && item.itemList.length > 0) {
           const { itemList } = item;
-          itemList.map(child => {
+          itemList.forEach(child => {
             childIds.push(child.id);
           });
         }
@@ -79,12 +79,12 @@ export default class CheckboxList extends Component {
     if (childIds.indexOf(id) > -1) { // childIds 数组中是否存在当前点击的 checkbox id
       childIds.splice(childIds.indexOf(id), 1); // 如果有，则删除
       // childIds 数组中不存在当前点击的 checkbox 其父级的所有子级 id，取消其父级 checkbox 选中状态
-      checkboxList.map(item => {
+      checkboxList.forEach(item => {
         const { itemList } = item;
-        itemList.map(children => {
+        itemList.forEach(children => {
           if (children.id === id) {
             let flag = true;
-            itemList.map(child => {
+            itemList.forEach(child => {
               if (childIds.indexOf(child.id) > -1) {
                 flag = false;
               }
@@ -98,9 +98,9 @@ export default class CheckboxList extends Component {
     } else {
       childIds.push(id); // 如果 childIds 数组中不存在当前点击的 checkbox id，则将其加入数组
       if (childIds.length > 0) { // 为当前选中 checkbox 的父级添加选中状态
-        checkboxList.map(item => {
+        checkboxList.forEach(item => {
           const { itemList } = item;
-          itemList.map(child => {
+          itemList.forEach(child => {
             // 查找到当前点击的 checkbox 父级，且 parentIds 数组中不存在其父级 id
             if (child.id === id && parentIds.indexOf(item.id) === -1) {
               parentIds.push(item.id);
