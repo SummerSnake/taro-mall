@@ -20,15 +20,15 @@
       overflow: hidden;
     }
     .botItemTxtWrap {
-      padding: 0 20px;
       box-sizing: border-box;
-      background: rgba(255, 255, 255, 1);
+      padding: 0 20px;
+      background-color: #fff;
       .txtTop {
         height: 60px;
         line-height: 60px;
         > text:first-child {
           @include wh(62px, 30px);
-          @include sc(24px, rgba(255, 255, 255, 1));
+          @include sc(24px, #fff);
           line-height: 30px;
           margin: 20px 12px 0 0;
           background-color: rgba(232, 14, 39, 1);

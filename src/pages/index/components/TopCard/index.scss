@@ -42,7 +42,7 @@
         box-sizing: border-box;
         padding: 12px 20px;
         border-radius: 10px;
-        background: rgba(255, 255, 255, 1);
+        background-color: #fff;
         box-shadow: 0 4px 8px 0 rgba(224, 224, 224, 0.5);
         .txtTop {
           height: 30px;
@@ -53,7 +53,7 @@
             line-height: 30px;
             margin-right: 12px;
             text-align: center;
-            background: rgba(232, 14, 39, 1);
+            background-color: rgba(232, 14, 39, 1);
             border-radius: 16px;
           }
           > text:last-child {

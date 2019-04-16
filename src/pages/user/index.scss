@@ -15,7 +15,6 @@
     .headerLeft {
       .headerImgWrap {
         @include wh(126px, 126px);
-        float: left;
         margin-right: 36px;
         border-radius: 50%;
         overflow: hidden;
@@ -30,10 +29,9 @@
         > view:last-child {
           @include wh(138px, 30px);
           @include sc(24px, #fff);
-          float: left;
           line-height: 30px;
           text-align: center;
-          background: rgba(246, 193, 191, 1);
+          background-color: rgba(246, 193, 191, 1);
           border-radius: 16px;
         }
       }
@@ -44,7 +42,7 @@
       justify-content: flex-end;
       > view {
         height: 60px;
-        line-height: 56px;
+        line-height: 54px;
         box-sizing: border-box;
         padding: 0 16px;
         border: 2px solid rgba(195, 195, 195, 1);
@@ -78,7 +76,7 @@
           line-height: 48px;
           margin: 24px 10px 0 0;
           text-align: center;
-          background: rgba(255, 226, 192, 1);
+          background-color: rgba(255, 226, 192, 1);
           border-radius: 24px;
         }
       }
@@ -109,7 +107,7 @@
           top: -6px;
           z-index: 1;
           line-height: 30px;
-          color: #FF4949 !important;
+          color: #ff4949 !important;
           font-size: 20px;
           text-align: center;
           overflow: hidden;

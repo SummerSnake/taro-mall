@@ -54,7 +54,3 @@ yarn dev:weapp
     │   ├── app.js             // 入口文件
     │   └── index.html
     └── package.json            // 项目依赖
-
-# 备注
-
-部分功能需要接口支持，暂时无法实现，如下拉加载、筛选、增删改查等。

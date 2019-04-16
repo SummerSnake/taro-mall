@@ -95,12 +95,12 @@ export default class User extends Component {
       <View className='userWrap'>
         <View className='userHeader'>
           <View className='headerLeft'>
-            <View className='headerImgWrap'>
+            <View className='headerImgWrap left'>
               <Image src={userInfo.avatarUrl} />
             </View>
             <View className='headerTxt'>
               <View>{userInfo.nickName}</View>
-              <View onClick={this.goEdit.bind(this, '05')}>个人设置</View>
+              <View className='left' onClick={this.goEdit.bind(this, '05')}>个人设置</View>
             </View>
           </View>
           <View className='headerRight'>

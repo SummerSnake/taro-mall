@@ -18,7 +18,7 @@
   .botCardItemWrap {
     width: 100%;
     padding: 12px 0;
-    border-bottom: 1px solid #f4f4f4;
+    border-bottom: 2px solid #f4f4f4;
     .botItemImgWrap {
       @include wh(180px, 180px);
       border-radius: 16px;
@@ -27,7 +27,7 @@
     .botItemTxtWrap {
       padding: 0 20px;
       box-sizing: border-box;
-      background: rgba(255, 255, 255, 1);
+      background-color: #fff;
       .txtTop {
         height: 60px;
         line-height: 60px;
