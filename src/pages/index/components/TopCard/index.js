@@ -13,22 +13,22 @@ export default class TopCard extends Component {
    * @param type
    * @param id
    */
-  // goHref = (type, id) => {
-  //   switch (type) {
-  //     case '01':
-  //       Taro.navigateTo({
-  //         url: `/pages/activity/index`
-  //       });
-  //       break;
-  //     case '02':
-  //       this.$preload({ id });
-  //       Taro.navigateTo({
-  //         url: `/pages/goodInfo/index`
-  //       });
-  //       break;
-  //     default:
-  //   }
-  // };
+  goHref = (type, id) => {
+    switch (type) {
+      case '01':
+        Taro.navigateTo({
+          url: `/pages/activity/index`
+        });
+        break;
+      case '02':
+        this.$preload({ id });
+        Taro.navigateTo({
+          url: `/pages/goodInfo/index`
+        });
+        break;
+      default:
+    }
+  };
 
   render() {
     const { imgList } = this.props.topCardObj;

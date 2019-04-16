@@ -1,0 +1,180 @@
+@import '../../styles/base';
+
+.goodsInfoWrap {
+  @include wmh(100vw, 100vh);
+  padding-bottom: 98px;
+  background-color: #f4f4f4;
+  .bannerWrap {
+    @include wh(100%, 600px);
+  }
+  .infoTxtWrap {
+    box-sizing: border-box;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 1);
+    .txtTop {
+      margin-bottom: 60px;
+      > text {
+        @include sc(30px, rgba(51, 51, 51, 1));
+      }
+    }
+    .txtBottom {
+      display: inline-block;
+      margin-bottom: 8px;
+      > text:first-child {
+        @include sc(32px, rgba(232, 14, 39, 1));
+        display: inline-block;
+        margin-right: 16px;
+      }
+      .bottomLast {
+        @include sc(28px, rgba(153, 153, 153, 1));
+        position: relative;
+      }
+      .bottomLast:after {
+        @include wh(120%, 2px);
+        position: absolute;
+        content: ' ';
+        top: 22px;
+        left: 0;
+        background-color: #dbdbdb;
+      }
+    }
+    .txtRight {
+      @include sc(28px, rgba(153, 153, 153, 1));
+      > text:first-child {
+        display: inline-block;
+        margin-right: 20px;
+      }
+    }
+  }
+  .numWrap {
+    height: 110px;
+    line-height: 110px;
+    box-sizing: border-box;
+    padding: 0 24px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    .totalMoney {
+      display: inline-block;
+      @include sc(28px, rgba(153, 153, 153, 1));
+      > text {
+        @include sc(32px, #e80e27);
+        font-size: 32px;
+      }
+    }
+    .btnGroup {
+      display: flex;
+      align-items: center;
+      .subBtn {
+        flex: 1;
+      }
+      .addBtn {
+        flex: 1;
+      }
+      .totalNum {
+        @include sc(30px, rgba(51, 51, 51, 1));
+        flex: 1;
+        margin: 0 20px;
+      }
+    }
+  }
+  .tabsWrap {
+    .tabsHeader {
+      display: flex;
+      align-items: center;
+      height: 88px;
+      line-height: 88px;
+      background-color: #fff;
+      > view {
+        flex: 1;
+        font-size: 32px;
+        text-align: center;
+        > text {
+          @include wh(120px, 88px);
+          display: inline-block;
+          line-height: 88px;
+        }
+        .tabTag {
+          @include sc(26px, #999);
+        }
+        .tabTagActive {
+          @include sc(30px, #e80e27);
+          font-weight: 600;
+          box-sizing: border-box;
+          border-bottom: 4px solid #e80e27;
+        }
+      }
+    }
+    .tabsCon {
+      width: 100%;
+      > image {
+        width: 100%;
+      }
+    }
+  }
+  .goodInfoBottom {
+    @include wh(100%, 98px);
+    display: flex;
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+    .bottomIconWrap {
+      display: flex;
+      align-items: center;
+      width: 348px;
+      .bottomIcon {
+        position: relative;
+        flex: 1;
+        text-align: center;
+        .iconTxt {
+          @include sc(24px, #666);
+        }
+        .badgeDom {
+          position: absolute;
+          right: 26px;
+          top: -2px;
+          z-index: 1;
+          transform: translate(50%, 0);
+          font-size: 20px;
+          text-align: center;
+          color: #fff;
+          height: 22px;
+          line-height: 22px;
+          padding: 0 10px;
+          border-radius: 14px 14px 14px 0;
+          overflow: hidden;
+          background-color: #FF4949;
+          box-shadow: 0 4px 8px 0 rgba(233, 59, 61, 0.2);
+        }
+      }
+    }
+    .botBtnWrap {
+      display: flex;
+      width: 376px;
+      height: 66px;
+      line-height: 66px;
+      margin: 18px 0;
+      font-size: 28px;
+      background: rgba(255, 167, 0, 1);
+      border-radius: 34px;
+      overflow: hidden;
+      .addToCart {
+        flex: 1;
+        color: #fff;
+        text-align: center;
+        background-color: #ffa700;
+      }
+      .goPay {
+        flex: 1;
+        padding: 0;
+        color: #fff;
+        font-size: 28px;
+        line-height: 66px;
+        border-radius: 0;
+        background-color: #e80e27;
+      }
+    }
+  }
+}
