@@ -117,18 +117,18 @@ export default class GoodInfo extends Component {
   goHref = (type) => {
     switch (type) {
       case '01':
-        Taro.redirectTo({
+        Taro.switchTab({
           url: '/pages/index/index',
         });
         break;
       case '02':
-        Taro.redirectTo({
+        Taro.switchTab({
           url: '/pages/category/index',
         });
         break;
       case '03':
         this.setStore();
-        Taro.redirectTo({
+        Taro.switchTab({
           url: '/pages/cart/index',
         });
         break;
@@ -139,7 +139,7 @@ export default class GoodInfo extends Component {
         });
         break;
       default:
-        Taro.redirectTo({
+        Taro.switchTab({
           url: '/pages/index/index',
         });
     }

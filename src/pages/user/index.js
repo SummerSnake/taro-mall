@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Image, Text } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
+import { View, Image, Text, Button } from '@tarojs/components';
+import { AtIcon, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
 import { isObj } from '@/utils/api';
@@ -16,6 +16,7 @@ export default class User extends Component {
     super(...arguments);
     this.state = {
       userInfo: {},
+      modalOpen: false,
     };
   }
 
@@ -27,9 +28,27 @@ export default class User extends Component {
     const userInfo = Taro.getStorageSync('userInfo');
     if (isObj(userInfo) && Object.keys(userInfo).length > 0) {
       this.setState({ userInfo });
+    } else { // 未授权弹出授权页面
+      this.setState({ modalOpen: true });
     }
     this.props.dispatch({
       type: 'user/load',
+    });
+  };
+
+  /**
+   * 获取用户信息
+   */
+  applyAuthorize = () => {
+    // 获取用户信息
+    Taro.getUserInfo({
+      success: (res) => {
+        this.setState({
+          userInfo: res.userInfo,
+          modalOpen: false,
+        });
+        Taro.setStorageSync('userInfo', res.userInfo);
+      }
     });
   };
 
@@ -75,13 +94,20 @@ export default class User extends Component {
   // };
 
   /**
+   * 跳转首页
+   */
+  goHome = () => {
+    Taro.switchTab({
+      url: '/pages/index/index',
+    });
+  };
+
+  /**
    * 跳转订单列表
    * @param type
    */
   goOrderList = (type) => {
-    this.$preload({
-      current: type,
-    });
+    this.$preload({ current: type });
     Taro.navigateTo({
       url: '/pages/orderList/index',
     });
@@ -198,6 +224,17 @@ export default class User extends Component {
             </View>
           </View>
         </View>
+
+        <AtModal isOpened={this.state.modalOpen} closeOnClickOverlay={false}>
+          <AtModalHeader>欢迎来到泰罗商城</AtModalHeader>
+          <AtModalContent>
+            请授权登录，获得完整购物体验
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.goHome.bind(this)}>取消</Button>
+            <Button openType='getUserInfo' onClick={this.applyAuthorize}>授权登录</Button>
+          </AtModalAction>
+        </AtModal>
 
         <Loading isLoading={effects['user/load']} />
       </View>
