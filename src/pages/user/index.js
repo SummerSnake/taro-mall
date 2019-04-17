@@ -52,54 +52,42 @@ export default class User extends Component {
     });
   };
 
-  // /**
-  //  * 跳转页面
-  //  * @param type
-  //  */
-  // goEdit = (type) => {
-  //   this.$preload({
-  //     id: this.state.fetchData.id
-  //   });
-  //   switch (type) {
-  //     case '01':
-  //       Taro.navigateTo({
-  //         url: '/pages/addrPage/index'
-  //       });
-  //       break;
-  //     case '02':
-  //       Taro.navigateTo({
-  //         url: '/pages/phoneEdit/index'
-  //       });
-  //       break;
-  //     case '03':
-  //       Taro.navigateTo({
-  //         url: '/pages/invoiceEdit/index'
-  //       });
-  //       break;
-  //     case '04':
-  //       Taro.navigateTo({
-  //         url: '/pages/coupon/index'
-  //       });
-  //       break;
-  //     case '05':
-  //       Taro.navigateTo({
-  //         url: '/pages/userEdit/index'
-  //       });
-  //       break;
-  //     default:
-  //       Taro.navigateTo({
-  //         url: '/pages/homepage/index'
-  //       });
-  //   }
-  // };
-
   /**
-   * 跳转首页
+   * 跳转页面
+   * @param type
    */
-  goHome = () => {
-    Taro.switchTab({
-      url: '/pages/index/index',
-    });
+  goHref = (type) => {
+    switch (type) {
+      case '01':
+        Taro.navigateTo({
+          url: '/pages/userEdit/index',
+        });
+        break;
+      case '02':
+        Taro.navigateTo({
+          url: '/pages/coupon/index',
+        });
+        break;
+      case '03':
+        Taro.navigateTo({
+          url: '/pages/addrPage/index',
+        });
+        break;
+      case '04':
+        Taro.navigateTo({
+          url: '/pages/phoneEdit/index',
+        });
+        break;
+      case '05':
+        Taro.navigateTo({
+          url: '/pages/invoiceEdit/index',
+        });
+        break;
+      default:
+        Taro.switchTab({
+          url: '/pages/index/index',
+        });
+    }
   };
 
   /**
@@ -125,7 +113,7 @@ export default class User extends Component {
             </View>
             <View className='headerTxt'>
               <View>{userInfo.nickName}</View>
-              <View className='left' onClick={this.goEdit.bind(this, '05')}>个人设置</View>
+              <View className='left' onClick={this.goHref.bind(this, '01')}>个人设置</View>
             </View>
           </View>
           <View className='headerRight'>
@@ -136,7 +124,7 @@ export default class User extends Component {
           </View>
         </View>
 
-        <View className='couponWrap' onClick={this.goEdit.bind(this, '04')}>
+        <View className='couponWrap' onClick={this.goHref.bind(this, '02')}>
           <View>
             <Text className='couponTxt'>我的优惠券</Text>
             <View className='couponTotal right'>
@@ -188,21 +176,21 @@ export default class User extends Component {
         </View>
 
         <View className='infoList'>
-          <View onClick={this.goEdit.bind(this, '01')}>
+          <View onClick={this.goHref.bind(this, '03')}>
             <AtIcon value='map-pin' size='16' color='#999' className='verIcon' />
             <Text>收货地址</Text>
             <View className='right'>
               <AtIcon value='chevron-right' size='20' color='#999' />
             </View>
           </View>
-          <View onClick={this.goEdit.bind(this, '02')}>
+          <View onClick={this.goHref.bind(this, '04')}>
             <AtIcon value='phone' size='16' color='#999' className='verIcon' />
             <Text>认证手机</Text>
             <View className='right'>
               <AtIcon value='chevron-right' size='20' color='#999' />
             </View>
           </View>
-          <View onClick={this.goEdit.bind(this, '03')}>
+          <View onClick={this.goHref.bind(this, '05')}>
             <AtIcon prefixClass='fa' value='book' size='14' color='#999' className='verIcon' />
             <Text>增值发票</Text>
             <View className='right'>
@@ -231,7 +219,7 @@ export default class User extends Component {
             请授权登录，获得完整购物体验
           </AtModalContent>
           <AtModalAction>
-            <Button onClick={this.goHome.bind(this)}>取消</Button>
+            <Button onClick={this.goHref.bind(this)}>取消</Button>
             <Button openType='getUserInfo' onClick={this.applyAuthorize}>授权登录</Button>
           </AtModalAction>
         </AtModal>
