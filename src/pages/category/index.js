@@ -3,7 +3,6 @@ import { View } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
-import GlobalFooter from '@/components/GlobalFooter/index';
 import { isObj } from '@/utils/api';
 import Header from './components/Header/index';
 import Classify from './components/Classify/index';
@@ -107,8 +106,6 @@ export default class Category extends Component {
         <Loading isLoading={effects['category/load']} />
 
         <NoData isVisible={goodsList.length === 0} />
-
-        <GlobalFooter isActive='02' />
       </View>
     );
   }

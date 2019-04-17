@@ -2,7 +2,6 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import GlobalFooter from '@/components/GlobalFooter/index';
 import IconList from './components/IconList/index';
 import TopCard from './components/TopCard/index';
 import MidCard from './components/MidCard/index';
@@ -57,8 +56,6 @@ export default class Index extends Component {
         <BotCard botCardObj={botCardObj} />
 
         <Loading isLoading={effects['home/load']} />
-
-        <GlobalFooter isActive='01' />
       </View>
     );
   }

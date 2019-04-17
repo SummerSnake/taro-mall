@@ -3,7 +3,6 @@ import { View, Image, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import GlobalFooter from '@/components/GlobalFooter/index';
 import { isObj } from '@/utils/api';
 import './index.scss';
 
@@ -201,8 +200,6 @@ export default class User extends Component {
         </View>
 
         <Loading isLoading={effects['user/load']} />
-
-        <GlobalFooter isActive='04' />
       </View>
     );
   }

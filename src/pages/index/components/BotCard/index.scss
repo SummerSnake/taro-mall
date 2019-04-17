@@ -3,8 +3,7 @@
 .botCardWrap {
   width: 100%;
   box-sizing: border-box;
-  padding: 24px 20px 98px;
-  margin-bottom: 20px;
+  padding: 24px 20px 0;
   background-color: #fff;
   .botCardTit {
     @include sc(36px, #999);

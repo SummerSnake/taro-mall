@@ -3,11 +3,10 @@
 .goodCardWrap {
   width: 100%;
   box-sizing: border-box;
-  padding: 24px 20px 98px;
+  padding: 24px 20px;
   background-color: #fff;
   .scrollDom {
-    height: calc(100vh - 426px);
-    box-sizing: border-box;
+    height: calc(100vh - 354px);
     overflow: auto;
   }
   .botCardItemWrap {
