@@ -94,7 +94,7 @@ export default class GoodInfo extends Component {
         });
         if (flag) {
           list.push({ // 如果缓不存在该商品，则加入缓存
-            id: this.props.goodInfo.id,
+            ...this.props.goodInfo,
             num: this.state.totalNum,
           });
         }
@@ -102,7 +102,7 @@ export default class GoodInfo extends Component {
       } else { // 如果不存在，则将商品 id 数量 存入缓存中
         let timeStamp = Date.parse(new Date()) + 2592000000;
         Taro.setStorageSync('goodsList', [{
-          id: this.props.goodInfo.id,
+          ...this.props.goodInfo,
           num: this.state.totalNum,
         }]);
         Taro.setStorageSync('expiration', timeStamp);

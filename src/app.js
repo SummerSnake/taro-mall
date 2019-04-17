@@ -19,8 +19,9 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/category/index',
-      'pages/goodInfo/index',
+      'pages/cart/index',
       'pages/user/index',
+      'pages/goodInfo/index',
       'pages/orderList/index',
     ],
     window: {
