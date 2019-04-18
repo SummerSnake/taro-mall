@@ -30,18 +30,7 @@ export default class Category extends Component {
    */
   onHeaderCall = (json) => {
     if (isObj(json) && Object.keys(json).length > 0) {
-      this.props.dispatch({
-        type: 'category/save',
-        payload: {
-          filters: {
-            ...this.props.filters,
-            ...json,
-          },
-        },
-      });
-      this.props.dispatch({
-        type: 'category/load',
-      });
+      this.fetchApi(json);
     }
   };
 
@@ -51,18 +40,7 @@ export default class Category extends Component {
    */
   onClassifyCall = (json) => {
     if (isObj(json) && Object.keys(json).length > 0) {
-      this.props.dispatch({
-        type: 'category/save',
-        payload: {
-          filters: {
-            ...this.props.filters,
-            ...json,
-          },
-        },
-      });
-      this.props.dispatch({
-        type: 'category/load',
-      });
+      this.fetchApi(json);
     }
   };
 
@@ -72,19 +50,34 @@ export default class Category extends Component {
    */
   onGoodsCall = (json) => {
     if (json.type === 'loading') {
-      this.props.dispatch({
-        type: 'category/save',
-        payload: {
-          pagination: {
-            ...this.props.pagination,
-            current: this.props.pagination.current += 1,
-          },
-        },
-      });
-      this.props.dispatch({
-        type: 'category/load',
+      this.fetchApi(null, {
+        current: this.props.pagination.current += 1
       });
     }
+  };
+
+  /**
+   * 获取数据
+   * @param filters
+   * @param pagination
+   */
+  fetchApi = (filters, pagination) => {
+    this.props.dispatch({
+      type: 'category/save',
+      payload: {
+        filters: {
+          ...this.props.filters,
+          ...filters,
+        },
+        pagination: {
+          ...this.props.pagination,
+          ...pagination,
+        },
+      },
+    });
+    this.props.dispatch({
+      type: 'category/load',
+    });
   };
 
   render() {

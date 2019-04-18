@@ -94,7 +94,7 @@ export default class Classify extends Component {
     e.stopPropagation();
     if (verVal(this.state.filter)) { // 筛选
       const json = {
-        filter: this.state.filter,
+        classifyFilter: this.state.filter,
       };
       this.props.onClassifyCall(json);
     } else { // 未筛选取消选中状态
