@@ -1,0 +1,84 @@
+@import '../../styles/base';
+
+.couponWrap {
+  @include wmh(100vw, 100vh);
+  box-sizing: border-box;
+  padding-bottom: 24px;
+  background-color: rgba(242, 242, 242, 1);
+  .tabsHeader {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    box-sizing: border-box;
+    padding: 0 100px;
+    margin-bottom: 24px;
+    background-color: #fff;
+    border-top: 2px solid #f4f4f4;
+    > view {
+      flex: 1;
+      height: 60px;
+      line-height: 60px;
+      font-size: 32px;
+      text-align: center;
+      border: 2px solid #e80e27;
+    }
+    > view:first-child {
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+    }
+    > view:last-child {
+      border-left: none;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+    .tabTag {
+      color: #e80e27;
+    }
+    .tabTagActive {
+      color: #fff;
+      background-color: #e80e27;
+    }
+  }
+  .tabsCon {
+    .tabsItem {
+      position: relative;
+      width: 690px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 20px;
+      margin-bottom: 24px;
+      background-color: #fff;
+      box-shadow: 2px 2px 6px 2px rgba(181, 181, 181, 0.5);
+      border-radius: 12px;
+      overflow: hidden;
+      .tabTitle {
+        @include sc(32px, #333);
+        font-weight: 600;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 2px dashed #dbdbdb;
+        > text {
+          @include sc(28px, #e80e27);
+        }
+      }
+      .tabCon {
+        @include sc(28px, #999);
+        padding: 10px 0;
+        > text {
+          padding: 0 12px;
+        }
+      }
+      .invalidDom {
+        @include wh(224px, 40px);
+        @include sc(28px, #fff);
+        position: absolute;
+        right: -66px;
+        bottom: 36px;
+        transform: rotate(308deg);
+        line-height: 40px;
+        text-align: center;
+        background-color: #999;
+      }
+    }
+  }
+}

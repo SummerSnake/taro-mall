@@ -5,6 +5,7 @@ import orderList from '../pages/orderList/model';
 import category from '../pages/category/model';
 import goodInfo from '../pages/goodInfo/model';
 import userEdit from '../pages/userEdit/model';
+import coupon from '../pages/coupon/model';
 
 export default [
   common,
@@ -13,5 +14,6 @@ export default [
   orderList,
   category,
   goodInfo,
-  userEdit
+  userEdit,
+  coupon,
 ];
