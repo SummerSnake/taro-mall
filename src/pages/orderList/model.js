@@ -8,7 +8,7 @@ export default {
   effects: {
     * load(_, { call, put }) {
       const data = yield call(orderList, {});
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         yield put({
           type: 'save',
           payload: {

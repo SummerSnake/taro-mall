@@ -12,7 +12,7 @@ export default {
       const data = yield call(coupon, {});
       const list = current === 0 ? data.data.filter(item => new Date() < new Date(Date.parse(item.endDate)))
         : data.data.filter(item => new Date() > new Date(Date.parse(item.endDate)));
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         yield put({
           type: 'save',
           payload: {

@@ -18,7 +18,7 @@ export default {
         filters,
         pagination,
       });
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         if (Array.isArray(data.data) && data.data.length > 0) {
           yield put({
             type: 'save',
@@ -32,7 +32,7 @@ export default {
 
     * loadClassify(_, { call, put }) {
       const data = yield call(categoryApi.classify, {});
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         if (Array.isArray(data.data) && data.data.length > 0) {
           yield put({
             type: 'save',

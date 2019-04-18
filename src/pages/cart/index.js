@@ -91,7 +91,7 @@ export default class Cart extends Component {
     let totalMoney = 0;
     const { list } = this.state;
     list.forEach(item => {
-      if(checkboxIds.includes(item.id)) { // 计算总价
+      if (checkboxIds.includes(item.id)) { // 计算总价
         totalMoney += parseFloat(item.num) * parseFloat(item.price);
       } else { // 全选选择框操作
         flag = false;

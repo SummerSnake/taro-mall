@@ -10,7 +10,7 @@ export default {
     * load(_, { call, put, select }) {
       const { goodId } = yield select(state => state.goodInfo);
       const data = yield call(goodsList, {});
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         if (Array.isArray(data.data) && data.data.length > 0) {
           const list = data.data;
           const info = list.filter(item => item.id === goodId);

@@ -13,7 +13,7 @@ export default {
         appellation,
         birth,
       });
-      if (data.status === 200) {
+      if (data['status'] === 200) {
         yield put({
           type: 'save',
           payload: {
