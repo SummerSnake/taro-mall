@@ -89,7 +89,8 @@ export default class OrderList extends Component {
   // };
 
   render() {
-    const { tabHeader, curTab, tabList, toastOpen, effects } = this.state;
+    const { effects } = this.props;
+    const { tabHeader, curTab, tabList, toastOpen } = this.state;
     return (
       <View className='orderListWrap'>
         <View className='tabsHeader'>
