@@ -22,6 +22,7 @@ class App extends Component {
       'pages/cart/index',
       'pages/user/index',
       'pages/user/subPages/userEdit/index',
+      'pages/user/subPages/addrPage/index',
       'pages/goodInfo/index',
       'pages/coupon/index',
       'pages/orderList/index',

@@ -10,7 +10,6 @@ import './index.scss';
   ...user,
   ...loading,
 }))
-
 export default class User extends Component {
   constructor() {
     super(...arguments);
@@ -70,7 +69,7 @@ export default class User extends Component {
         break;
       case '03':
         Taro.navigateTo({
-          url: '/pages/addrPage/index',
+          url: '/pages/user/subPages/addrPage/index',
         });
         break;
       case '04':

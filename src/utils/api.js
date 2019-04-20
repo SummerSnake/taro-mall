@@ -60,3 +60,10 @@ export function verVal(val) {
 export function isObj(obj) {
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
+
+/**
+ * 延迟执行
+ */
+export const delayFunc = (timeout) => new Promise(resolve => {
+  setTimeout(resolve, timeout);
+});

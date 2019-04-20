@@ -1,0 +1,57 @@
+@import "../../../../styles/base";
+
+.addrPageWrap {
+  @include wmh(100vw, 100vh);
+  box-sizing: border-box;
+  padding: 0 30px;
+  background-color: #fff;
+  .addrWrap {
+    position: relative;
+    border-bottom: 2px solid #d8d8d8;
+    .addrTop {
+      @include sc(28px, #333);
+      height: 50px;
+      line-height: 50px;
+      padding-top: 12px;
+      > text:first-child {
+        font-weight: 600;
+      }
+      > View:last-child {
+        display: inline-block;
+        > text {
+          @include sc(24px, #e80e27);
+          padding-left: 40px;
+        }
+      }
+    }
+    .addrBottom {
+      @include sc(24px, #999);
+      padding: 20px 0;
+    }
+    .editIcon {
+      @include wh(50px, 50px);
+      position: absolute;
+      top: 30px;
+      right: 20px;
+    }
+    .deleteIcon {
+      @include wh(50px, 50px);
+      position: absolute;
+      top: 30px;
+      right: 100px;
+    }
+  }
+  .submitBtn {
+    @include wh(500px, 80px);
+    position: absolute;
+    bottom: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 80px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    background-color: #e80e27;
+    border-radius: 8px;
+  }
+}
