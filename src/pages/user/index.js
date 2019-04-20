@@ -60,7 +60,7 @@ export default class User extends Component {
     switch (type) {
       case '01':
         Taro.navigateTo({
-          url: '/pages/userEdit/index',
+          url: '/pages/user/subPages/userEdit/index',
         });
         break;
       case '02':

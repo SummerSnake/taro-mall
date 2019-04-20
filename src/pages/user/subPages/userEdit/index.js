@@ -2,8 +2,8 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Input, Picker } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import { connect } from '@tarojs/redux';
-import Loading from '../../components/Loading/index';
-import { verVal } from "../../utils/api";
+import Loading from '../../../../components/Loading/index';
+import { verVal } from "../../../../utils/api";
 import './index.scss';
 
 @connect(({ userEdit, loading }) => ({
