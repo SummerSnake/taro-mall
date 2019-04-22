@@ -82,7 +82,7 @@ export default class AddrPage extends Component {
   // };
 
   render() {
-    const { addrList, toastOpen, effects } = this.props;
+    const { addrList, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
       <View className='addrPageWrap'>
         {
@@ -121,7 +121,8 @@ export default class AddrPage extends Component {
           新增收货地址
         </View>
 
-        <AtToast isOpened={toastOpen} text='删除成功' icon='check-circle' />
+        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
+
         <Loading isLoading={effects['addrPage/load']} />
       </View>
     );

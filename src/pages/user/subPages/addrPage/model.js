@@ -7,6 +7,8 @@ export default {
     id: 0,
     addrList: [],
     toastOpen: false,
+    toastTxt: '',
+    toastIcon: '',
   },
   effects: {
     * load(_, { call, put }) {
@@ -34,24 +36,29 @@ export default {
             type: 'save',
             payload: {
               addrList: list,
+              toastOpen: true,
+              toastTxt: '删除成功',
+              toastIcon: 'check-circle',
             },
           });
         }
-        // 删除成功显示 toast
+      } else {
         yield put({
           type: 'save',
           payload: {
             toastOpen: true,
-          }
-        });
-        yield call(delayFunc, 2000);
-        yield put({
-          type: 'save',
-          payload: {
-            toastOpen: false,
+            toastTxt: '删除失败',
+            toastIcon: 'close-circle',
           }
         });
       }
+      yield call(delayFunc, 2000);
+      yield put({
+        type: 'save',
+        payload: {
+          toastOpen: false,
+        }
+      });
     },
   },
   reducers: {

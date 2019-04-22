@@ -2,8 +2,8 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Input, Picker } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import { connect } from '@tarojs/redux';
-import Loading from '../../../../components/Loading/index';
-import { verVal } from "../../../../utils/api";
+import Loading from '@/components/Loading/index';
+import { verVal } from "@/utils/api";
 import './index.scss';
 
 @connect(({ userEdit, loading }) => ({
@@ -11,13 +11,6 @@ import './index.scss';
   ...loading,
 }))
 export default class UserEdit extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      toastOpen: false,
-      toastTxt: '',
-    };
-  }
 
   config = {
     navigationBarTitleText: '个人设置',
@@ -60,10 +53,7 @@ export default class UserEdit extends Component {
    */
   checkInputVal = (inputVal, toastTxt) => {
     if (!verVal(inputVal)) {
-      this.setState({ toastTxt: toastTxt, toastOpen: true });
-      setTimeout(() => {
-        this.setState({ toastOpen: false });
-      }, 2000);
+      this.toastFunc(toastTxt, 'close-circle');
       return true;
     }
   };
@@ -79,22 +69,39 @@ export default class UserEdit extends Component {
       return;
     }
     this.props.dispatch({
-      type: 'userEdit/load',
-    });
-    this.setState({
-      toastOpen: true,
-      toastTxt: '设置成功',
+      type: 'userEdit/submit',
     });
     setTimeout(() => {
-      this.setState({ toastOpen: false });
       Taro.switchTab({
         url: '/pages/user/index',
       });
     }, 2000);
   };
 
+  /**
+   * toast 弹出
+   */
+  toastFunc = (txt, icon) => {
+    this.props.dispatch({
+      type: 'userEdit/save',
+      payload: {
+        toastOpen: true,
+        toastTxt: txt,
+        toastIcon: icon,
+      }
+    });
+    setTimeout(() => {
+      this.props.dispatch({
+        type: 'userEdit/save',
+        payload: {
+          toastOpen: false,
+        }
+      });
+    }, 2000);
+  };
+
   render() {
-    const { appellation, birth, effects } = this.props;
+    const { appellation, birth, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
       <View className='phoneEditWrap'>
         <View className='infoItem clearfix'>
@@ -119,7 +126,7 @@ export default class UserEdit extends Component {
                 value={birth}
                 className='inputNode'
               >
-                <View className='pickerNode ellipsis'>{this.state.birth}</View>
+                <View className='pickerNode ellipsis'>{birth}</View>
               </Picker>
             </View>
           </View>
@@ -129,9 +136,9 @@ export default class UserEdit extends Component {
           提交
         </View>
 
-        <Loading isLoading={effects['userEdit/load']} />
+        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 
-        <AtToast isOpened={this.state.toastOpen} text={this.state.toastTxt} icon='check-circle' />
+        <Loading isLoading={effects['userEdit/load']} />
       </View>
     );
   }
