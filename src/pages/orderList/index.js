@@ -1,6 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-import { AtToast } from "taro-ui";
 import { connect } from '@tarojs/redux';
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
@@ -22,7 +21,6 @@ export default class OrderList extends Component {
       ],
       tabList: [],
       curTab: "00",
-      toastOpen: false,
     };
   }
 
@@ -90,7 +88,7 @@ export default class OrderList extends Component {
 
   render() {
     const { effects } = this.props;
-    const { tabHeader, curTab, tabList, toastOpen } = this.state;
+    const { tabHeader, curTab, tabList } = this.state;
     return (
       <View className='orderListWrap'>
         <View className='tabsHeader'>
@@ -146,8 +144,6 @@ export default class OrderList extends Component {
         </View>
 
         <NoData isVisible={tabList.length === 0} />
-
-        <AtToast isOpened={toastOpen} text='下边没有了' icon='close-circle' />
 
         <Loading isLoading={effects['orderList/load']} />
       </View>

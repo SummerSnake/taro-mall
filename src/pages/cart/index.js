@@ -126,7 +126,7 @@ export default class Cart extends Component {
   };
 
   /**
-   * 全选 checkbox
+   * 跳转订单页面
    */
   goOrder = () => {
     this.setStore();
