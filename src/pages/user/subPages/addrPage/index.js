@@ -38,7 +38,7 @@ export default class AddrPage extends Component {
       this.$preload({ itemClone });
     }
     Taro.navigateTo({
-      url: '/pages/addrEdit/index',
+      url: '/pages/user/subPages/addrEdit/index',
     });
   };
 
