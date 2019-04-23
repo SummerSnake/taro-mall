@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'FontAwesome';
   /* 自行安装第三方字体图标库 */
+  /* 此种引入方式，开发者工具与苹果正常显示，安卓测试不显示，转为base64可以正常显示。*/
   src: url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.eot');
   src: url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff2') format('woff2'),
   url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff') format('woff'),

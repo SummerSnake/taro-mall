@@ -20,7 +20,7 @@ export default class Cart extends Component {
     navigationBarTitleText: '购物车',
   };
 
-  componentDidMount = async () => {
+  componentDidShow = async () => {
     this.setState({ isLoading: true });
     // 从缓存中拿当前购买的商品信息
     const goodsList = Taro.getStorageSync('goodsList');
@@ -32,7 +32,7 @@ export default class Cart extends Component {
         checkboxIds.push(item.id);
       });
       // 计算总价
-      let { totalMoney } = this.state;
+      let totalMoney = 0;
       list.forEach(item => {
         totalMoney += parseFloat(item.num) * parseFloat(item.price);
       });
@@ -183,13 +183,14 @@ export default class Cart extends Component {
                   className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
                   onClick={this.checkboxClick.bind(this, item.id)}
                 >
-                  <AtIcon
-                    style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}
-                    prefixClass='fa'
-                    value='checked'
-                    size='16'
-                    color='#fff'
-                  />
+                  <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
+                    <AtIcon
+                      prefixClass='fa'
+                      value='checked'
+                      size='16'
+                      color='#fff'
+                    />
+                  </View>
                 </View>
                 <View className='cartItemImgWrap left'>
                   <Image src={item.goodPic} />
@@ -226,13 +227,15 @@ export default class Cart extends Component {
             className={isSelectAll ? 'cardCheckActive' : 'cardCheck'}
             onClick={this.selectAll}
           >
-            <AtIcon
-              style={{ display: isSelectAll ? 'block' : 'none' }}
-              prefixClass='fa'
-              value='checked'
-              size='16'
-              color='#fff'
-            />
+            <View style={{ display: isSelectAll ? 'block' : 'none' }}>
+              <AtIcon
+                style={{ display: isSelectAll ? 'block' : 'none' }}
+                prefixClass='fa'
+                value='checked'
+                size='16'
+                color='#fff'
+              />
+            </View>
           </View>
           <Text className='selectTxt'>全选</Text>
           <View className='totalNum'>合计：<Text>￥{this.state.totalMoney}</Text></View>

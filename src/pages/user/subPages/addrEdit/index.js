@@ -211,7 +211,7 @@ export default class AddrEdit extends Component {
               className={checkedVal ? 'cardCheckActive' : 'cardCheck'}
               onClick={this.checkedChange.bind(this)}
             >
-              <View style={{ display: checkedVal > -1 ? 'block' : 'none' }}>
+              <View style={{ display: checkedVal ? 'block' : 'none' }}>
                 <AtIcon
                   prefixClass='fa'
                   value='checked'

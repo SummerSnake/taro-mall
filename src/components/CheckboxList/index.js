@@ -128,13 +128,14 @@ export default class CheckboxList extends Component {
                     className={parentIds.indexOf(item.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
                     onClick={this.parentCheckboxClick.bind(this, item.id)}
                   >
-                    <AtIcon
-                      style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}
-                      prefixClass='fa'
-                      value='checked'
-                      size='16'
-                      color='#fff'
-                    />
+                    <View style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}>
+                      <AtIcon
+                        prefixClass='fa'
+                        value='checked'
+                        size='16'
+                        color='#fff'
+                      />
+                    </View>
                   </View>
                   <View className='checkboxTitle'>{item.title}</View>
                 </View>
@@ -151,13 +152,14 @@ export default class CheckboxList extends Component {
                             className={childIds.indexOf(childItem.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
                             onClick={this.childCheckboxClick.bind(this, childItem.id)}
                           >
-                            <AtIcon
-                              style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}
-                              prefixClass='fa'
-                              value='checked'
-                              size='16'
-                              color='#fff'
-                            />
+                            <View style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}>
+                              <AtIcon
+                                prefixClass='fa'
+                                value='checked'
+                                size='16'
+                                color='#fff'
+                              />
+                            </View>
                           </View>
                           <View className='checkboxTitle'>{item.title}</View>
                         </View>
