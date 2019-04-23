@@ -50,27 +50,25 @@ export default class MidCard extends Component {
         </View>
         <View className='midItemWrap clearfix'>
           {
-            imgList.map((item) => {
-              return (
-                <View
-                  className='midItemDom left'
-                  key={item.id}
-                  onClick={this.goHref.bind(this, '02', item.id)}
-                >
-                  <View className='midItemImgWrap'>
-                    <Image src={item.goodPic} />
-                    <View className='midImgBot'>
-                      <Text>热销</Text>
-                      <Text className='ellipsis'>{item.name}</Text>
-                    </View>
-                  </View>
-                  <View className='midItemTxtWrap'>
-                    <View className='txtTop'>￥{item.price}</View>
-                    <View className='txtBot'>销量：1000</View>
+            imgList.map(item => (
+              <View
+                className='midItemDom left'
+                key={item.id}
+                onClick={this.goHref.bind(this, '02', item.id)}
+              >
+                <View className='midItemImgWrap'>
+                  <Image src={item.goodPic} />
+                  <View className='midImgBot'>
+                    <Text>热销</Text>
+                    <Text className='ellipsis'>{item.name}</Text>
                   </View>
                 </View>
-              );
-            })
+                <View className='midItemTxtWrap'>
+                  <View className='txtTop'>￥{item.price}</View>
+                  <View className='txtBot'>销量：1000</View>
+                </View>
+              </View>
+            ))
           }
         </View>
       </View>

@@ -120,56 +120,52 @@ export default class CheckboxList extends Component {
     return (
       <View className='checkboxListWrap'>
         {
-          this.state.checkboxList.map(item => {
-            return (
-              <View className='itemWrap clearfix' key={item.id}>
-                <View className='parentWrap'>
-                  <View
-                    className={parentIds.indexOf(item.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
-                    onClick={this.parentCheckboxClick.bind(this, item.id)}
-                  >
-                    <View style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}>
-                      <AtIcon
-                        prefixClass='fa'
-                        value='checked'
-                        size='16'
-                        color='#fff'
-                      />
-                    </View>
+          this.state.checkboxList.map(item => (
+            <View className='itemWrap clearfix' key={item.id}>
+              <View className='parentWrap'>
+                <View
+                  className={parentIds.indexOf(item.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
+                  onClick={this.parentCheckboxClick.bind(this, item.id)}
+                >
+                  <View style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}>
+                    <AtIcon
+                      prefixClass='fa'
+                      value='checked'
+                      size='16'
+                      color='#fff'
+                    />
                   </View>
-                  <View className='checkboxTitle'>{item.title}</View>
                 </View>
-
-                <View className='childWrap clearfix'>
-                  {
-                    item.itemList.map(childItem => {
-                      return (
-                        <View
-                          className='childDom left'
-                          key={childItem.id}
-                        >
-                          <View
-                            className={childIds.indexOf(childItem.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
-                            onClick={this.childCheckboxClick.bind(this, childItem.id)}
-                          >
-                            <View style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}>
-                              <AtIcon
-                                prefixClass='fa'
-                                value='checked'
-                                size='16'
-                                color='#fff'
-                              />
-                            </View>
-                          </View>
-                          <View className='checkboxTitle'>{item.title}</View>
-                        </View>
-                      );
-                    })
-                  }
-                </View>
+                <View className='checkboxTitle'>{item.title}</View>
               </View>
-            );
-          })
+
+              <View className='childWrap clearfix'>
+                {
+                  item.itemList.map(childItem => (
+                    <View
+                      className='childDom left'
+                      key={childItem.id}
+                    >
+                      <View
+                        className={childIds.indexOf(childItem.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
+                        onClick={this.childCheckboxClick.bind(this, childItem.id)}
+                      >
+                        <View style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}>
+                          <AtIcon
+                            prefixClass='fa'
+                            value='checked'
+                            size='16'
+                            color='#fff'
+                          />
+                        </View>
+                      </View>
+                      <View className='checkboxTitle'>{item.title}</View>
+                    </View>
+                  ))
+                }
+              </View>
+            </View>
+          ))
         }
       </View>
     );

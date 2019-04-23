@@ -171,54 +171,52 @@ export default class Cart extends Component {
     return (
       <View className='cartWrap'>
         {
-          Array.isArray(list) && list.map(item => {
-            return (
+          Array.isArray(list) && list.map(item => (
+            <View
+              className='cardItemWrap clearfix'
+              key={item.id}
+              onClick={this.goGoodInfo.bind(this, item.id)}
+            >
               <View
-                className='cardItemWrap clearfix'
-                key={item.id}
-                onClick={this.goGoodInfo.bind(this, item.id)}
+                style={{ margin: '28px 10px 0' }}
+                className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
+                onClick={this.checkboxClick.bind(this, item.id)}
               >
-                <View
-                  style={{ margin: '28px 10px 0' }}
-                  className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
-                  onClick={this.checkboxClick.bind(this, item.id)}
-                >
-                  <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
-                    <AtIcon
-                      prefixClass='fa'
-                      value='checked'
-                      size='16'
-                      color='#fff'
-                    />
-                  </View>
-                </View>
-                <View className='cartItemImgWrap left'>
-                  <Image src={item.goodPic} />
-                </View>
-                <View className='cartItemTxtWrap left'>
-                  <View className='ellipsis'>{item.name}</View>
-                  <View>￥{item.price}</View>
-                </View>
-                <View className='btnGroup'>
-                  <View className='subBtn' onClick={this.btnClick.bind(this, item.id, 'sub')}>
-                    <AtIcon
-                      value='subtract-circle'
-                      size='23'
-                      color='#999'
-                    />
-                  </View>
-                  <View className='numDom'>{item.num}</View>
-                  <View className='addBtn' onClick={this.btnClick.bind(this, item.id, 'add')}>
-                    <AtIcon
-                      value='add-circle'
-                      size='23'
-                      color='#999'
-                    />
-                  </View>
+                <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
+                  <AtIcon
+                    prefixClass='fa'
+                    value='checked'
+                    size='16'
+                    color='#fff'
+                  />
                 </View>
               </View>
-            );
-          })
+              <View className='cartItemImgWrap left'>
+                <Image src={item.goodPic} />
+              </View>
+              <View className='cartItemTxtWrap left'>
+                <View className='ellipsis'>{item.name}</View>
+                <View>￥{item.price}</View>
+              </View>
+              <View className='btnGroup'>
+                <View className='subBtn' onClick={this.btnClick.bind(this, item.id, 'sub')}>
+                  <AtIcon
+                    value='subtract-circle'
+                    size='23'
+                    color='#999'
+                  />
+                </View>
+                <View className='numDom'>{item.num}</View>
+                <View className='addBtn' onClick={this.btnClick.bind(this, item.id, 'add')}>
+                  <AtIcon
+                    value='add-circle'
+                    size='23'
+                    color='#999'
+                  />
+                </View>
+              </View>
+            </View>
+          ))
         }
 
         <View className='statisticWrap'>

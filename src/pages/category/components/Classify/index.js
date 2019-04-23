@@ -116,17 +116,15 @@ export default class Classify extends Component {
       <View className='classifyWrap'>
         <View className='classifySelect'>
           {
-            titleArr.map(item => {
-              return (
-                <View
-                  key={item.id}
-                  className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
-                  onClick={this.selectTitle.bind(this, item.id)}
-                >
-                  {item.title}
-                </View>
-              );
-            })
+            titleArr.map(item => (
+              <View
+                key={item.id}
+                className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
+                onClick={this.selectTitle.bind(this, item.id)}
+              >
+                {item.title}
+              </View>
+            ))
           }
         </View>
 
@@ -137,17 +135,15 @@ export default class Classify extends Component {
         >
           <View className='classifyList clearfix'>
             {
-              classifyList.map((item) => {
-                return (
-                  <View
-                    key={item.id}
-                    className={item.id.toString() === `${listItemActive}` ? 'listItemActive' : 'listItem'}
-                    onClick={this.listItemClick.bind(this, item.id, item.title)}
-                  >
-                    {item.title}
-                  </View>
-                );
-              })
+              classifyList.map(item => (
+                <View
+                  key={item.id}
+                  className={item.id.toString() === `${listItemActive}` ? 'listItemActive' : 'listItem'}
+                  onClick={this.listItemClick.bind(this, item.id, item.title)}
+                >
+                  {item.title}
+                </View>
+              ))
             }
             <View className='btnGroup'>
               <View className='cancelDom' onClick={this.handleCancel}>取消</View>

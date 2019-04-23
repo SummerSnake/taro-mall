@@ -37,13 +37,11 @@ export default class Index extends Component {
           autoplay
         >
           {
-            Array.isArray(imgList) && imgList.length > 0 && imgList.map((img) => {
-              return (
-                <SwiperItem key={img.id}>
-                  <Image src={img.imgUrl} />
-                </SwiperItem>
-              );
-            })
+            Array.isArray(imgList) && imgList.map(img => (
+              <SwiperItem key={img.id}>
+                <Image src={img.imgUrl} />
+              </SwiperItem>
+            ))
           }
         </Swiper>
 

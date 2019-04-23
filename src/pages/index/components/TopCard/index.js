@@ -49,27 +49,25 @@ export default class TopCard extends Component {
         </View>
         <View className='topItemWrap'>
           {
-            imgList.map((item) => {
-              return (
-                <View
-                  className='topItemDom'
-                  key={item.id}
-                  onClick={this.goHref.bind(this, '02', item.id)}
-                >
-                  <View className='topItemImgWrap'>
-                    <Image src={item.goodPic} />
-                  </View>
-                  <View className='topItemTxtWrap'>
-                    <View className='txtTop'>
-                      <Text className='left'>热销</Text>
-                      <Text className='left ellipsis'>{item.name}</Text>
-                    </View>
-                    <View className='txtMid'>￥{item.price}</View>
-                    <View className='txtBot'>销量：100</View>
-                  </View>
+            imgList.map(item => (
+              <View
+                className='topItemDom'
+                key={item.id}
+                onClick={this.goHref.bind(this, '02', item.id)}
+              >
+                <View className='topItemImgWrap'>
+                  <Image src={item.goodPic} />
                 </View>
-              );
-            })
+                <View className='topItemTxtWrap'>
+                  <View className='txtTop'>
+                    <Text className='left'>热销</Text>
+                    <Text className='left ellipsis'>{item.name}</Text>
+                  </View>
+                  <View className='txtMid'>￥{item.price}</View>
+                  <View className='txtBot'>销量：100</View>
+                </View>
+              </View>
+            ))
           }
         </View>
       </View>

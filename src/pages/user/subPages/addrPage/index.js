@@ -30,7 +30,7 @@ export default class AddrPage extends Component {
     e.stopPropagation();
     if (id > 0) { // 编辑传数据
       let itemClone = {};
-      this.state.addrList.map((item) => {
+      this.state.addrList.forEach(item => {
         if (item.id === id) {
           itemClone = { ...item };
         }

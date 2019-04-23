@@ -83,26 +83,24 @@ export default class Coupon extends Component {
 
         <View className='tabsCon'>
           {
-            Array.isArray(couponList) && couponList.map(item => {
-              return (
-                <View
-                  className='tabsItem'
-                  key={item.id}
-                  onClick={this.goOrder.bind(this, item.id, item.name, item.amount)}
-                >
-                  <View className='tabTitle'>
-                    {item.name}
-                    <Text className='right' style={{ color: current === 0 ? '#e80e27' : '#999' }}>
-                      ￥{item.amount}
-                    </Text>
-                  </View>
-                  <View className='tabCon'>适用类型：{item.type}</View>
-                  <View className='tabCon'>最低消费：{item.minCost}</View>
-                  <View className='tabCon'>有效期：{item.startDate}<Text>至</Text>{item.endDate}</View>
-                  <View className='invalidDom' style={{ display: current === 0 ? 'none' : 'block' }}>已失效</View>
+            Array.isArray(couponList) && couponList.map(item => (
+              <View
+                className='tabsItem'
+                key={item.id}
+                onClick={this.goOrder.bind(this, item.id, item.name, item.amount)}
+              >
+                <View className='tabTitle'>
+                  {item.name}
+                  <Text className='right' style={{ color: current === 0 ? '#e80e27' : '#999' }}>
+                    ￥{item.amount}
+                  </Text>
                 </View>
-              );
-            })
+                <View className='tabCon'>适用类型：{item.type}</View>
+                <View className='tabCon'>最低消费：{item.minCost}</View>
+                <View className='tabCon'>有效期：{item.startDate}<Text>至</Text>{item.endDate}</View>
+                <View className='invalidDom' style={{ display: current === 0 ? 'none' : 'block' }}>已失效</View>
+              </View>
+            ))
           }
         </View>
 

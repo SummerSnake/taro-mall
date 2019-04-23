@@ -93,53 +93,49 @@ export default class OrderList extends Component {
       <View className='orderListWrap'>
         <View className='tabsHeader'>
           {
-            tabHeader.map((item) => {
-              return (
-                <View key={item.id}>
-                  <Text
-                    className={item.id === curTab ? 'tabTagActive' : 'tabTag'}
-                    onClick={this.handleClick.bind(this, item.id)}
-                  >
-                    {item.title}
-                  </Text>
-                </View>
-              );
-            })
+            tabHeader.map(item => (
+              <View key={item.id}>
+                <Text
+                  className={item.id === curTab ? 'tabTagActive' : 'tabTag'}
+                  onClick={this.handleClick.bind(this, item.id)}
+                >
+                  {item.title}
+                </Text>
+              </View>
+            ))
           }
         </View>
 
         <View className='tabsCon'>
           {
-            Array.isArray(tabList) && tabList.length > 0 && tabList.map((item) => {
-              return (
-                <View
-                  className='tabsItem'
-                  key={item.id}
-                  onClick={this.goOrderDetail.bind(this, item.id, item.orderState, item.orderNum)}
-                >
-                  <View className='tabTitle'>
-                    {item.orderState === "01" ? '待付款' : item.orderState === "02" ? '待发货' : '已完成'}
-                    <Text className='right'>￥{item.actualMoney}</Text>
-                  </View>
-                  {
-                    Array.isArray(item.goodsList) && item.goodsList.length > 0 &&
-                    (
-                      <View className='tabCon'>
-                        {
-                          item.goodsList.map((good) => {
-                            return (<Image key={good.id} className='goodImg' src={good.goodsPictures} />);
-                          })
-                        }
-                      </View>
-                    )
-                  }
-                  <View className='tabCon'>
-                    <Text>共{item.goodsList.length}件商品</Text>
-                    <Text>{item.createDate}</Text>
-                  </View>
+            Array.isArray(tabList) && tabList.map(item => (
+              <View
+                className='tabsItem'
+                key={item.id}
+                onClick={this.goOrderDetail.bind(this, item.id, item.orderState, item.orderNum)}
+              >
+                <View className='tabTitle'>
+                  {item.orderState === "01" ? '待付款' : item.orderState === "02" ? '待发货' : '已完成'}
+                  <Text className='right'>￥{item.actualMoney}</Text>
                 </View>
-              );
-            })
+                {
+                  Array.isArray(item.goodsList) && item.goodsList.length > 0 &&
+                  (
+                    <View className='tabCon'>
+                      {
+                        item.goodsList.map(good => {
+                          return (<Image key={good.id} className='goodImg' src={good.goodsPictures} />);
+                        })
+                      }
+                    </View>
+                  )
+                }
+                <View className='tabCon'>
+                  <Text>共{item.goodsList.length}件商品</Text>
+                  <Text>{item.createDate}</Text>
+                </View>
+              </View>
+            ))
           }
         </View>
 

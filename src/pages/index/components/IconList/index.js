@@ -20,16 +20,14 @@ export default class IconList extends Component {
     return (
       <View className='iconList clearfix'>
         {
-          Array.isArray(iconList) && iconList.length > 0 && iconList.map((icon) => {
-            return (
-              <View className='iconItem left' key={icon.id} onClick={this.goGoodList.bind(this, icon.id)}>
-                <View className='iconWrap'>
-                  <Image src={icon.imgUrl} />
-                </View>
-                <View className='iconTitle'>{icon.title}</View>
+          Array.isArray(iconList) && iconList.map(icon => (
+            <View className='iconItem left' key={icon.id} onClick={this.goGoodList.bind(this, icon.id)}>
+              <View className='iconWrap'>
+                <Image src={icon.imgUrl} />
               </View>
-            );
-          })
+              <View className='iconTitle'>{icon.title}</View>
+            </View>
+          ))
         }
       </View>
     );
