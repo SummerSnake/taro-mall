@@ -52,9 +52,7 @@ export default {
           toastOpen: false,
         }
       });
-      Taro.redirectTo({
-        url: '/pages/user/subPages/addrPage/index',
-      });
+      Taro.navigateBack();
     },
   },
   reducers: {

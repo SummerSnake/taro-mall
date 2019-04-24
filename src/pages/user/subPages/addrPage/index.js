@@ -117,9 +117,7 @@ export default class AddrPage extends Component {
           })
         }
 
-        <View className='submitBtn' onClick={this.addAddr.bind(this, null)}>
-          新增收货地址
-        </View>
+        <View className='submitBtn' onClick={this.addAddr.bind(this, null)}>新增收货地址</View>
 
         <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 

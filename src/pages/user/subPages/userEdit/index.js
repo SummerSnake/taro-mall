@@ -71,11 +71,6 @@ export default class UserEdit extends Component {
     this.props.dispatch({
       type: 'userEdit/submit',
     });
-    setTimeout(() => {
-      Taro.switchTab({
-        url: '/pages/user/index',
-      });
-    }, 2000);
   };
 
   /**
@@ -132,9 +127,7 @@ export default class UserEdit extends Component {
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.submitEdit.bind(this)}>
-          提交
-        </View>
+        <View className='submitBtn' onClick={this.submitEdit.bind(this)}>提交</View>
 
         <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 

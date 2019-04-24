@@ -133,7 +133,7 @@ export default class AddrEdit extends Component {
    */
   toastFunc = (txt, icon) => {
     this.props.dispatch({
-      type: 'userEdit/save',
+      type: 'addrEdit/save',
       payload: {
         toastOpen: true,
         toastTxt: txt,
@@ -142,7 +142,7 @@ export default class AddrEdit extends Component {
     });
     setTimeout(() => {
       this.props.dispatch({
-        type: 'userEdit/save',
+        type: 'addrEdit/save',
         payload: {
           toastOpen: false,
         }
@@ -223,9 +223,7 @@ export default class AddrEdit extends Component {
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.submitEdit.bind(this)}>
-          提交
-        </View>
+        <View className='submitBtn' onClick={this.submitEdit.bind(this)}>提交</View>
 
         <Loading isLoading={effects['addrEdit/submit']} />
 

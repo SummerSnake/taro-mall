@@ -79,15 +79,11 @@ export default class PhoneEdit extends Component {
         let counter = this.state.count;
         counter -= 1;
         if (counter < 1) {
-          this.setState({
-            btnChange: true,
-          });
+          this.setState({ btnChange: true });
           counter = 60;
           clearInterval(this.timer);
         }
-        this.setState({
-          count: counter,
-        });
+        this.setState({ count: counter });
       }, 1000);
     }
   };
@@ -190,10 +186,7 @@ export default class PhoneEdit extends Component {
           </View>
         </View>
 
-
-        <View className='submitBtn' onClick={this.handleSubmit.bind(this)}>
-          提交
-        </View>
+        <View className='submitBtn' onClick={this.handleSubmit.bind(this)}>提交</View>
 
         <Loading isLoading={effects['phoneEdit/submit'] || effects['phoneEdit/sendSmsCode']} />
 

@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 import { delayFunc } from '@/utils/api';
 import userEdit from './service';
 
@@ -55,6 +56,7 @@ export default {
           toastOpen: false,
         }
       });
+      Taro.navigateBack();
     },
   },
   reducers: {

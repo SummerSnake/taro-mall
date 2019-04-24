@@ -46,9 +46,7 @@ export default {
           toastOpen: false,
         }
       });
-      Taro.redirectTo({
-        url: '/pages/user/index',
-      });
+      Taro.navigateBack();
     },
 
     * sendSmsCode(_, { call, put, select }) {
