@@ -74,7 +74,7 @@ export default class User extends Component {
         break;
       case '04':
         Taro.navigateTo({
-          url: '/pages/phoneEdit/index',
+          url: '/pages/user/subPages/phoneEdit/index',
         });
         break;
       case '05':

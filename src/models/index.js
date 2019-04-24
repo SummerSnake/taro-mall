@@ -8,6 +8,7 @@ import userEdit from '../pages/user/subPages/userEdit/model';
 import coupon from '../pages/coupon/model';
 import addrPage from '../pages/user/subPages/addrPage/model';
 import addrEdit from '../pages/user/subPages/addrEdit/model';
+import phoneEdit from '../pages/user/subPages/phoneEdit/model';
 
 export default [
   common,
@@ -20,4 +21,5 @@ export default [
   coupon,
   addrPage,
   addrEdit,
+  phoneEdit,
 ];

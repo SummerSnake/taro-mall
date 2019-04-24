@@ -18,12 +18,12 @@ export default {
     * submit(_, { call, put, select }) {
       const { consignee, phone, region, detail, checkedVal } = yield select(state => state.addrEdit);
       const data = yield call(addrEdit, {
-        consigneeName: consignee,
-        consigneePhone: phone,
+        consignee,
+        phone,
         province: region[0],
         city: region[1],
         area: region[2],
-        detailedAddress: detail,
+        detailAddr: detail,
         type: checkedVal ? 1 : 0,
       });
       if (data['status'] === 200) {
