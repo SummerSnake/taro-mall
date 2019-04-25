@@ -10,17 +10,17 @@ export function postRequest(url, params) {
     Taro.request({
       url: apiUrl + url,
       data: {
-        ...params
+        ...params,
       },
       method: 'POST',
       header: {
         'content-type': 'application/json',
-      }
+      },
     })
-      .then((res) => {
+      .then(res => {
         resolve(res.data);
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error);
       });
   });
@@ -34,7 +34,7 @@ export function getRequest(url, params) {
     Taro.request({
       url: apiUrl + url,
       data: {
-        ...params
+        ...params,
       },
       method: 'GET',
     })
@@ -64,6 +64,7 @@ export function isObj(obj) {
 /**
  * 延迟执行
  */
-export const delayFunc = (timeout) => new Promise(resolve => {
-  setTimeout(resolve, timeout);
-});
+export const delayFunc = timeout =>
+  new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });

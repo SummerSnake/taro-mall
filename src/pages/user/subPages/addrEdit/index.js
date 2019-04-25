@@ -3,7 +3,7 @@ import { View, Text, Picker, Input } from '@tarojs/components';
 import { AtToast, AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import { verVal } from "@/utils/api";
+import { verVal } from '@/utils/api';
 import './index.scss';
 
 @connect(({ addrEdit, loading }) => ({
@@ -11,7 +11,6 @@ import './index.scss';
   ...loading,
 }))
 export default class AddrEdit extends Component {
-
   config = {
     navigationBarTitleText: '收货地址设置',
   };
@@ -30,7 +29,7 @@ export default class AddrEdit extends Component {
             detailAddr: itemClone.detailAddr,
             checkedVal: itemClone.type === 1,
           },
-        }
+        },
       });
     }
   };
@@ -39,15 +38,15 @@ export default class AddrEdit extends Component {
    * 收货人输入框
    * @param e
    */
-  handleConsigneeChange = async (e) => {
+  handleConsigneeChange = async e => {
     this.props.dispatch({
       type: 'addrEdit/save',
       payload: {
         params: {
           ...this.props.params,
           consignee: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -55,15 +54,15 @@ export default class AddrEdit extends Component {
    * 认证手机输入框
    * @param e
    */
-  handlePhoneChange = async (e) => {
+  handlePhoneChange = async e => {
     this.props.dispatch({
       type: 'addrEdit/save',
       payload: {
         params: {
           ...this.props.params,
           phone: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -71,15 +70,15 @@ export default class AddrEdit extends Component {
    * 省市区选择框
    * @param e
    */
-  handleAreaChange = (e) => {
+  handleAreaChange = e => {
     this.props.dispatch({
       type: 'addrEdit/save',
       payload: {
         params: {
           ...this.props.params,
           area: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -87,15 +86,15 @@ export default class AddrEdit extends Component {
    * 详细地址输入框
    * @param e
    */
-  handleDetailAddrChange = (e) => {
+  handleDetailAddrChange = e => {
     this.props.dispatch({
       type: 'addrEdit/save',
       payload: {
         params: {
           ...this.props.params,
           detailAddr: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -109,8 +108,8 @@ export default class AddrEdit extends Component {
         params: {
           ...this.props.params,
           checkedVal: !this.props.params.checkedVal,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -157,14 +156,14 @@ export default class AddrEdit extends Component {
         toastOpen: true,
         toastTxt: txt,
         toastIcon: icon,
-      }
+      },
     });
     setTimeout(() => {
       this.props.dispatch({
         type: 'addrEdit/save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     }, 2000);
   };
@@ -172,39 +171,39 @@ export default class AddrEdit extends Component {
   render() {
     const { params, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
-      <View className='userEditWrap'>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>收货人：</View>
-          <View className='inputDom left'>
+      <View className="userEditWrap">
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">收货人：</View>
+          <View className="inputDom left">
             <Input
-              placeholder='请输入收货人'
+              placeholder="请输入收货人"
               value={params.consignee}
               onChange={this.handleConsigneeChange.bind(this)}
-              className='inputNode'
+              className="inputNode"
             />
           </View>
         </View>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>手机号码：</View>
-          <View className='inputDom left'>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">手机号码：</View>
+          <View className="inputDom left">
             <Input
-              placeholder='请输入手机号码'
+              placeholder="请输入手机号码"
               value={params.phone}
               onChange={this.handlePhoneChange.bind(this)}
-              className='inputNode'
+              className="inputNode"
             />
           </View>
         </View>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>所在地区：</View>
-          <View className='inputDom left'>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">所在地区：</View>
+          <View className="inputDom left">
             <Picker
-              mode='region'
+              mode="region"
               onChange={this.handleAreaChange}
               value={params.area}
-              className='inputNode'
+              className="inputNode"
             >
-              <View className='pickerNode ellipsis'>
+              <View className="pickerNode ellipsis">
                 <Text>{params.area[0]}</Text>
                 <Text>{params.area[1]}</Text>
                 <Text>{params.area[2]}</Text>
@@ -212,37 +211,34 @@ export default class AddrEdit extends Component {
             </Picker>
           </View>
         </View>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>详细地址：</View>
-          <View className='inputDom left'>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">详细地址：</View>
+          <View className="inputDom left">
             <Input
-              placeholder='请输入详细地址'
+              placeholder="请输入详细地址"
               value={params.detailAddr}
               onChange={this.handleDetailAddrChange.bind(this)}
-              className='inputNode'
+              className="inputNode"
             />
           </View>
         </View>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>设为默认地址：</View>
-          <View className='inputDom left'>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">设为默认地址：</View>
+          <View className="inputDom left">
             <View
               className={params.checkedVal ? 'cardCheckActive' : 'cardCheck'}
               onClick={this.handleCheckedChange.bind(this)}
             >
               <View style={{ display: params.checkedVal ? 'block' : 'none' }}>
-                <AtIcon
-                  prefixClass='fa'
-                  value='checked'
-                  size='16'
-                  color='#fff'
-                />
+                <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
               </View>
             </View>
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.handleSubmit.bind(this)}>提交</View>
+        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
+          提交
+        </View>
 
         <Loading isLoading={effects['addrEdit/submit']} />
 

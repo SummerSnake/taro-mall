@@ -57,7 +57,7 @@ export default class Cart extends Component {
     const { list } = this.state;
     list.forEach(item => {
       if (item.id === id) {
-        item.num = type === 'add' ? item.num += 1 : item.num -= 1;
+        item.num = type === 'add' ? (item.num += 1) : (item.num -= 1);
         if (item.num < 1) {
           item.num = 0;
         }
@@ -82,7 +82,8 @@ export default class Cart extends Component {
   checkboxClick = (id, e) => {
     e.stopPropagation();
     const { checkboxIds } = this.state;
-    if (checkboxIds.includes(id)) { // checkboxIds 数组中是否存在当前点击的 checkbox id
+    if (checkboxIds.includes(id)) {
+      // checkboxIds 数组中是否存在当前点击的 checkbox id
       checkboxIds.splice(checkboxIds.indexOf(id), 1); // 如果有，则删除
     } else {
       checkboxIds.push(id); // 如果 childIds 数组中不存在当前点击的 checkbox id，则将其加入数组
@@ -91,9 +92,11 @@ export default class Cart extends Component {
     let totalMoney = 0;
     const { list } = this.state;
     list.forEach(item => {
-      if (checkboxIds.includes(item.id)) { // 计算总价
+      if (checkboxIds.includes(item.id)) {
+        // 计算总价
         totalMoney += parseFloat(item.num) * parseFloat(item.price);
-      } else { // 全选选择框操作
+      } else {
+        // 全选选择框操作
         flag = false;
       }
     });
@@ -115,7 +118,7 @@ export default class Cart extends Component {
         isSelectAll: false,
       });
     } else {
-      list.forEach((item) => {
+      list.forEach(item => {
         checkboxIds.push(item.id);
       });
       this.setState({
@@ -154,7 +157,7 @@ export default class Cart extends Component {
    * 跳转商品详情
    * @param id
    */
-  goGoodInfo = (id) => {
+  goGoodInfo = id => {
     this.setStore();
     this.$preload({ id });
     Taro.navigateTo({
@@ -169,11 +172,11 @@ export default class Cart extends Component {
   render() {
     const { list, checkboxIds, isSelectAll } = this.state;
     return (
-      <View className='cartWrap'>
-        {
-          Array.isArray(list) && list.map(item => (
+      <View className="cartWrap">
+        {Array.isArray(list) &&
+          list.map(item => (
             <View
-              className='cardItemWrap clearfix'
+              className="cardItemWrap clearfix"
               key={item.id}
               onClick={this.goGoodInfo.bind(this, item.id)}
             >
@@ -183,43 +186,29 @@ export default class Cart extends Component {
                 onClick={this.checkboxClick.bind(this, item.id)}
               >
                 <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
-                  <AtIcon
-                    prefixClass='fa'
-                    value='checked'
-                    size='16'
-                    color='#fff'
-                  />
+                  <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
                 </View>
               </View>
-              <View className='cartItemImgWrap left'>
+              <View className="cartItemImgWrap left">
                 <Image src={item.goodPic} />
               </View>
-              <View className='cartItemTxtWrap left'>
-                <View className='ellipsis'>{item.name}</View>
+              <View className="cartItemTxtWrap left">
+                <View className="ellipsis">{item.name}</View>
                 <View>￥{item.price}</View>
               </View>
-              <View className='btnGroup'>
-                <View className='subBtn' onClick={this.btnClick.bind(this, item.id, 'sub')}>
-                  <AtIcon
-                    value='subtract-circle'
-                    size='23'
-                    color='#999'
-                  />
+              <View className="btnGroup">
+                <View className="subBtn" onClick={this.btnClick.bind(this, item.id, 'sub')}>
+                  <AtIcon value="subtract-circle" size="23" color="#999" />
                 </View>
-                <View className='numDom'>{item.num}</View>
-                <View className='addBtn' onClick={this.btnClick.bind(this, item.id, 'add')}>
-                  <AtIcon
-                    value='add-circle'
-                    size='23'
-                    color='#999'
-                  />
+                <View className="numDom">{item.num}</View>
+                <View className="addBtn" onClick={this.btnClick.bind(this, item.id, 'add')}>
+                  <AtIcon value="add-circle" size="23" color="#999" />
                 </View>
               </View>
             </View>
-          ))
-        }
+          ))}
 
-        <View className='statisticWrap'>
+        <View className="statisticWrap">
           <View
             style={{ margin: '12px 4px 0 8px' }}
             className={isSelectAll ? 'cardCheckActive' : 'cardCheck'}
@@ -228,19 +217,21 @@ export default class Cart extends Component {
             <View style={{ display: isSelectAll ? 'block' : 'none' }}>
               <AtIcon
                 style={{ display: isSelectAll ? 'block' : 'none' }}
-                prefixClass='fa'
-                value='checked'
-                size='16'
-                color='#fff'
+                prefixClass="fa"
+                value="checked"
+                size="16"
+                color="#fff"
               />
             </View>
           </View>
-          <Text className='selectTxt'>全选</Text>
-          <View className='totalNum'>合计：<Text>￥{this.state.totalMoney}</Text></View>
+          <Text className="selectTxt">全选</Text>
+          <View className="totalNum">
+            合计：<Text>￥{this.state.totalMoney}</Text>
+          </View>
           <Button
-            className='createOrder right'
+            className="createOrder right"
             onClick={this.goOrder.bind(this)}
-            openType='getUserInfo'
+            openType="getUserInfo"
           >
             下单({checkboxIds.length})
           </Button>

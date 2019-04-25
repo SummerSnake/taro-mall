@@ -6,7 +6,7 @@ export default class Activity extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      goodsList: []
+      goodsList: [],
     };
   }
 
@@ -25,7 +25,7 @@ export default class Activity extends Component {
    * 跳转商品详情
    * @param id
    */
-  goHref = (id) => {
+  goHref = id => {
     this.$preload({ id });
     Taro.navigateTo({
       url: '/pages/goodInfo/index',
@@ -35,29 +35,28 @@ export default class Activity extends Component {
   render() {
     const { goodsList } = this.state;
     return (
-      <View className='activityWrap'>
-        <View className='topItemWrap'>
-          {
-            Array.isArray(goodsList) && goodsList.map(item => (
+      <View className="activityWrap">
+        <View className="topItemWrap">
+          {Array.isArray(goodsList) &&
+            goodsList.map(item => (
               <View
-                className='botCardItemWrap clearfix'
+                className="botCardItemWrap clearfix"
                 key={item.id}
                 onClick={this.goHref.bind(this, '02', item.id)}
               >
-                <View className='botItemImgWrap left'>
+                <View className="botItemImgWrap left">
                   <Image src={item.goodPic} />
                 </View>
-                <View className='botItemTxtWrap left'>
-                  <View className='txtTop'>
-                    <Text className='left'>热销</Text>
-                    <Text className='left ellipsis'>{item.name}</Text>
+                <View className="botItemTxtWrap left">
+                  <View className="txtTop">
+                    <Text className="left">热销</Text>
+                    <Text className="left ellipsis">{item.name}</Text>
                   </View>
-                  <View className='txtMid'>￥{item.price}</View>
-                  <View className='txtBot'>销量：10000</View>
+                  <View className="txtMid">￥{item.price}</View>
+                  <View className="txtBot">销量：10000</View>
                 </View>
               </View>
-            ))
-          }
+            ))}
         </View>
       </View>
     );

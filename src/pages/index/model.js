@@ -10,7 +10,7 @@ export default {
     botCardObj: {},
   },
   effects: {
-    * load(_, { call, put }) {
+    *load(_, { call, put }) {
       const data = yield call(homepage, {});
       if (data['status'] === 200) {
         yield put({

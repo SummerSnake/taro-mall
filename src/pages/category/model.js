@@ -12,7 +12,7 @@ export default {
     },
   },
   effects: {
-    * load(_, { call, put, select }) {
+    *load(_, { call, put, select }) {
       const { goodsList, filters, pagination } = yield select(state => state.category);
       const data = yield call(categoryApi.category, {
         filters,
@@ -30,7 +30,7 @@ export default {
       }
     },
 
-    * loadClassify(_, { call, put }) {
+    *loadClassify(_, { call, put }) {
       const data = yield call(categoryApi.classify, {});
       if (data['status'] === 200) {
         if (Array.isArray(data.data) && data.data.length > 0) {

@@ -18,18 +18,18 @@ export default {
     toastIcon: '',
   },
   effects: {
-    * load(_, { call, put }) {
+    *load(_, { call, put }) {
       const data = yield call(invoiceEdit, {});
       if (data['status'] === 200) {
         yield put({
           type: 'save',
           payload: {
-            params: {...data.data},
+            params: { ...data.data },
           },
         });
       }
     },
-    * submit(_, { call, put, select }) {
+    *submit(_, { call, put, select }) {
       const { params } = yield select(state => state.invoiceEdit);
       const data = yield call(invoiceEdit, {
         ...params,
@@ -50,7 +50,7 @@ export default {
             toastOpen: true,
             toastTxt: '设置失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -58,7 +58,7 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
       Taro.navigateBack();
     },

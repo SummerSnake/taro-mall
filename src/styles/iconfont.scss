@@ -3,9 +3,12 @@
   /* 自行安装第三方字体图标库 */
   /* 此种引入方式，开发者工具与苹果正常显示，安卓测试不显示，转为base64可以正常显示。*/
   src: url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.eot');
-  src: url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff2') format('woff2'),
-  url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff') format('woff'),
-  url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.ttf') format('truetype');
+  src: url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff2')
+      format('woff2'),
+    url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.woff')
+      format('woff'),
+    url('https://gitee.com/summersnake/images/raw/master/fonts/fontawesome-webfont.ttf')
+      format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -22,33 +25,33 @@
 }
 
 .fa-checked:before {
-  content: "\f00c";
+  content: '\f00c';
 }
 
 .fa-paper-plane:before {
-  content: "\f1d8";
+  content: '\f1d8';
 }
 
 .fa-paper-plane-o:before {
-  content: "\f1d9";
+  content: '\f1d9';
 }
 
 .fa-vimeo:before {
-  content: "\f27d";
+  content: '\f27d';
 }
 
 .fa-book:before {
-  content: "\f02d";
+  content: '\f02d';
 }
 
 .fa-street-view:before {
-  content: "\f21d";
+  content: '\f21d';
 }
 
 .fa-users:before {
-  content: "\f0c0";
+  content: '\f0c0';
 }
 
 .fa-superpowers:before {
-  content: "\f2dd";
+  content: '\f2dd';
 }

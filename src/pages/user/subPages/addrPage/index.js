@@ -10,7 +10,6 @@ import './index.scss';
   ...loading,
 }))
 export default class AddrPage extends Component {
-
   config = {
     navigationBarTitleText: '收货地址',
   };
@@ -28,7 +27,8 @@ export default class AddrPage extends Component {
    */
   addAddr = async (id, e) => {
     e.stopPropagation();
-    if (id > 0) { // 编辑传数据
+    if (id > 0) {
+      // 编辑传数据
       let itemClone = {};
       this.state.addrList.forEach(item => {
         if (item.id === id) {
@@ -53,7 +53,7 @@ export default class AddrPage extends Component {
       type: 'addrPage/save',
       payload: {
         id,
-      }
+      },
     });
     this.props.dispatch({
       type: 'addrPage/delete',
@@ -84,40 +84,41 @@ export default class AddrPage extends Component {
   render() {
     const { addrList, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
-      <View className='addrPageWrap'>
-        {
-          addrList.map(item => {
-            const phoneVal = `${item.phone.toString().slice(0, 3)}****${item.phone.toString().slice(7)}`;
-            const addrVal = `${item.province}${item.city}${item.region}${item.detailAddr}`;
-            return (
-              <View
-                className='addrWrap'
-                key={item.id}
-                onClick={this.handleAddrClick.bind(this,
-                  item.id,
-                  item.consignee,
-                  phoneVal,
-                  addrVal
-                )}
-              >
-                <View className='addrTop'>
-                  <Text>{item.consigneeName}</Text>
-                  <View>{phoneVal}
-                    <Text style={{ display: item.type === 1 ? 'inline-block' : 'none' }}>默认地址</Text>
-                  </View>
+      <View className="addrPageWrap">
+        {addrList.map(item => {
+          const phoneVal = `${item.phone.toString().slice(0, 3)}****${item.phone
+            .toString()
+            .slice(7)}`;
+          const addrVal = `${item.province}${item.city}${item.region}${item.detailAddr}`;
+          return (
+            <View
+              className="addrWrap"
+              key={item.id}
+              onClick={this.handleAddrClick.bind(this, item.id, item.consignee, phoneVal, addrVal)}
+            >
+              <View className="addrTop">
+                <Text>{item.consigneeName}</Text>
+                <View>
+                  {phoneVal}
+                  <Text style={{ display: item.type === 1 ? 'inline-block' : 'none' }}>
+                    默认地址
+                  </Text>
                 </View>
-                <View className='addrBottom ellipsis'>{addrVal}</View>
-                <View className='editIcon' onClick={this.addAddr.bind(this, item.id)}>
-                  <AtIcon value='edit' size='20' color='#666' />
-                </View>
-                <View className='deleteIcon' onClick={this.deleteAddr.bind(this, item.id)}>
-                  <AtIcon value='close-circle' size='20' color='#666' />
-                </View>
-              </View>);
-          })
-        }
+              </View>
+              <View className="addrBottom ellipsis">{addrVal}</View>
+              <View className="editIcon" onClick={this.addAddr.bind(this, item.id)}>
+                <AtIcon value="edit" size="20" color="#666" />
+              </View>
+              <View className="deleteIcon" onClick={this.deleteAddr.bind(this, item.id)}>
+                <AtIcon value="close-circle" size="20" color="#666" />
+              </View>
+            </View>
+          );
+        })}
 
-        <View className='submitBtn' onClick={this.addAddr.bind(this, null)}>新增收货地址</View>
+        <View className="submitBtn" onClick={this.addAddr.bind(this, null)}>
+          新增收货地址
+        </View>
 
         <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 

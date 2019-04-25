@@ -3,7 +3,7 @@ import { View, Input } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import { verVal } from "@/utils/api";
+import { verVal } from '@/utils/api';
 import './index.scss';
 
 @connect(({ phoneEdit, loading }) => ({
@@ -27,12 +27,12 @@ export default class PhoneEdit extends Component {
    * 认证手机输入框
    * @param e
    */
-  handleOldPhoneChange = async (e) => {
+  handleOldPhoneChange = async e => {
     this.props.dispatch({
       type: 'phoneEdit/save',
       payload: {
         oldPhone: e.detail.value,
-      }
+      },
     });
   };
 
@@ -40,12 +40,12 @@ export default class PhoneEdit extends Component {
    * 新手机输入框
    * @param e
    */
-  handleNewPhoneChange = async (e) => {
+  handleNewPhoneChange = async e => {
     this.props.dispatch({
       type: 'phoneEdit/save',
       payload: {
         newPhone: e.detail.value,
-      }
+      },
     });
   };
 
@@ -53,12 +53,12 @@ export default class PhoneEdit extends Component {
    * 新手机验证码输入框
    * @param e
    */
-  handleNewSmsCodeChange = async (e) => {
+  handleNewSmsCodeChange = async e => {
     this.props.dispatch({
       type: 'phoneEdit/save',
       payload: {
         newSmsCode: e.detail.value,
-      }
+      },
     });
   };
 
@@ -127,14 +127,14 @@ export default class PhoneEdit extends Component {
         toastOpen: true,
         toastTxt: txt,
         toastIcon: icon,
-      }
+      },
     });
     setTimeout(() => {
       this.props.dispatch({
         type: 'phoneEdit/save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     }, 2000);
   };
@@ -142,43 +142,43 @@ export default class PhoneEdit extends Component {
   render() {
     const { oldPhone, newPhone, newSmsCode, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
-      <View className='phoneEditWrap'>
+      <View className="phoneEditWrap">
         <View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>认证手机：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">认证手机：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={oldPhone}
                 onChange={this.handleOldPhoneChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>新手机：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">新手机：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={newPhone}
                 onChange={this.handleNewPhoneChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>验证码：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">验证码：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={newSmsCode}
                 onChange={this.handleNewSmsCodeChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
             <View
               onClick={this.getSmsCode.bind(this)}
-              className='verBtn right'
+              className="verBtn right"
               style={{ backgroundColor: this.state.btnChange ? '#e80e27' : '#ccc' }}
             >
               {this.state.btnChange ? '获取验证码' : `重新发送(${this.state.count})`}
@@ -186,7 +186,9 @@ export default class PhoneEdit extends Component {
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.handleSubmit.bind(this)}>提交</View>
+        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
+          提交
+        </View>
 
         <Loading isLoading={effects['phoneEdit/submit'] || effects['phoneEdit/sendSmsCode']} />
 

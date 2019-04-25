@@ -14,7 +14,6 @@ import './index.scss';
   ...loading,
 }))
 export default class Category extends Component {
-
   config = {
     navigationBarTitleText: '商品分类',
   };
@@ -28,7 +27,7 @@ export default class Category extends Component {
    * 头部回调
    * @param json
    */
-  onHeaderCall = (json) => {
+  onHeaderCall = json => {
     if (isObj(json) && Object.keys(json).length > 0) {
       this.fetchApi(json);
     }
@@ -38,7 +37,7 @@ export default class Category extends Component {
    * 分类回调
    * @param json
    */
-  onClassifyCall = (json) => {
+  onClassifyCall = json => {
     if (isObj(json) && Object.keys(json).length > 0) {
       this.fetchApi(json);
     }
@@ -48,10 +47,10 @@ export default class Category extends Component {
    * 列表滚动回调
    * @param json
    */
-  onGoodsCall = (json) => {
+  onGoodsCall = json => {
     if (json.type === 'loading') {
       this.fetchApi(null, {
-        current: this.props.pagination.current += 1
+        current: (this.props.pagination.current += 1),
       });
     }
   };
@@ -83,18 +82,12 @@ export default class Category extends Component {
   render() {
     const { goodsList, classifyList, effects } = this.props;
     return (
-      <View className='categoryWrap'>
+      <View className="categoryWrap">
         <Header onHeaderCall={this.onHeaderCall} />
 
-        <Classify
-          onClassifyCall={this.onClassifyCall}
-          classifyList={classifyList}
-        />
+        <Classify onClassifyCall={this.onClassifyCall} classifyList={classifyList} />
 
-        <GoodsList
-          goodsList={goodsList}
-          onGoodsCall={this.onGoodsCall}
-        />
+        <GoodsList goodsList={goodsList} onGoodsCall={this.onGoodsCall} />
 
         <Loading isLoading={effects['category/load']} />
 

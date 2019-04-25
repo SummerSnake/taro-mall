@@ -13,7 +13,7 @@ export default {
     toastIcon: '',
   },
   effects: {
-    * submit(_, { call, put, select }) {
+    *submit(_, { call, put, select }) {
       const { oldPhone, newPhone, newSmsCode } = yield select(state => state.phoneEdit);
       const data = yield call(phoneEdit, {
         oldPhone,
@@ -36,7 +36,7 @@ export default {
             toastOpen: true,
             toastTxt: '设置失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -44,12 +44,12 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
       Taro.navigateBack();
     },
 
-    * sendSmsCode(_, { call, put, select }) {
+    *sendSmsCode(_, { call, put, select }) {
       const { newPhone, newSmsCode } = yield select(state => state.phoneEdit);
       const data = yield call(phoneEdit, {
         newPhone,
@@ -71,7 +71,7 @@ export default {
             toastOpen: true,
             toastTxt: '验证码发送失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -79,7 +79,7 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     },
   },

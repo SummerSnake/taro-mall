@@ -27,7 +27,7 @@
     margin-bottom: 20px;
     background-color: #fff;
     .checkboxTitle {
-      @include sc(32px ,rgba(51, 51, 51, 1));
+      @include sc(32px, rgba(51, 51, 51, 1));
       height: 46px;
       line-height: 46px;
     }

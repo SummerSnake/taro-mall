@@ -1,16 +1,16 @@
 {
-	"miniprogramRoot": "dist/",
-	"projectname": "taro_mini",
-	"description": "微信小程序商城",
-	"appid": "wx33bea6a8be451c65",
-	"setting": {
-		"urlCheck": false,
-		"es6": false,
-		"postcss": false,
-		"minified": false,
-		"newFeature": true,
-		"autoAudits": false
-	},
-	"compileType": "miniprogram",
-	"condition": {}
+  "miniprogramRoot": "dist/",
+  "projectname": "taro_mini",
+  "description": "微信小程序商城",
+  "appid": "wx33bea6a8be451c65",
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "postcss": false,
+    "minified": false,
+    "newFeature": true,
+    "autoAudits": false
+  },
+  "compileType": "miniprogram",
+  "condition": {}
 }

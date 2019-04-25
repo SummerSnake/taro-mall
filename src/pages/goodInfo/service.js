@@ -1,6 +1,6 @@
 import { postRequest } from '@/utils/api';
 
-const goodsList = async (params) => {
+const goodsList = async params => {
   return await postRequest('/goodsList', params);
 };
 

@@ -80,7 +80,6 @@ export default {
 };
 `;
 
-
 // service页面模版
 const serviceTep = `import { postRequest } from '../../utils/api';
 
@@ -90,8 +89,6 @@ const ${dirName} = async(params) => {
 
 export default ${dirName};
 `;
-
-
 
 fs.mkdirSync(`./src/pages/${dirName}`);
 process.chdir(`./src/pages/${dirName}`);

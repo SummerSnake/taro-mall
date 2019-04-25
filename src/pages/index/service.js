@@ -1,6 +1,6 @@
 import { getRequest } from '@/utils/api';
 
-const homepage = async (params) => {
+const homepage = async params => {
   return await getRequest('/homePage', params);
 };
 

@@ -12,9 +12,7 @@ import './index.scss';
   ...home,
   ...loading,
 }))
-
 export default class Index extends Component {
-
   config = {
     navigationBarTitleText: '首页',
   };
@@ -28,21 +26,14 @@ export default class Index extends Component {
   render() {
     const { imgList, iconList, topCardObj, midCardObj, botCardObj, effects } = this.props;
     return (
-      <View className='homeWrap'>
-        <Swiper
-          indicatorColor='#999'
-          indicatorActiveColor='#fff'
-          circular
-          indicatorDots
-          autoplay
-        >
-          {
-            Array.isArray(imgList) && imgList.map(img => (
+      <View className="homeWrap">
+        <Swiper indicatorColor="#999" indicatorActiveColor="#fff" circular indicatorDots autoplay>
+          {Array.isArray(imgList) &&
+            imgList.map(img => (
               <SwiperItem key={img.id}>
                 <Image src={img.imgUrl} />
               </SwiperItem>
-            ))
-          }
+            ))}
         </Swiper>
 
         <IconList iconList={iconList} />

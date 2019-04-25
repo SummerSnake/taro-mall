@@ -6,7 +6,7 @@ export default {
     fetchData: {},
   },
   effects: {
-    * load(_, { call, put }) {
+    *load(_, { call, put }) {
       const data = yield call(orderList, {});
       if (data['status'] === 200) {
         yield put({

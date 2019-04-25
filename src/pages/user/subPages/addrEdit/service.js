@@ -1,6 +1,6 @@
 import { getRequest } from '@/utils/api';
 
-const addrEdit = async (params) => {
+const addrEdit = async params => {
   return await getRequest('/addrPage', params);
 };
 

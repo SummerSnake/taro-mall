@@ -12,7 +12,7 @@ export default {
     toastIcon: '',
   },
   effects: {
-    * load(_, { call, put }) {
+    *load(_, { call, put }) {
       const data = yield call(userEdit, {});
       if (data['status'] === 200) {
         yield put({
@@ -24,7 +24,7 @@ export default {
         });
       }
     },
-    * submit(_, { call, put, select }) {
+    *submit(_, { call, put, select }) {
       const { appellation, birth } = yield select(state => state.userEdit);
       const data = yield call(userEdit, {
         appellation,
@@ -46,7 +46,7 @@ export default {
             toastOpen: true,
             toastTxt: '设置失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -54,7 +54,7 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
       Taro.navigateBack();
     },

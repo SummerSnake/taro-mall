@@ -17,7 +17,7 @@ export default {
     toastIcon: '',
   },
   effects: {
-    * submit(_, { call, put, select }) {
+    *submit(_, { call, put, select }) {
       const { params } = yield select(state => state.addrEdit);
       const data = yield call(addrEdit, {
         ...params,
@@ -42,7 +42,7 @@ export default {
             toastOpen: true,
             toastTxt: '设置失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -50,7 +50,7 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
       Taro.navigateBack();
     },

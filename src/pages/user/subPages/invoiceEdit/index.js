@@ -3,7 +3,7 @@ import { View, Input } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import { verVal } from "@/utils/api";
+import { verVal } from '@/utils/api';
 import './index.scss';
 
 @connect(({ invoiceEdit, loading }) => ({
@@ -11,7 +11,6 @@ import './index.scss';
   ...loading,
 }))
 export default class InvoiceEdit extends Component {
-
   config = {
     navigationBarTitleText: '增值发票',
   };
@@ -26,15 +25,15 @@ export default class InvoiceEdit extends Component {
    * 单位名称输入框
    * @param e
    */
-  handleCompanyChange = async (e) => {
+  handleCompanyChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           company: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -42,15 +41,15 @@ export default class InvoiceEdit extends Component {
    * 纳税人识别码输入框
    * @param e
    */
-  handleTaxpayerChange = async (e) => {
+  handleTaxpayerChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           taxpayer: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -58,15 +57,15 @@ export default class InvoiceEdit extends Component {
    * 注册地址输入框
    * @param e
    */
-  handleRegaddrChange = async (e) => {
+  handleRegaddrChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           regAddr: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -74,15 +73,15 @@ export default class InvoiceEdit extends Component {
    * 注册电话输入框
    * @param e
    */
-  handleRegPhoneChange = async (e) => {
+  handleRegPhoneChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           regPhone: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -90,15 +89,15 @@ export default class InvoiceEdit extends Component {
    * 开户银行输入框
    * @param e
    */
-  handleBankChange = async (e) => {
+  handleBankChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           bank: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -106,15 +105,15 @@ export default class InvoiceEdit extends Component {
    * 认证手机输入框
    * @param e
    */
-  handleBankAccountChange = async (e) => {
+  handleBankAccountChange = async e => {
     this.props.dispatch({
       type: 'invoiceEdit/save',
       payload: {
         params: {
           ...this.props.params,
           bankAccount: e.detail.value,
-        }
-      }
+        },
+      },
     });
   };
 
@@ -166,92 +165,94 @@ export default class InvoiceEdit extends Component {
         toastOpen: true,
         toastTxt: txt,
         toastIcon: icon,
-      }
+      },
     });
     setTimeout(() => {
       this.props.dispatch({
         type: 'invoiceEdit/save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     }, 2000);
   };
 
   render() {
-    const { params, toastOpen, toastTxt, toastIcon  } = this.props;
+    const { params, toastOpen, toastTxt, toastIcon } = this.props;
     return (
-      <View className='invoiceEditWrap'>
+      <View className="invoiceEditWrap">
         <View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>单位名称：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">单位名称：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.company}
                 onChange={this.handleCompanyChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>纳税人识别码：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">纳税人识别码：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.taxpayer}
                 onChange={this.handleTaxpayerChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>注册地址：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">注册地址：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.regAddr}
                 onChange={this.handleRegaddrChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>注册电话：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">注册电话：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.regPhone}
                 onChange={this.handleRegPhoneChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>开户银行：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">开户银行：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.bank}
                 onChange={this.handleBankChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>银行账户：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">银行账户：</View>
+            <View className="inputDom left">
               <Input
-                type='text'
+                type="text"
                 value={params.bankAccount}
                 onChange={this.handleBankAccountChange.bind(this)}
-                className='inputNode'
+                className="inputNode"
               />
             </View>
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.handleSubmit.bind(this)}>提交</View>
+        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
+          提交
+        </View>
 
         <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 

@@ -11,7 +11,7 @@ export default {
     toastIcon: '',
   },
   effects: {
-    * load(_, { call, put }) {
+    *load(_, { call, put }) {
       const data = yield call(addrPage);
       if (data['status'] === 200) {
         if (Array.isArray(data.data) && data.data.length > 0) {
@@ -24,7 +24,7 @@ export default {
         }
       }
     },
-    * delete(_, { call, put, select }) {
+    *delete(_, { call, put, select }) {
       const { id } = yield select(state => state.addrPage);
       const data = yield call(addrPage, {
         id,
@@ -49,7 +49,7 @@ export default {
             toastOpen: true,
             toastTxt: '删除失败',
             toastIcon: 'close-circle',
-          }
+          },
         });
       }
       yield call(delayFunc, 2000);
@@ -57,7 +57,7 @@ export default {
         type: 'save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     },
   },

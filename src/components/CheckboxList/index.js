@@ -41,9 +41,11 @@ export default class CheckboxList extends Component {
   parentCheckboxClick = (id, e) => {
     e.stopPropagation();
     const { parentIds, childIds, checkboxList } = this.state;
-    if (parentIds.indexOf(id) > -1) { // parentIds 数组中是否存在当前点击的 checkbox id
+    if (parentIds.indexOf(id) > -1) {
+      // parentIds 数组中是否存在当前点击的 checkbox id
       parentIds.splice(parentIds.indexOf(id), 1); // 如果存在，则删除
-      checkboxList.forEach(item => { // 取消当前点击的 checkbox 其所有子级 checkbox 选中状态
+      checkboxList.forEach(item => {
+        // 取消当前点击的 checkbox 其所有子级 checkbox 选中状态
         if (item.id === id && item.itemList.length > 0) {
           const { itemList } = item;
           itemList.forEach(child => {
@@ -53,7 +55,8 @@ export default class CheckboxList extends Component {
       });
     } else {
       parentIds.push(id); // 如果 parentIds 数组中不存在当前点击的 checkbox id，则将其加入数组
-      checkboxList.forEach(item => {// 为当前点击的 checkbox 其所有子级 checkbox 添加选中状态
+      checkboxList.forEach(item => {
+        // 为当前点击的 checkbox 其所有子级 checkbox 添加选中状态
         if (item.id === id && item.itemList.length > 0) {
           const { itemList } = item;
           itemList.forEach(child => {
@@ -76,7 +79,8 @@ export default class CheckboxList extends Component {
   childCheckboxClick = (id, e) => {
     e.stopPropagation();
     const { parentIds, childIds, checkboxList } = this.state;
-    if (childIds.indexOf(id) > -1) { // childIds 数组中是否存在当前点击的 checkbox id
+    if (childIds.indexOf(id) > -1) {
+      // childIds 数组中是否存在当前点击的 checkbox id
       childIds.splice(childIds.indexOf(id), 1); // 如果有，则删除
       // childIds 数组中不存在当前点击的 checkbox 其父级的所有子级 id，取消其父级 checkbox 选中状态
       checkboxList.forEach(item => {
@@ -97,7 +101,8 @@ export default class CheckboxList extends Component {
       });
     } else {
       childIds.push(id); // 如果 childIds 数组中不存在当前点击的 checkbox id，则将其加入数组
-      if (childIds.length > 0) { // 为当前选中 checkbox 的父级添加选中状态
+      if (childIds.length > 0) {
+        // 为当前选中 checkbox 的父级添加选中状态
         checkboxList.forEach(item => {
           const { itemList } = item;
           itemList.forEach(child => {
@@ -118,55 +123,42 @@ export default class CheckboxList extends Component {
   render() {
     const { parentIds, childIds } = this.state;
     return (
-      <View className='checkboxListWrap'>
-        {
-          this.state.checkboxList.map(item => (
-            <View className='itemWrap clearfix' key={item.id}>
-              <View className='parentWrap'>
-                <View
-                  className={parentIds.indexOf(item.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
-                  onClick={this.parentCheckboxClick.bind(this, item.id)}
-                >
-                  <View style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}>
-                    <AtIcon
-                      prefixClass='fa'
-                      value='checked'
-                      size='16'
-                      color='#fff'
-                    />
-                  </View>
+      <View className="checkboxListWrap">
+        {this.state.checkboxList.map(item => (
+          <View className="itemWrap clearfix" key={item.id}>
+            <View className="parentWrap">
+              <View
+                className={parentIds.indexOf(item.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
+                onClick={this.parentCheckboxClick.bind(this, item.id)}
+              >
+                <View style={{ display: parentIds.indexOf(item.id) > -1 ? 'block' : 'none' }}>
+                  <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
                 </View>
-                <View className='checkboxTitle'>{item.title}</View>
               </View>
-
-              <View className='childWrap clearfix'>
-                {
-                  item.itemList.map(childItem => (
-                    <View
-                      className='childDom left'
-                      key={childItem.id}
-                    >
-                      <View
-                        className={childIds.indexOf(childItem.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'}
-                        onClick={this.childCheckboxClick.bind(this, childItem.id)}
-                      >
-                        <View style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}>
-                          <AtIcon
-                            prefixClass='fa'
-                            value='checked'
-                            size='16'
-                            color='#fff'
-                          />
-                        </View>
-                      </View>
-                      <View className='checkboxTitle'>{item.title}</View>
-                    </View>
-                  ))
-                }
-              </View>
+              <View className="checkboxTitle">{item.title}</View>
             </View>
-          ))
-        }
+
+            <View className="childWrap clearfix">
+              {item.itemList.map(childItem => (
+                <View className="childDom left" key={childItem.id}>
+                  <View
+                    className={
+                      childIds.indexOf(childItem.id) > -1 ? 'checkboxDomActive' : 'checkboxDom'
+                    }
+                    onClick={this.childCheckboxClick.bind(this, childItem.id)}
+                  >
+                    <View
+                      style={{ display: childIds.indexOf(childItem.id) > -1 ? 'block' : 'none' }}
+                    >
+                      <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
+                    </View>
+                  </View>
+                  <View className="checkboxTitle">{item.title}</View>
+                </View>
+              ))}
+            </View>
+          </View>
+        ))}
       </View>
     );
   }

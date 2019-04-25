@@ -3,7 +3,7 @@ import { View, Input, Picker } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
-import { verVal } from "@/utils/api";
+import { verVal } from '@/utils/api';
 import './index.scss';
 
 @connect(({ userEdit, loading }) => ({
@@ -11,7 +11,6 @@ import './index.scss';
   ...loading,
 }))
 export default class UserEdit extends Component {
-
   config = {
     navigationBarTitleText: '个人设置',
   };
@@ -26,12 +25,12 @@ export default class UserEdit extends Component {
    * 会员称呼输入框
    * @param e
    */
-  onAppellationChange = async (e) => {
+  onAppellationChange = async e => {
     this.props.dispatch({
       type: 'userEdit/save',
       payload: {
         appellation: e.detail.value,
-      }
+      },
     });
   };
 
@@ -39,12 +38,12 @@ export default class UserEdit extends Component {
    * 出生日期输入框
    * @param e
    */
-  onBirthChange = async (e) => {
+  onBirthChange = async e => {
     this.props.dispatch({
       type: 'userEdit/save',
       payload: {
         birth: e.detail.value,
-      }
+      },
     });
   };
 
@@ -83,14 +82,14 @@ export default class UserEdit extends Component {
         toastOpen: true,
         toastTxt: txt,
         toastIcon: icon,
-      }
+      },
     });
     setTimeout(() => {
       this.props.dispatch({
         type: 'userEdit/save',
         payload: {
           toastOpen: false,
-        }
+        },
       });
     }, 2000);
   };
@@ -98,36 +97,38 @@ export default class UserEdit extends Component {
   render() {
     const { appellation, birth, toastOpen, toastTxt, toastIcon, effects } = this.props;
     return (
-      <View className='phoneEditWrap'>
-        <View className='infoItem clearfix'>
-          <View className='prefixDom left'>称呼：</View>
-          <View className='inputDom left'>
+      <View className="phoneEditWrap">
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">称呼：</View>
+          <View className="inputDom left">
             <Input
-              type='text'
+              type="text"
               value={appellation}
               onChange={this.onAppellationChange.bind(this)}
-              className='inputNode'
+              className="inputNode"
             />
           </View>
         </View>
 
         <View>
-          <View className='infoItem clearfix'>
-            <View className='prefixDom left'>出生日期：</View>
-            <View className='inputDom left'>
+          <View className="infoItem clearfix">
+            <View className="prefixDom left">出生日期：</View>
+            <View className="inputDom left">
               <Picker
-                mode='date'
+                mode="date"
                 onChange={this.onBirthChange.bind(this)}
                 value={birth}
-                className='inputNode'
+                className="inputNode"
               >
-                <View className='pickerNode ellipsis'>{birth}</View>
+                <View className="pickerNode ellipsis">{birth}</View>
               </Picker>
             </View>
           </View>
         </View>
 
-        <View className='submitBtn' onClick={this.submitEdit.bind(this)}>提交</View>
+        <View className="submitBtn" onClick={this.submitEdit.bind(this)}>
+          提交
+        </View>
 
         <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
 

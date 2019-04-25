@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import { verVal } from "@/utils/api";
+import { verVal } from '@/utils/api';
 import './index.scss';
 
 export default class Classify extends Component {
@@ -29,7 +29,7 @@ export default class Classify extends Component {
    * 分类选择
    * @param id
    */
-  selectTitle = async (id) => {
+  selectTitle = async id => {
     const arr = [...this.state.selectArr];
     if (!arr.includes(id)) {
       arr.push(id);
@@ -65,15 +65,21 @@ export default class Classify extends Component {
    * 分类列表取消
    * @param e
    */
-  handleCancel = (e) => {
+  handleCancel = e => {
     e.stopPropagation();
     const arr = [...this.state.titleArr];
     const { selectId } = this.state;
     // 修改选中标题文字
     arr.forEach(item => {
       if (selectId === item.id) {
-        item.title = selectId === 1 ? '神器' : selectId === 2 ? '凶器'
-          : selectId === 3 ? '鬼斧神工' : '日月无光';
+        item.title =
+          selectId === 1
+            ? '神器'
+            : selectId === 2
+            ? '凶器'
+            : selectId === 3
+            ? '鬼斧神工'
+            : '日月无光';
       }
     });
     // 取消选中状态
@@ -90,14 +96,16 @@ export default class Classify extends Component {
    * 分类列表确定
    * @param e
    */
-  handleSelect = (e) => {
+  handleSelect = e => {
     e.stopPropagation();
-    if (verVal(this.state.filter)) { // 筛选
+    if (verVal(this.state.filter)) {
+      // 筛选
       const json = {
         classifyFilter: this.state.filter,
       };
       this.props.onClassifyCall(json);
-    } else { // 未筛选取消选中状态
+    } else {
+      // 未筛选取消选中状态
       const selectedArr = [...this.state.selectArr];
       const newArr = selectedArr.filter(item => item !== this.state.selectId);
       this.setState({
@@ -113,41 +121,43 @@ export default class Classify extends Component {
     const { classifyList } = this.props;
     const { titleArr, selectArr, listItemActive, shadeVisible } = this.state;
     return (
-      <View className='classifyWrap'>
-        <View className='classifySelect'>
-          {
-            titleArr.map(item => (
-              <View
-                key={item.id}
-                className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
-                onClick={this.selectTitle.bind(this, item.id)}
-              >
-                {item.title}
-              </View>
-            ))
-          }
+      <View className="classifyWrap">
+        <View className="classifySelect">
+          {titleArr.map(item => (
+            <View
+              key={item.id}
+              className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
+              onClick={this.selectTitle.bind(this, item.id)}
+            >
+              {item.title}
+            </View>
+          ))}
         </View>
 
         <View
-          className='shadeDom'
+          className="shadeDom"
           style={{ display: shadeVisible ? 'block' : 'none' }}
           onClick={this.handleCancel}
         >
-          <View className='classifyList clearfix'>
-            {
-              classifyList.map(item => (
-                <View
-                  key={item.id}
-                  className={item.id.toString() === `${listItemActive}` ? 'listItemActive' : 'listItem'}
-                  onClick={this.listItemClick.bind(this, item.id, item.title)}
-                >
-                  {item.title}
-                </View>
-              ))
-            }
-            <View className='btnGroup'>
-              <View className='cancelDom' onClick={this.handleCancel}>取消</View>
-              <View className='submitDom' onClick={this.handleSelect}>确定</View>
+          <View className="classifyList clearfix">
+            {classifyList.map(item => (
+              <View
+                key={item.id}
+                className={
+                  item.id.toString() === `${listItemActive}` ? 'listItemActive' : 'listItem'
+                }
+                onClick={this.listItemClick.bind(this, item.id, item.title)}
+              >
+                {item.title}
+              </View>
+            ))}
+            <View className="btnGroup">
+              <View className="cancelDom" onClick={this.handleCancel}>
+                取消
+              </View>
+              <View className="submitDom" onClick={this.handleSelect}>
+                确定
+              </View>
             </View>
           </View>
         </View>

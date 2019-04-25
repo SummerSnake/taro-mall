@@ -7,7 +7,7 @@ export default {
     goodId: 0,
   },
   effects: {
-    * load(_, { call, put, select }) {
+    *load(_, { call, put, select }) {
       const { goodId } = yield select(state => state.goodInfo);
       const data = yield call(goodsList, {});
       if (data['status'] === 200) {
