@@ -79,7 +79,7 @@ export default class User extends Component {
         break;
       case '05':
         Taro.navigateTo({
-          url: '/pages/invoiceEdit/index',
+          url: '/pages/user/subPages/invoiceEdit/index',
         });
         break;
       default:
