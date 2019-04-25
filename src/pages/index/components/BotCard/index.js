@@ -16,14 +16,15 @@ export default class BotCard extends Component {
   goHref = (type, id) => {
     switch (type) {
       case '01':
+        this.$preload({ list: this.props.botCardObj.imgList });
         Taro.navigateTo({
-          url: `/pages/activity/index`
+          url: '/pages/activity/index',
         });
         break;
       case '02':
         this.$preload({ id });
         Taro.navigateTo({
-          url: `/pages/goodInfo/index`
+          url: '/pages/goodInfo/index',
         });
         break;
       default:

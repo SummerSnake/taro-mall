@@ -26,9 +26,10 @@ class App extends Component {
       'pages/user/subPages/addrEdit/index',
       'pages/user/subPages/phoneEdit/index',
       'pages/user/subPages/invoiceEdit/index',
-      'pages/goodInfo/index',
       'pages/coupon/index',
       'pages/orderList/index',
+      'pages/goodInfo/index',
+      'pages/activity/index',
     ],
     window: {
       navigationBarTitleText: '泰罗商城',
