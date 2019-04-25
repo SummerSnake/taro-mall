@@ -5,26 +5,26 @@ import addrEdit from './service';
 export default {
   namespace: 'addrEdit',
   state: {
-    consignee: '',
-    phone: '',
-    region: [],
-    detail: '',
-    checkedVal: false,
+    params: {
+      consignee: '',
+      phone: '',
+      area: [],
+      detailAddr: '',
+      checkedVal: false,
+    },
     toastOpen: false,
     toastTxt: '',
     toastIcon: '',
   },
   effects: {
     * submit(_, { call, put, select }) {
-      const { consignee, phone, region, detail, checkedVal } = yield select(state => state.addrEdit);
+      const { params } = yield select(state => state.addrEdit);
       const data = yield call(addrEdit, {
-        consignee,
-        phone,
-        province: region[0],
-        city: region[1],
-        area: region[2],
-        detailAddr: detail,
-        type: checkedVal ? 1 : 0,
+        ...params,
+        province: params.area[0],
+        city: params.area[1],
+        region: params.area[2],
+        type: params.checkedVal ? 1 : 0,
       });
       if (data['status'] === 200) {
         yield put({

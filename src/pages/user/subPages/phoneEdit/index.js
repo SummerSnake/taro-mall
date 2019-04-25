@@ -144,7 +144,7 @@ export default class PhoneEdit extends Component {
     return (
       <View className='phoneEditWrap'>
         <View>
-          <View className='infoItem'>
+          <View className='infoItem clearfix'>
             <View className='prefixDom left'>认证手机：</View>
             <View className='inputDom left'>
               <Input
@@ -155,7 +155,7 @@ export default class PhoneEdit extends Component {
               />
             </View>
           </View>
-          <View className='infoItem'>
+          <View className='infoItem clearfix'>
             <View className='prefixDom left'>新手机：</View>
             <View className='inputDom left'>
               <Input
@@ -166,7 +166,7 @@ export default class PhoneEdit extends Component {
               />
             </View>
           </View>
-          <View className='infoItem'>
+          <View className='infoItem clearfix'>
             <View className='prefixDom left'>验证码：</View>
             <View className='inputDom left'>
               <Input
