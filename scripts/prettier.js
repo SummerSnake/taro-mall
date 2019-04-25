@@ -15,9 +15,13 @@ const prettierConfigPath = require.resolve('../.prettierrc');
 let didError = false;
 
 let files = [];
-const jsFiles = glob.sync('**/*.js*', { ignore: ['**/node_modules/**', 'dist/**'] });
-const cssFiles = glob.sync('**/*.scss*', { ignore: ['**/node_modules/**', 'dist/**'] });
-const eslintrc = glob.sync('.eslintrc.js', { ignore: ['**/node_modules/**', 'build/**'] });
+const jsFiles = glob.sync('**/*.js*', {
+  ignore: ['**/node_modules/**', 'dist/**', '.git/**', '.idea/**'],
+});
+const cssFiles = glob.sync('**/*.scss*', {
+  ignore: ['**/node_modules/**', 'dist/**', '.git/**', '.idea/**'],
+});
+const eslintrc = glob.sync('.eslintrc.js');
 files = files.concat(jsFiles);
 files = files.concat(cssFiles);
 files = files.concat(eslintrc);
