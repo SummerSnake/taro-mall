@@ -1,0 +1,43 @@
+@import '../../../../styles/base';
+
+.couponWrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  .couponItem {
+    @include wh(100%, 92px);
+    @include sc(28px, rgba(153, 153, 153, 1));
+    line-height: 92px;
+    border-bottom: 2px dashed #ccc;
+    .itemTxt {
+      @include sc(30px, rgba(153, 153, 153, 1));
+      height: 92px;
+      line-height: 92px;
+    }
+  }
+  > .couponItem:nth-of-type(3) {
+    > view {
+      display: inline-block;
+      color: #e80e27;
+    }
+  }
+  .arrowImg {
+    @include wh(16px, 26px);
+    margin: 32px 0 0 32px;
+  }
+  .pickDom {
+    .inputNode {
+      text-align: right;
+      .scoreTxt {
+        @include wh(92px, 92px);
+        width: 92px;
+        height: 92px;
+        line-height: 92px;
+        font-size: 30px;
+        color: #333;
+      }
+    }
+  }
+}

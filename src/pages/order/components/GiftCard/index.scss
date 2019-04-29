@@ -1,0 +1,22 @@
+.giftWrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  > view {
+    width: 100%;
+    height: 92px;
+    line-height: 92px;
+    font-size: 28px;
+    color: rgba(153, 153, 153, 1);
+    border-bottom: 2px dashed #ccc;
+    > text {
+      float: right;
+      height: 92px;
+      line-height: 92px;
+      font-size: 30px;
+      color: #333;
+    }
+  }
+}

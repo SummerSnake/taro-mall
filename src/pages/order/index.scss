@@ -1,0 +1,31 @@
+@import '../../styles/base';
+
+.orderWrap {
+  @include wmh(100vw, 100vh);
+  padding-bottom: 98px;
+  .orderBottom {
+    @include wh(100%, 98px);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    display: flex;
+    line-height: 98px;
+    background-color: #fff;
+    > view:first-child {
+      @include sc(28px, #333);
+      flex: 3;
+      text-align: right;
+      > text {
+        @include sc(32px, #e80e27);
+      }
+    }
+    .goPay {
+      flex: 1;
+      margin-left: 24px;
+      color: #fff;
+      text-align: center;
+      background-color: #e80e27;
+    }
+  }
+}

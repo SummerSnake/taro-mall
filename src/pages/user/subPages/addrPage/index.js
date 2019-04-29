@@ -60,26 +60,27 @@ export default class AddrPage extends Component {
     });
   };
 
-  // /**
-  //  * 订单页面选择收货地址
-  //  * @param id
-  //  * @param consignee
-  //  * @param phone
-  //  * @param address
-  //  */
-  // handleAddrClick = async (id, consignee, phone, address) => {
-  //   if (this.$router.preload.type === 'order') {
-  //     this.$preload({
-  //       addressId: id,
-  //       consignee,
-  //       phone,
-  //       address,
-  //     });
-  //     Taro.redirectTo({
-  //       url: '/pages/order/index',
-  //     });
-  //   }
-  // };
+  /**
+   * 订单页面选择收货地址
+   * @param id
+   * @param consignee
+   * @param phone
+   * @param address
+   */
+  handleAddrClick = async (id, consignee, phone, address) => {
+    const navType = Taro.getStorageSync('navType');
+    if (navType === 'order') {
+      this.$preload({
+        id,
+        consignee,
+        phone,
+        address,
+      });
+      Taro.redirectTo({
+        url: '/pages/order/index',
+      });
+    }
+  };
 
   render() {
     const { addrList, toastOpen, toastTxt, toastIcon, effects } = this.props;
@@ -94,7 +95,13 @@ export default class AddrPage extends Component {
             <View
               className="addrWrap"
               key={item.id}
-              onClick={this.handleAddrClick.bind(this, item.id, item.consignee, phoneVal, addrVal)}
+              onClick={this.handleAddrClick.bind(
+                this,
+                item.id,
+                item.consignee,
+                item.phone,
+                addrVal
+              )}
             >
               <View className="addrTop">
                 <Text>{item.consigneeName}</Text>
