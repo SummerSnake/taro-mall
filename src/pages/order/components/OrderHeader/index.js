@@ -4,10 +4,9 @@ import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
 import './index.scss';
 
-@connect(({ addrPage, invoiceEdit, loading }) => ({
+@connect(({ addrPage, invoiceEdit }) => ({
   ...addrPage,
   ...invoiceEdit,
-  ...loading,
 }))
 export default class OrderHeader extends Component {
   componentDidMount = () => {
@@ -44,7 +43,7 @@ export default class OrderHeader extends Component {
   };
 
   render() {
-    const { addrList, company } = this.props;
+    const { addrList, params } = this.props;
     let addrInfo = {};
     addrList.forEach(item => {
       if (item.type === 1) {
@@ -83,9 +82,9 @@ export default class OrderHeader extends Component {
         )}
         <View className="invoiceDom" onClick={this.goHref.bind(this, '02')}>
           <AtIcon prefixClass="fa" value="files-text-o" size="14" color="#999" />
-          <Text>发票信息：{company || ''}</Text>
+          <Text>发票信息：{params.company || ''}</Text>
           <Image
-            className="imgDom"
+            className="imgDom right"
             src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
           />
         </View>

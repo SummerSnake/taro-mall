@@ -29,6 +29,7 @@ class App extends Component {
       'pages/orderList/index',
       'pages/goodInfo/index',
       'pages/activity/index',
+      'pages/order/index',
     ],
     window: {
       navigationBarTitleText: '泰罗商城',

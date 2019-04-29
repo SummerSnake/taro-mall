@@ -133,6 +133,7 @@ export default class Cart extends Component {
    */
   goOrder = () => {
     this.setStore();
+    this.$preload({ checkedGoods: this.state.checkboxIds });
     Taro.navigateTo({
       url: '/pages/order/index',
     });

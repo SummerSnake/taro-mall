@@ -6,14 +6,13 @@ import GoodsCard from './components/GoodsCard/index';
 import GiftCard from './components/GiftCard/index';
 import CouponCard from './components/CouponCard/index';
 import Loading from '../../components/Loading/index';
-import { postRequest } from '../../utils/api';
+import { isObj, verVal } from '../../utils/api';
 import './index.scss';
 
 export default class Order extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      memId: '', // 会员 id
       goodsList: [], // 已购商品列表
       orderInfo: {
         // 地址，发票，积分，优惠券信息
@@ -27,8 +26,6 @@ export default class Order extends Component {
       totalMoney: 0, // 总金额
       actualMoney: 0, // 实际需要支付金额
       integralDiscount: 0, // 积分优惠金额
-      paymentIntegral: 0, // 抵扣金额消耗积分
-      isLoading: false,
       toastOpen: false,
       toastTxt: '',
       toastIcon: '',
@@ -39,54 +36,43 @@ export default class Order extends Component {
     navigationBarTitleText: '确认订单',
   };
 
-  componentDidMount = async () => {
-    this.setState({ isLoading: true });
+  componentDidShow = async () => {
     await this.fetchGoodsList();
-    // 获取会员 id
-    const menInfo = await postRequest('/member/getMemInfo');
-    if (menInfo.code === 0) {
-      await this.setState({ memId: menInfo.data.id });
-      await this.fetchOrderInfo(menInfo.data.id);
-    }
+    const preData = this.$router.preload;
     // 选择地址
-    if (this.$router.preload && typeof this.$router.preload.addressId !== 'undefined') {
-      const preData = this.$router.preload;
+    if (isObj(preData) && verVal(preData.addrId)) {
       const json = {
-        addressId: preData.addressId,
+        addressId: preData.addrId,
         consignee: preData.consignee,
         phone: preData.phone,
         address: preData.address,
       };
       this.setState({
-        addrInfo: json,
+        addrInfo: { ...json },
       });
     }
     // 选择优惠券
-    if (this.$router.preload && typeof this.$router.preload.couponId !== 'undefined') {
-      const coupon = this.$router.preload;
+    if (isObj(preData) && verVal(preData.couponId)) {
       const couponInfo = {
-        couponId: coupon.couponId,
-        couponName: coupon.couponName,
-        preferentialAmount: coupon.preferentialAmount,
+        couponId: preData.couponId,
+        couponName: preData.couponName,
+        couponAmount: preData.couponAmount,
       };
       let actualMoney = 0;
-      // 优惠券金额小于总金额减去积分优惠金额
-      if (coupon.preferentialAmount <= this.state.totalMoney - this.state.integralDiscount) {
+      const { totalMoney, integralDiscount } = this.state;
+      // 优惠券金额小于等于总金额减去积分优惠金额
+      if (preData.couponAmount <= totalMoney - integralDiscount) {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
-        actualMoney =
-          this.state.totalMoney - (coupon.preferentialAmount + this.state.integralDiscount);
+        actualMoney = totalMoney - (preData.couponAmount + integralDiscount);
       } else {
         this.toastFunc('抵用金额不能大于实付金额', 'close-circle');
         return;
       }
       this.setState({
         couponInfo,
-        actualMoney,
+        actualMoney: actualMoney.toFixed(2),
       });
     }
-    this.setState({
-      isLoading: false,
-    });
   };
 
   /**
@@ -94,83 +80,28 @@ export default class Order extends Component {
    */
   fetchGoodsList = async () => {
     // 从缓存中获取当前购买的商品信息
-    if (Taro.getStorageSync('goodsList') && Taro.getStorageSync('goodsList').length > 0) {
-      const goodsList = JSON.parse(JSON.stringify(Taro.getStorageSync('goodsList')));
-      let goodsArr = []; // 当前购买商品数组
-      if (Array.isArray(goodsList) && goodsList.length > 0) {
-        let pdIds = [];
-        goodsList.map(item => {
-          if (pdIds.indexOf(item.id) === -1) {
-            pdIds.push(item.id);
-          }
+    let list = Taro.getStorageSync('goodsList');
+    if (Array.isArray(list) && list.length > 0) {
+      let arr = [];
+      // 购物车选择的商品
+      const preData = this.$router.preload;
+      const { checkedGoods } = preData;
+      if (isObj(preData) && Array.isArray(checkedGoods) && checkedGoods.length > 0) {
+        arr = list.filter(item => {
+          return item.id === checkedGoods.map(good => good.id);
         });
-        pdIds = pdIds.join();
-        // 通过商品 id 获取商品列表
-        const data = await postRequest('/shoppingMall/getShoppingCartList', {
-          pdIds,
-        });
-        const list = JSON.parse(JSON.stringify(data.data));
-        // 从缓存中获取当前购买的商品数量
-        list.map(item => {
-          item.itemList.map(child => {
-            goodsList.map(good => {
-              if (child.id === good.id) {
-                child.num = good.num;
-              }
-            });
-          });
-        });
-        // 计算总价
-        let totalMoney = this.state.totalMoney;
-        list.map(item => {
-          item.itemList.map(child => {
-            totalMoney += parseFloat(child.num * child.sellingPrice);
-            goodsArr.push(child);
-          });
-        });
-        this.setState({
-          totalMoney: totalMoney.toFixed(2),
-          actualMoney: totalMoney.toFixed(2),
-          goodsList: goodsArr,
-        });
+      } else {
+        arr = [...list];
       }
-    }
-  };
-
-  /**
-   * 获取地址，发票，积分，优惠券信息
-   * @param id
-   */
-  fetchOrderInfo = async id => {
-    let goodsList = [];
-    this.state.goodsList.map(item => {
-      let json2 = {
-        id: item.id,
-        productAmount: (item.sellingPrice * item.num).toFixed(2),
-      };
-      goodsList.push(json2);
-    });
-    const orderInfo = await postRequest('/shoppingMall/getIntegralAndCoupon', {
-      mallOrderPdList: goodsList,
-      memberId: id,
-    });
-    if (orderInfo.code === 0) {
-      const addrData = orderInfo.data.memberSite;
-      if (Object.keys(addrData).length > 0) {
-        const json = {
-          addressId: addrData.id,
-          consignee: addrData.consigneeName,
-          phone: addrData.consigneePhone,
-          address: `${addrData.province}${addrData.city}${addrData.area}${
-            addrData.detailedAddress
-          }`,
-        };
-        this.setState({
-          addrInfo: json,
-        });
-      }
+      // 计算总价
+      let totalMoney = 0;
+      arr.map(item => {
+        totalMoney += parseFloat(item.num) * parseFloat(item.price);
+      });
       this.setState({
-        orderInfo: orderInfo.data,
+        totalMoney: totalMoney.toFixed(2),
+        actualMoney: totalMoney.toFixed(2),
+        goodsList: list,
       });
     }
   };
@@ -180,26 +111,25 @@ export default class Order extends Component {
    * @param score
    */
   onScoreCall = score => {
-    const { deductionAmount, integralDosage } = this.state.orderInfo.integraRule;
-    const integralDiscount = score * (deductionAmount / integralDosage);
+    const integralDiscount = score / 10; // 积分抵扣规则
     let actualMoney = 0;
-    // 积分金额小于总金额减去优惠券抵扣金额
-    if (integralDiscount <= this.state.totalMoney - this.state.couponInfo.preferentialAmount) {
-      // 实付金额等于总金额减去优惠券金额与积分优惠金额
-      if (Object.keys(this.state.couponInfo).length > 0) {
-        actualMoney =
-          this.state.totalMoney - (integralDiscount + this.state.couponInfo.preferentialAmount);
+    const { totalMoney, couponInfo } = this.state;
+    // 如果已选择优惠券
+    if (isObj(couponInfo) && verVal(couponInfo.couponAmount)) {
+      // 积分金额小于等于总金额减去优惠券抵扣金额
+      if (integralDiscount <= totalMoney - couponInfo.couponAmount) {
+        // 实付金额等于总金额减去优惠券金额与积分优惠金额
+        actualMoney = totalMoney - (integralDiscount + couponInfo.couponAmount);
       } else {
-        actualMoney = this.state.totalMoney - integralDiscount;
+        this.toastFunc('抵用金额不能大于实付金额', 'close-circle');
       }
     } else {
-      this.toastFunc('抵用金额不能大于实付金额', 'close-circle');
-      return;
+      // 如果未选择优惠券, 实付金额等于总金额减去积分优惠金额
+      actualMoney = this.state.totalMoney - integralDiscount;
     }
     this.setState({
       actualMoney,
       integralDiscount,
-      paymentIntegral: score,
     });
   };
 
@@ -207,7 +137,7 @@ export default class Order extends Component {
    * 支付成功删除商品
    */
   removeStorage = async () => {
-    const goodsList = JSON.parse(JSON.stringify(Taro.getStorageSync('goodsList')));
+    const { goodsList } = this.state;
     const goodsArr = JSON.parse(JSON.stringify(this.state.goodsList));
 
     let arr = [];
@@ -251,33 +181,20 @@ export default class Order extends Component {
       });
     });
     const that = this;
-    const data = await postRequest('/shoppingMall/membershipOrder', {
-      actualMoney: this.state.actualMoney,
-      couponId: this.state.couponInfo.couponId,
-      exchangePoints: this.state.orderInfo.consumeIntegral,
-      integralDiscount: this.state.integralDiscount,
-      memberSiteId: this.state.addrInfo.addressId,
-      mallOrderPdList: arr,
-      memberId: this.state.memId,
-      orderMoney: this.state.totalMoney,
-      paymentIntegral: this.state.paymentIntegral,
+    Taro.requestPayment({
+      timeStamp: '',
+      nonceStr: '',
+      package: '',
+      signType: '',
+      paySign: '',
+      success: function() {
+        that.toastFunc('支付成功', 'check-circle');
+        that.removeStorage();
+      },
+      fail: function() {
+        that.toastFunc('支付失败', 'close-circle');
+      },
     });
-    if (data.code === 0) {
-      Taro.requestPayment({
-        timeStamp: data.data.timeStamp,
-        nonceStr: data.data.nonceStr,
-        package: data.data.packageValue,
-        signType: data.data.signType,
-        paySign: data.data.paySign,
-        success: function() {
-          that.toastFunc('支付成功', 'check-circle');
-          that.removeStorage();
-        },
-        fail: function() {
-          that.toastFunc('支付失败', 'close-circle');
-        },
-      });
-    }
   };
 
   /**

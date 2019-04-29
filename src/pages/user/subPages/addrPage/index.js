@@ -71,7 +71,7 @@ export default class AddrPage extends Component {
     const navType = Taro.getStorageSync('navType');
     if (navType === 'order') {
       this.$preload({
-        id,
+        addrId: id,
         consignee,
         phone,
         address,

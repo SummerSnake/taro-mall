@@ -57,6 +57,7 @@ export default class User extends Component {
    * @param type
    */
   goHref = type => {
+    Taro.setStorageSync('navType', 'user');
     switch (type) {
       case '01':
         Taro.navigateTo({

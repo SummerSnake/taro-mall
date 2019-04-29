@@ -30,7 +30,6 @@
   .invoiceDom {
     @include sc(26px, #333);
     padding: 20px 0 0 86px;
-    font-size: 26px;
     > text {
       display: inline-block;
       vertical-align: middle;
@@ -39,9 +38,6 @@
   }
   .imgDom {
     @include wh(16px, 26px);
-    float: right;
-    width: 16px;
-    height: 26px;
     margin-top: 10px;
   }
 }
