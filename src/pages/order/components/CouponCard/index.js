@@ -1,30 +1,49 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image, Picker } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
+import { connect } from '@tarojs/redux';
 import './index.scss';
 
+@connect(({ user }) => ({
+  ...user,
+}))
 export default class Coupon extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      score: [0, 1000, 2000, 3000, 5000],
       index: 0,
+      scoreArr: [0, 1000, 2000, 3000, 5000],
+      couponName: '请选择优惠券',
       toastOpen: false,
-      scoreNum: 0,
     };
   }
+
+  componentDidMount = () => {
+    this.props.dispatch({
+      type: 'user/load',
+    });
+  };
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.couponInfo.couponName !== this.props.couponInfo.couponName) {
+      this.setState({
+        couponName: nextProps.couponInfo.couponName,
+      });
+    }
+  };
 
   /**
    * 选择积分
    * @param e
    */
   pickerChange = e => {
-    this.setState({
-      index: e.detail.value,
-    });
-    if (this.state.score[parseInt(e.detail.value)] <= this.props.orderInfo.availableIntegral) {
-      this.props.onScoreCall(this.state.score[parseInt(e.detail.value)]);
-      this.setState({ scoreNum: this.state.score[e.detail.value] });
+    const { score } = this.props;
+    const { scoreArr } = this.state;
+    if (scoreArr[parseInt(e.detail.value)] <= score) {
+      this.props.onScoreCall(scoreArr[parseInt(e.detail.value)]);
+      this.setState({
+        index: parseInt(e.detail.value),
+      });
     } else {
       this.setState({ toastOpen: true });
       setTimeout(() => {
@@ -35,74 +54,51 @@ export default class Coupon extends Component {
 
   /**
    * 跳转优惠券列表
-   * @param type
    */
-  goCoupon = type => {
-    if (type === '02') {
-      this.$preload({
-        memId: this.props.memId,
-        couponIds: this.props.couponIds,
-      });
-      Taro.navigateTo({
-        url: `/pages/coupon/index`,
-      });
-    }
+  goCouponList = () => {
+    Taro.setStorageSync('navType', 'order');
+    Taro.navigateTo({
+      url: '/pages/coupon/index',
+    });
   };
 
   render() {
-    const { totalMoney, couponIds, couponInfo, integraRule } = this.props;
-    let couponName = '暂无可用优惠券';
-    let type = '02';
-    if (
-      typeof couponIds !== 'undefined' &&
-      couponIds !== null &&
-      typeof couponInfo !== 'undefined'
-    ) {
-      couponName =
-        couponIds.length === 0
-          ? '暂无可用优惠券'
-          : Object.keys(couponInfo).length === 0
-          ? '请选择优惠券'
-          : couponInfo.couponName;
-      type = couponIds.length === 0 ? '01' : '02'; // 无优惠券，阻止跳转
-    }
+    const { totalMoney } = this.props;
     return (
       <View className="couponWrap">
         <View className="couponItem">
           订单金额<Text className="itemTxt right">{totalMoney}</Text>
         </View>
 
-        <View className="couponItem" onClick={this.goCoupon.bind(this, type)}>
+        <View className="couponItem" onClick={this.goCouponList.bind(this)}>
           优惠券
           <Image
             className="arrowImg"
-            src="https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/more_arrow.png"
+            src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
           />
-          <Text className="itemTxt right">{couponName}</Text>
+          <Text className="itemTxt right">{this.state.couponName}</Text>
         </View>
 
         <View className="couponItem">
           积分抵扣金额
-          <View>
-            ({integraRule.integralDosage}积分抵扣{integraRule.deductionAmount}元)
-          </View>
+          <View>(100积分抵扣10元)</View>
           <Image
             className="arrowImg right"
-            src="https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/more_arrow.png"
+            src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
           />
           <View className="pickDom right">
             <Picker
               onChange={this.pickerChange}
               value={this.state.index}
-              range={this.state.score}
+              range={this.state.scoreArr}
               className="inputNode"
             >
-              <Text className="scoreTxt">{this.state.scoreNum}</Text>
+              <Text className="scoreTxt">{this.state.scoreArr[this.state.index]}</Text>
             </Picker>
           </View>
         </View>
 
-        <AtToast isOpened={this.state.toastOpen} text="可用积分不足" icon="heart-2" />
+        <AtToast isOpened={this.state.toastOpen} text="可用积分不足" icon="close-circle" />
       </View>
     );
   }

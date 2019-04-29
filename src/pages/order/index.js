@@ -85,11 +85,13 @@ export default class Order extends Component {
       let arr = [];
       // 购物车选择的商品
       const preData = this.$router.preload;
-      const { checkedGoods } = preData;
-      if (isObj(preData) && Array.isArray(checkedGoods) && checkedGoods.length > 0) {
-        arr = list.filter(item => {
-          return item.id === checkedGoods.map(good => good.id);
-        });
+      if (isObj(preData)) {
+        const { checkedGoods } = preData;
+        if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
+          arr = list.filter(item => {
+            return item.id === checkedGoods.map(good => good.id);
+          });
+        }
       } else {
         arr = [...list];
       }
@@ -101,7 +103,7 @@ export default class Order extends Component {
       this.setState({
         totalMoney: totalMoney.toFixed(2),
         actualMoney: totalMoney.toFixed(2),
-        goodsList: list,
+        goodsList: arr,
       });
     }
   };
@@ -226,12 +228,8 @@ export default class Order extends Component {
         <GiftCard orderInfo={orderInfo} />
 
         <CouponCard
-          memId={this.state.memId}
-          couponIds={orderInfo.couponIds}
           totalMoney={this.state.totalMoney}
           couponInfo={this.state.couponInfo}
-          integraRule={orderInfo.integraRule}
-          orderInfo={orderInfo}
           onScoreCall={this.onScoreCall}
         />
 

@@ -45,18 +45,17 @@ export default class Coupon extends Component {
    * 选择优惠券，跳转订单页面
    * @param id
    * @param couponName
-   * @param preferentialAmount
-   * @param type
+   * @param amount
    */
-  goOrder = (id, couponName, preferentialAmount, type) => {
-    if (type === '02') {
+  goOrder = (id, couponName, amount) => {
+    if (Taro.getStorageSync('navType') === 'order') {
       this.$preload({
         couponName,
-        preferentialAmount,
         couponId: id,
+        couponAmount: amount,
       });
       Taro.redirectTo({
-        url: `/pages/order/index`,
+        url: '/pages/order/index',
       });
     }
   };
