@@ -3,7 +3,6 @@ import { View, Text } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
 import OrderHeader from './components/OrderHeader/index';
 import GoodsCard from './components/GoodsCard/index';
-import GiftCard from './components/GiftCard/index';
 import CouponCard from './components/CouponCard/index';
 import Loading from '../../components/Loading/index';
 import { isObj, verVal } from '../../utils/api';
@@ -14,13 +13,6 @@ export default class Order extends Component {
     super(...arguments);
     this.state = {
       goodsList: [], // 已购商品列表
-      orderInfo: {
-        // 地址，发票，积分，优惠券信息
-        couponIds: [],
-        integraRule: {},
-        memberInvoice: {},
-        memberSite: {},
-      },
       addrInfo: {}, // 地址信息
       couponInfo: {}, // 当前所选优惠券信息
       totalMoney: 0, // 总金额
@@ -37,7 +29,49 @@ export default class Order extends Component {
   };
 
   componentDidShow = async () => {
-    await this.fetchGoodsList();
+    this.fetchGoodsList();
+  };
+
+  /**
+   * 获取商品列表
+   */
+  fetchGoodsList = async () => {
+    // 从缓存中获取当前购买的商品信息
+    let list = Taro.getStorageSync('goodsList');
+    if (Array.isArray(list) && list.length > 0) {
+      let arr = [];
+      // 购物车选择的商品
+      const { preload } = this.$router;
+      if (
+        isObj(preload) &&
+        Array.isArray(preload.checkedGoods) &&
+        preload.checkedGoods.length > 0
+      ) {
+        arr = list.filter(item => {
+          return item.id === preload.checkedGoods.map(good => good.id);
+        });
+      } else {
+        arr = [...list];
+      }
+      // 计算总价
+      let totalMoney = 0;
+      arr.map(item => {
+        totalMoney += parseFloat(item.num) * parseFloat(item.price);
+      });
+      this.setState({
+        totalMoney: totalMoney.toFixed(2),
+        actualMoney: totalMoney.toFixed(2),
+        goodsList: arr,
+      });
+      this.selectCallback(totalMoney);
+    }
+  };
+
+  /**
+   * 选择地址、选择优惠券
+   * @param totalMoney
+   */
+  selectCallback = async totalMoney => {
     const preData = this.$router.preload;
     // 选择地址
     if (isObj(preData) && verVal(preData.addrId)) {
@@ -52,59 +86,22 @@ export default class Order extends Component {
       });
     }
     // 选择优惠券
-    if (isObj(preData) && verVal(preData.couponId)) {
-      const couponInfo = {
-        couponId: preData.couponId,
-        couponName: preData.couponName,
-        couponAmount: preData.couponAmount,
-      };
+    let couponInfo = Taro.getStorageSync('couponInfo');
+    if (isObj(couponInfo) && verVal(couponInfo.couponId)) {
       let actualMoney = 0;
-      const { totalMoney, integralDiscount } = this.state;
+      const { integralDiscount } = this.state;
       // 优惠券金额小于等于总金额减去积分优惠金额
-      if (preData.couponAmount <= totalMoney - integralDiscount) {
+      if (couponInfo.couponAmount <= totalMoney - integralDiscount) {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
-        actualMoney = totalMoney - (preData.couponAmount + integralDiscount);
+        actualMoney = totalMoney - (couponInfo.couponAmount + integralDiscount);
+        this.setState({
+          couponInfo,
+          actualMoney: actualMoney.toFixed(2),
+        });
+        Taro.removeStorageSync('couponInfo');
       } else {
-        this.toastFunc('抵用金额不能大于实付金额', 'close-circle');
-        return;
+        this.toastFunc('优惠券金额不能大于实付金额', 'close-circle');
       }
-      this.setState({
-        couponInfo,
-        actualMoney: actualMoney.toFixed(2),
-      });
-    }
-  };
-
-  /**
-   * 获取商品列表
-   */
-  fetchGoodsList = async () => {
-    // 从缓存中获取当前购买的商品信息
-    let list = Taro.getStorageSync('goodsList');
-    if (Array.isArray(list) && list.length > 0) {
-      let arr = [];
-      // 购物车选择的商品
-      const preData = this.$router.preload;
-      if (isObj(preData)) {
-        const { checkedGoods } = preData;
-        if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
-          arr = list.filter(item => {
-            return item.id === checkedGoods.map(good => good.id);
-          });
-        }
-      } else {
-        arr = [...list];
-      }
-      // 计算总价
-      let totalMoney = 0;
-      arr.map(item => {
-        totalMoney += parseFloat(item.num) * parseFloat(item.price);
-      });
-      this.setState({
-        totalMoney: totalMoney.toFixed(2),
-        actualMoney: totalMoney.toFixed(2),
-        goodsList: arr,
-      });
     }
   };
 
@@ -123,7 +120,7 @@ export default class Order extends Component {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
         actualMoney = totalMoney - (integralDiscount + couponInfo.couponAmount);
       } else {
-        this.toastFunc('抵用金额不能大于实付金额', 'close-circle');
+        this.toastFunc('积分抵用金额不能大于实付金额', 'close-circle');
       }
     } else {
       // 如果未选择优惠券, 实付金额等于总金额减去积分优惠金额
@@ -213,18 +210,16 @@ export default class Order extends Component {
   };
 
   render() {
-    const { addrInfo, goodsList, orderInfo } = this.state;
+    const { addrInfo, couponInfo, goodsList } = this.state;
     return (
       <View className="orderWrap">
         <OrderHeader addrInfo={addrInfo} />
 
         <GoodsCard goodsList={goodsList} />
 
-        <GiftCard orderInfo={orderInfo} />
-
         <CouponCard
           totalMoney={this.state.totalMoney}
-          couponInfo={this.state.couponInfo}
+          couponInfo={couponInfo}
           onScoreCall={this.onScoreCall}
         />
 

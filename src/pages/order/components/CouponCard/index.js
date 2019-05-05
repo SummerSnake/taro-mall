@@ -25,7 +25,7 @@ export default class Coupon extends Component {
   };
 
   componentWillReceiveProps = nextProps => {
-    if (nextProps.couponInfo.couponName !== this.props.couponInfo.couponName) {
+    if (nextProps.couponInfo.couponId !== this.props.couponInfo.couponId) {
       this.setState({
         couponName: nextProps.couponInfo.couponName,
       });
@@ -37,7 +37,7 @@ export default class Coupon extends Component {
    * @param e
    */
   pickerChange = e => {
-    const { score } = this.props;
+    const { score } = this.props.fetchData;
     const { scoreArr } = this.state;
     if (scoreArr[parseInt(e.detail.value)] <= score) {
       this.props.onScoreCall(scoreArr[parseInt(e.detail.value)]);

@@ -42,21 +42,19 @@ export default class Coupon extends Component {
   };
 
   /**
-   * 选择优惠券，跳转订单页面
+   * 订单页面选择优惠券
    * @param id
    * @param couponName
    * @param amount
    */
   goOrder = (id, couponName, amount) => {
     if (Taro.getStorageSync('navType') === 'order') {
-      this.$preload({
+      Taro.setStorageSync('couponInfo', {
         couponName,
         couponId: id,
         couponAmount: amount,
       });
-      Taro.redirectTo({
-        url: '/pages/order/index',
-      });
+      Taro.navigateBack();
     }
   };
 
