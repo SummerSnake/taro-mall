@@ -150,7 +150,6 @@ export default class Order extends Component {
     await Taro.removeStorageSync('goodsList');
     await Taro.setStorageSync('goodsList', arr);
     this.$preload({
-      memId: this.state.id,
       current: 1,
     });
     setTimeout(function() {
@@ -217,11 +216,7 @@ export default class Order extends Component {
     const { addrInfo, goodsList, orderInfo } = this.state;
     return (
       <View className="orderWrap">
-        <OrderHeader
-          memId={this.state.memId}
-          addrInfo={addrInfo}
-          company={orderInfo.memberInvoice.name}
-        />
+        <OrderHeader addrInfo={addrInfo} />
 
         <GoodsCard goodsList={goodsList} />
 

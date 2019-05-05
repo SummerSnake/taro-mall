@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { connect } from '@tarojs/redux';
+import { isObj } from '@/utils/api';
 import './index.scss';
 
 @connect(({ addrPage, invoiceEdit }) => ({
@@ -9,7 +10,7 @@ import './index.scss';
   ...invoiceEdit,
 }))
 export default class OrderHeader extends Component {
-  componentDidMount = () => {
+  componentDidShow = () => {
     this.props.dispatch({
       type: 'addrPage/load',
     });
@@ -27,12 +28,12 @@ export default class OrderHeader extends Component {
     switch (type) {
       case '01':
         Taro.navigateTo({
-          url: '/pages/addrPage/index',
+          url: '/pages/user/subPages/addrPage/index',
         });
         break;
       case '02':
         Taro.navigateTo({
-          url: '/pages/invoiceEdit/index',
+          url: '/pages/user/subPages/invoiceEdit/index',
         });
         break;
       default:
@@ -43,31 +44,35 @@ export default class OrderHeader extends Component {
   };
 
   render() {
-    const { addrList, params } = this.props;
-    let addrInfo = {};
-    addrList.forEach(item => {
-      if (item.type === 1) {
-        addrInfo = { ...item };
-      }
-    });
+    const { addrInfo, addrList, params } = this.props;
+    let addrObj = {};
+    let addrTxt = ''; // 收货地址
+    if (isObj(addrInfo) && addrInfo.addressId > 0) {
+      // 选择收货地址
+      addrObj = { ...addrInfo };
+      addrTxt = addrInfo.address;
+    } else {
+      // 挂载带出默认地址
+      addrList.forEach(item => {
+        if (item.type === 1) {
+          addrObj = { ...item };
+          addrTxt = `${item.province}${item.city}${item.region}${item.detailAddr}`;
+        }
+      });
+    }
     return (
       <View className="orderHeader">
-        {addrInfo && Object.keys(addrInfo).length > 0 ? (
+        {isObj(addrObj) && Object.keys(addrObj).length > 0 ? (
           <View className="addrDom" onClick={this.goHref.bind(this, '01')}>
             <View>
-              <Text>{addrInfo.consignee}</Text>
-              <Text>{addrInfo.phone}</Text>
+              <Text>{addrObj.consignee}</Text>
+              <Text>{addrObj.phone}</Text>
               <Image
                 className="imgDom"
                 src="https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/more_arrow.png"
               />
             </View>
-            <View>
-              {addrInfo.province}
-              {addrInfo.city}
-              {addrInfo.region}
-              {addrInfo.detailAddr}
-            </View>
+            <View>{addrTxt}</View>
           </View>
         ) : (
           <View className="addrDom" onClick={this.goHref.bind(this, '01')}>
