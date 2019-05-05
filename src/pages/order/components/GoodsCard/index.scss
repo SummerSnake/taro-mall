@@ -1,112 +1,45 @@
+@import '../../../../styles/base';
+
 .goodsCard {
+  width: 100%;
   box-sizing: border-box;
   padding: 20px;
-  background-color: #fff;
   margin-bottom: 20px;
+  background-color: #fff;
   .goodWrap {
-    width: 100%;
     padding: 20px 0;
-    border-bottom: 1px dashed #ccc;
+    border-bottom: 2px dashed #ccc;
     .goodImgWrap {
-      float: left;
-      width: 180px;
-      height: 180px;
+      @include wh(180px, 180px);
       border-radius: 16px;
       overflow: hidden;
-      .goodImg {
-        width: 100%;
-        height: 100%;
-      }
     }
     .goodTxtWrap {
-      float: left;
+      height: 180px;
       min-width: 530px;
-      padding: 0 20px;
       box-sizing: border-box;
-      background: rgba(255, 255, 255, 1);
+      padding: 0 20px;
+      background-color: #fff;
       .txtTop {
-        height: 30px;
-        line-height: 30px;
-        margin: 8px 0 24px;
-        > text:first-child {
-          float: left;
-          width: 62px;
-          height: 30px;
-          line-height: 30px;
-          margin-right: 12px;
-          background: rgba(232, 14, 39, 1);
-          border-radius: 16px;
-          font-size: 24px;
-          text-align: center;
-          color: rgba(255, 255, 255, 1);
-        }
-        > text:last-child {
-          float: left;
-          font-size: 28px;
-          color: rgba(51, 51, 51, 1);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+        @include sc(36px, #333);
+        height: 90px;
       }
-      .txtMidOne {
-        padding: 8px 0 20px;
-        font-size: 28px;
-        color: rgba(153, 153, 153, 1);
-        > text:first-child {
-          padding-right: 12px;
-          border-right: 1px solid rgba(153, 153, 153, 1);
-        }
-        > text:last-child {
-          padding-left: 12px;
-        }
-      }
-      .txtMidTwo {
+      .txtBottom {
+        @include sc(30px, rgba(232, 14, 39, 1));
         display: inline-block;
-        position: relative;
-        > text:first-child {
-          display: inline-block;
-          margin-right: 16px;
-          font-size: 32px;
-          color: rgba(232, 14, 39, 1);
-        }
-        > .midLast {
-          position: relative;
-          font-size: 28px;
-          color: rgba(153, 153, 153, 1);
-        }
-        > .midLast:after {
-          position: absolute;
-          content: ' ';
-          top: 22px;
-          left: 0;
-          width: 120%;
-          height: 2px;
-          background-color: #999;
-        }
+        height: 90px;
+        line-height: 90px;
       }
-      .txtMidBot {
-        float: right;
-        margin-top: 6px;
-        font-size: 30px;
-        color: rgba(153, 153, 153, 1);
-        > text:first-child {
+      .txtRight {
+        @include sc(30px, rgba(153, 153, 153, 1));
+        height: 90px;
+        line-height: 90px;
+        > text {
           display: inline-block;
           font-size: 36px;
           margin-left: 8px;
         }
       }
     }
-    .topItemDom:first-child {
-      margin-right: 20px;
-    }
-  }
-  .goodWrap:after {
-    clear: both;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    visibility: hidden;
   }
 }

@@ -2,12 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import './index.scss';
 
-export default class Gift extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {};
-  }
-
+export default class GoodsCard extends Component {
   /**
    * 跳转商品详情
    * @param id
@@ -15,7 +10,7 @@ export default class Gift extends Component {
   goGoodInfo = id => {
     this.$preload({ id });
     Taro.navigateTo({
-      url: `/pages/goodInfo/index`,
+      url: '/pages/goodInfo/index',
     });
   };
 
@@ -24,34 +19,20 @@ export default class Gift extends Component {
     return (
       <View className="goodsCard">
         {Array.isArray(goodsList) &&
-          goodsList.length > 0 &&
           goodsList.map(good => {
             return (
               <View
-                className="goodWrap"
+                className="goodWrap clearfix"
                 key={good.id}
                 onClick={this.goGoodInfo.bind(this, good.id)}
               >
-                <View className="goodImgWrap">
-                  <Image className="goodImg" src={good.goodsPictures} />
+                <View className="goodImgWrap left">
+                  <Image src={good.goodPic} />
                 </View>
-                <View className="goodTxtWrap">
-                  <View className="txtTop">
-                    <Text>{good.goodsBrandName}</Text>
-                    <Text>{good.pdFullName}</Text>
-                  </View>
-                  <View className="txtMidOne">
-                    <Text>{good.pdTypeName}</Text>
-                    <Text>
-                      {good.pdSpec}
-                      {good.basicUnitName}/{good.salesUnitName}
-                    </Text>
-                  </View>
-                  <View className="txtMidTwo">
-                    <Text>￥{good.sellingPrice}</Text>
-                    <Text className="midLast">￥{good.originalPrice}</Text>
-                  </View>
-                  <View className="txtMidBot">
+                <View className="goodTxtWrap left">
+                  <View className="txtTop">{good.name}</View>
+                  <View className="txtBottom">￥{good.price}</View>
+                  <View className="txtRight right">
                     x<Text>{good.num}</Text>
                   </View>
                 </View>
