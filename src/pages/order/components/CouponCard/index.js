@@ -8,6 +8,7 @@ import './index.scss';
   ...user,
 }))
 export default class Coupon extends Component {
+  indexClone = 0;
   constructor() {
     super(...arguments);
     this.state = {
@@ -30,6 +31,11 @@ export default class Coupon extends Component {
         couponName: nextProps.couponInfo.couponName,
       });
     }
+    if (nextProps.pickerChange) {
+      this.setState({
+        index: this.indexClone,
+      });
+    }
   };
 
   /**
@@ -41,9 +47,7 @@ export default class Coupon extends Component {
     const { scoreArr } = this.state;
     if (scoreArr[parseInt(e.detail.value)] <= score) {
       this.props.onScoreCall(scoreArr[parseInt(e.detail.value)]);
-      this.setState({
-        index: parseInt(e.detail.value),
-      });
+      this.indexClone = parseInt(e.detail.value);
     } else {
       this.setState({ toastOpen: true });
       setTimeout(() => {

@@ -18,6 +18,7 @@ export default class Order extends Component {
       totalMoney: 0, // 总金额
       actualMoney: 0, // 实际需要支付金额
       integralDiscount: 0, // 积分优惠金额
+      pickerChange: false, // 积分选择开关
       toastOpen: false,
       toastTxt: '',
       toastIcon: '',
@@ -119,17 +120,33 @@ export default class Order extends Component {
       if (integralDiscount <= totalMoney - couponInfo.couponAmount) {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
         actualMoney = totalMoney - (integralDiscount + couponInfo.couponAmount);
+        this.setState({
+          integralDiscount,
+          actualMoney: actualMoney.toFixed(2),
+          pickerChange: true,
+        });
       } else {
         this.toastFunc('积分抵用金额不能大于实付金额', 'close-circle');
       }
     } else {
-      // 如果未选择优惠券, 实付金额等于总金额减去积分优惠金额
-      actualMoney = this.state.totalMoney - integralDiscount;
+      // 如果未选择优惠券
+      if (integralDiscount <= totalMoney) {
+        // 实付金额等于总金额减去积分优惠金额
+        actualMoney = totalMoney - integralDiscount;
+        this.setState({
+          integralDiscount,
+          actualMoney: actualMoney.toFixed(2),
+          pickerChange: true,
+        });
+      } else {
+        this.toastFunc('积分抵用金额不能大于实付金额', 'close-circle');
+      }
     }
-    this.setState({
-      actualMoney,
-      integralDiscount,
-    });
+    setTimeout(() => {
+      this.setState({
+        pickerChange: false,
+      });
+    }, 500);
   };
 
   /**
@@ -220,6 +237,7 @@ export default class Order extends Component {
         <CouponCard
           totalMoney={this.state.totalMoney}
           couponInfo={couponInfo}
+          pickerChange={this.state.pickerChange}
           onScoreCall={this.onScoreCall}
         />
 
