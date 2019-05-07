@@ -25,7 +25,7 @@ export default class Cart extends Component {
     // 从缓存中拿当前购买的商品信息
     const goodsList = Taro.getStorageSync('goodsList');
     if (Array.isArray(goodsList) && goodsList.length > 0) {
-      const { checkboxIds } = this.state;
+      const checkboxIds = [];
       const list = JSON.parse(JSON.stringify(goodsList));
       list.forEach(item => {
         // 存储 checkboxIds 数组供 checkbox 使用

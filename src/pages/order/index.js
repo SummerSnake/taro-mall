@@ -45,7 +45,7 @@ export default class Order extends Component {
         const { checkedGoods } = this.$router.preload;
         if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
           arr = list.filter(item => {
-            return item.id === checkedGoods.map(good => good.id);
+            return checkedGoods.includes(item.id);
           });
         }
       } else {
@@ -175,6 +175,10 @@ export default class Order extends Component {
       addrInfo.addrId === ''
     ) {
       this.toastFunc('请选择收货地址', 'close-circle');
+      return;
+    }
+    if (this.state.actualMoney <= 0) {
+      this.toastFunc('请选择您要购买的商品', 'close-circle');
       return;
     }
     const that = this;
