@@ -47,7 +47,7 @@ export default class OrderHeader extends Component {
     const { addrInfo, addrList, params } = this.props;
     let addrObj = {};
     let addrTxt = ''; // 收货地址
-    if (isObj(addrInfo) && addrInfo.addressId > 0) {
+    if (isObj(addrInfo) && addrInfo.addrId > 0) {
       // 选择收货地址
       addrObj = { ...addrInfo };
       addrTxt = addrInfo.address;

@@ -4,7 +4,6 @@ import { AtToast } from 'taro-ui';
 import OrderHeader from './components/OrderHeader/index';
 import GoodsCard from './components/GoodsCard/index';
 import CouponCard from './components/CouponCard/index';
-import Loading from '../../components/Loading/index';
 import { isObj, verVal } from '../../utils/api';
 import './index.scss';
 
@@ -42,15 +41,13 @@ export default class Order extends Component {
     if (Array.isArray(list) && list.length > 0) {
       let arr = [];
       // 购物车选择的商品
-      const { preload } = this.$router;
-      if (
-        isObj(preload) &&
-        Array.isArray(preload.checkedGoods) &&
-        preload.checkedGoods.length > 0
-      ) {
-        arr = list.filter(item => {
-          return item.id === preload.checkedGoods.map(good => good.id);
-        });
+      if (isObj(this.$router.preload)) {
+        const { checkedGoods } = this.$router.preload;
+        if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
+          arr = list.filter(item => {
+            return item.id === checkedGoods.map(good => good.id);
+          });
+        }
       } else {
         arr = [...list];
       }
@@ -73,17 +70,11 @@ export default class Order extends Component {
    * @param totalMoney
    */
   selectCallback = async totalMoney => {
-    const preData = this.$router.preload;
+    let addrInfo = Taro.getStorageSync('addrInfo');
     // 选择地址
-    if (isObj(preData) && verVal(preData.addrId)) {
-      const json = {
-        addressId: preData.addrId,
-        consignee: preData.consignee,
-        phone: preData.phone,
-        address: preData.address,
-      };
+    if (isObj(addrInfo) && verVal(addrInfo.addrId)) {
       this.setState({
-        addrInfo: { ...json },
+        addrInfo: { ...addrInfo },
       });
     }
     // 选择优惠券
@@ -96,10 +87,9 @@ export default class Order extends Component {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
         actualMoney = totalMoney - (couponInfo.couponAmount + integralDiscount);
         this.setState({
-          couponInfo,
+          couponInfo: { ...couponInfo },
           actualMoney: actualMoney.toFixed(2),
         });
-        Taro.removeStorageSync('couponInfo');
       } else {
         this.toastFunc('优惠券金额不能大于实付金额', 'close-circle');
       }
@@ -180,21 +170,13 @@ export default class Order extends Component {
     const addrInfo = this.state.addrInfo;
     if (
       Object.keys(addrInfo).length === 0 ||
-      addrInfo.addressId === null ||
-      typeof addrInfo.addressId === 'undefined' ||
-      addrInfo.addressId === ''
+      typeof addrInfo.addrId === 'undefined' ||
+      addrInfo.addrId === null ||
+      addrInfo.addrId === ''
     ) {
       this.toastFunc('请选择收货地址', 'close-circle');
       return;
     }
-    let arr = [];
-    this.state.goodsList.map(item => {
-      arr.push({
-        pdId: item.id,
-        productAmount: (item.sellingPrice * item.num).toFixed(2),
-        sellingNum: item.num,
-      });
-    });
     const that = this;
     Taro.requestPayment({
       timeStamp: '',
@@ -205,9 +187,11 @@ export default class Order extends Component {
       success: function() {
         that.toastFunc('支付成功', 'check-circle');
         that.removeStorage();
+        Taro.removeStorageSync('couponInfo');
       },
       fail: function() {
         that.toastFunc('支付失败', 'close-circle');
+        Taro.removeStorageSync('couponInfo');
       },
     });
   };
@@ -224,6 +208,13 @@ export default class Order extends Component {
     setTimeout(() => {
       this.setState({ toastOpen: false });
     }, 2000);
+  };
+
+  /**
+   * 卸载页面删除优惠券缓存
+   */
+  componentWillUnmount = () => {
+    Taro.removeStorageSync('couponInfo');
   };
 
   render() {
@@ -255,7 +246,6 @@ export default class Order extends Component {
           text={this.state.toastTxt}
           icon={this.state.toastIcon}
         />
-        <Loading isLoading={this.state.isLoading} />
       </View>
     );
   }

@@ -70,15 +70,13 @@ export default class AddrPage extends Component {
   handleAddrClick = async (id, consignee, phone, address) => {
     const navType = Taro.getStorageSync('navType');
     if (navType === 'order') {
-      this.$preload({
+      Taro.setStorageSync('addrInfo', {
         addrId: id,
         consignee,
         phone,
         address,
       });
-      Taro.redirectTo({
-        url: '/pages/order/index',
-      });
+      Taro.navigateBack();
     }
   };
 
