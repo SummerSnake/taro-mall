@@ -1,0 +1,45 @@
+@import '../../../../../../styles/base';
+
+.goodsCard {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  .goodWrap {
+    padding: 20px 0;
+    border-bottom: 2px dashed #ccc;
+    .goodImgWrap {
+      @include wh(180px, 180px);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .goodTxtWrap {
+      height: 180px;
+      min-width: 530px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      background-color: #fff;
+      .txtTop {
+        @include sc(36px, #333);
+        height: 90px;
+      }
+      .txtBottom {
+        @include sc(30px, rgba(232, 14, 39, 1));
+        display: inline-block;
+        height: 90px;
+        line-height: 90px;
+      }
+      .txtRight {
+        @include sc(30px, rgba(153, 153, 153, 1));
+        height: 90px;
+        line-height: 90px;
+        > text {
+          display: inline-block;
+          font-size: 36px;
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}

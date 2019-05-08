@@ -1,0 +1,19 @@
+@import '../../../../styles/base';
+
+.orderDetailWrap {
+  @include wmh(100vw, 100vh);
+  box-sizing: border-box;
+  padding-bottom: 98px;
+  .orderDetailBottom {
+    @include wh(100%, 98px);
+    @include sc(40px, #fff);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    line-height: 98px;
+    text-align: center;
+    font-weight: 500;
+    background-color: #e80e27;
+  }
+}

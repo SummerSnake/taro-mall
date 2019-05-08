@@ -1,0 +1,39 @@
+@import '../../../../../../styles/base';
+
+.orderHeader {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-top: 2px solid #f4f4f4;
+  .addrDom {
+    padding: 0 0 20px 100px;
+    border-bottom: 2px dashed #ccc;
+    background: url('https://gitee.com/summersnake/images/raw/master/others/order_addr.png')
+      no-repeat left;
+    -webkit-background-size: 60px 60px;
+    background-size: 60px 60px;
+    > view:first-child {
+      > text:first-child {
+        @include sc(32px, #333);
+        display: inline-block;
+        padding-right: 60px;
+      }
+      > text:nth-of-type(2) {
+        @include sc(30px, #999);
+      }
+    }
+    > view:last-child {
+      @include sc(26px, #333);
+      padding-top: 8px;
+    }
+  }
+  .invoiceDom {
+    @include sc(26px, #333);
+    padding: 20px 0 0 86px;
+    > text {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 20px;
+    }
+  }
+}

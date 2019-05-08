@@ -65,27 +65,14 @@ export default class OrderList extends Component {
     });
   };
 
-  // /**
-  //  * 选择优惠券，跳转订单页面
-  //  * @param id
-  //  * @param orderState
-  //  * @param orderNum
-  //  */
-  // goOrderDetail = (id, orderState, orderNum) => {
-  //   this.$preload({
-  //     id,
-  //     orderState,
-  //     memId: this.$router.preload.memId,
-  //   });
-  //   if (orderNum) {
-  //     this.$preload({
-  //       orderNum,
-  //     });
-  //   }
-  //   Taro.navigateTo({
-  //     url: `/pages/orderDetail/index`
-  //   });
-  // };
+  /**
+   * 跳转订单详情
+   */
+  goOrderDetail = () => {
+    Taro.navigateTo({
+      url: '/pages/orderList/subPages/orderDetail/index',
+    });
+  };
 
   render() {
     const { effects } = this.props;
@@ -108,11 +95,7 @@ export default class OrderList extends Component {
         <View className="tabsCon">
           {Array.isArray(tabList) &&
             tabList.map(item => (
-              <View
-                className="tabsItem"
-                key={item.id}
-                onClick={this.goOrderDetail.bind(this, item.id, item.orderState, item.orderNum)}
-              >
+              <View className="tabsItem" key={item.id} onClick={this.goOrderDetail.bind(this)}>
                 <View className="tabTitle">
                   {item.orderState === '01'
                     ? '待付款'

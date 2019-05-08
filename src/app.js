@@ -27,6 +27,7 @@ class App extends Component {
       'pages/user/subPages/invoiceEdit/index',
       'pages/coupon/index',
       'pages/orderList/index',
+      'pages/orderList/subPages/orderDetail/index',
       'pages/goodInfo/index',
       'pages/activity/index',
       'pages/order/index',
