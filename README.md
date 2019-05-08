@@ -19,20 +19,24 @@ Taro 的语法规则基于 React 规范，它采用与 React 一致的组件化�
 # 部分截图展示
 
 ## 首页 && 分类列表
-<img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/home.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/category.jpg" width="375" height="667" />
+<div style="background-color: #f8f8f8;">
+  <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/home.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/category.jpg" width="375" height="667" />
+<div>
 
 ## 商品详情 && 购物车
-
-<img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/goodDetail.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/cart.jpg" width="375" height="667" />
+<div style="background-color: #f8f8f8;">
+  <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/goodDetail.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/cart.jpg" width="375" height="667" />
+<div>
 
 ## 我的 && 订单列表
-
-<img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/user.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/orderList.jpg" width="375" height="667" />
+<div style="background-color: #f8f8f8;">
+  <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/user.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/orderList.jpg" width="375" height="667" />
+<div>
 
 ## 优惠券 && 收货地址
-
-<img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/coupon.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/addrPage.jpg" width="375" height="667" />
-
+<div style="background-color: #f8f8f8;">
+  <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/coupon.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/addrPage.jpg" width="375" height="667" />
+<div>
 
 # 项目运行
 
