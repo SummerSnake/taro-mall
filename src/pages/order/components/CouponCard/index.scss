@@ -29,14 +29,10 @@
   }
   .pickDom {
     .inputNode {
-      text-align: right;
       .scoreTxt {
         @include wh(92px, 92px);
-        width: 92px;
-        height: 92px;
+        @include sc(30px, #333);
         line-height: 92px;
-        font-size: 30px;
-        color: #333;
       }
     }
   }
