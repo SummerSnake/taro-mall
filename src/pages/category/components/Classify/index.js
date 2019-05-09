@@ -11,7 +11,7 @@ export default class Classify extends Component {
         { id: 1, title: '沉鱼落雁' },
         { id: 2, title: '蕙质兰心' },
         { id: 3, title: '绝代佳人' },
-        { id: 4, title: '白璧无瑕' },
+        { id: 4, title: '风姿卓约' },
       ],
       selectArr: [], // 当前选择的分类数组
       selectId: 0, // 当前点击的分类 id
@@ -68,18 +68,18 @@ export default class Classify extends Component {
   handleCancel = e => {
     e.stopPropagation();
     const arr = [...this.state.titleArr];
-    const { selectId, titleArr } = this.state;
+    const { selectId } = this.state;
     // 修改选中标题文字
     arr.forEach(item => {
       if (selectId === item.id) {
         item.title =
           selectId === 1
-            ? titleArr[0]
+            ? '沉鱼落雁'
             : selectId === 2
-            ? titleArr[1]
+            ? '蕙质兰心'
             : selectId === 3
-            ? titleArr[2]
-            : titleArr[3];
+            ? '绝代佳人'
+            : '风姿卓约';
       }
     });
     // 取消选中状态
