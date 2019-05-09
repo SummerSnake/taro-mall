@@ -25,6 +25,7 @@ class App extends Component {
       'pages/user/subPages/addrEdit/index',
       'pages/user/subPages/phoneEdit/index',
       'pages/user/subPages/invoiceEdit/index',
+      'pages/user/subPages/suggestion/index',
       'pages/coupon/index',
       'pages/orderList/index',
       'pages/orderList/subPages/orderDetail/index',

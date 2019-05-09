@@ -10,6 +10,7 @@ import addrPage from '../pages/user/subPages/addrPage/model';
 import addrEdit from '../pages/user/subPages/addrEdit/model';
 import phoneEdit from '../pages/user/subPages/phoneEdit/model';
 import invoiceEdit from '../pages/user/subPages/invoiceEdit/model';
+import suggestion from '../pages/user/subPages/suggestion/model';
 import orderDetail from '../pages/orderList/subPages/orderDetail/model';
 
 export default [
@@ -26,4 +27,5 @@ export default [
   phoneEdit,
   invoiceEdit,
   orderDetail,
+  suggestion,
 ];
