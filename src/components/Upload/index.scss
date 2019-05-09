@@ -1,0 +1,24 @@
+@import '../../styles/base';
+
+.uploadWrap {
+  .addDom {
+    @include wh(118px, 116px);
+    line-height: 120px;
+    box-sizing: border-box;
+    border: 2px solid #d8d8d8;
+    text-align: center;
+  }
+  .imgDom {
+    position: relative;
+    @include wh(118px, 116px);
+    margin-right: 20px;
+    .cancelIcon {
+      position: absolute;
+      top: -16px;
+      right: -10px;
+    }
+  }
+  .imgDom:last-child {
+    margin-right: 0;
+  }
+}
