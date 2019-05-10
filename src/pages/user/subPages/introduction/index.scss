@@ -1,0 +1,53 @@
+@import '../../../../styles/base';
+
+.introWrap {
+  @include wmh(100vw, 100vh);
+  .introHeader {
+    @include wh(100%, 236px);
+    background: url('https://gitee.com/summersnake/images/raw/master/others/saber_logo.jpg')
+      no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+  .introCon {
+    @include wmh(100%, calc(100vh - 236px));
+    box-sizing: border-box;
+    padding: 50px;
+    background-color: #fff;
+    .conItem {
+      position: relative;
+      padding: 0 0 50px 50px;
+      margin-left: 50px;
+      border-left: 2px solid #5b8bff;
+      .conTitle {
+        @include sc(36px, #333);
+        line-height: 36px;
+        margin: 0 0 10px 18px;
+      }
+      .conTxt {
+        @include sc(28px, #888);
+      }
+      .conTxt:before {
+        @include wh(12px, 12px);
+        display: inline-block;
+        content: ' ';
+        background-color: rgba(201, 201, 201, 0.6);
+        margin-right: 14px;
+        border-radius: 50%;
+      }
+    }
+    .conItem:last-child {
+      margin-top: 40px;
+      border: none;
+    }
+    .circle {
+      @include wh(70px, 70px);
+      position: absolute;
+      left: -34px;
+      top: -10px;
+      z-index: 99;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+  }
+}

@@ -89,6 +89,11 @@ export default class User extends Component {
           url: '/pages/user/subPages/suggestion/index',
         });
         break;
+      case '07':
+        Taro.navigateTo({
+          url: '/pages/user/subPages/introduction/index',
+        });
+        break;
       default:
         Taro.switchTab({
           url: '/pages/index/index',
@@ -218,7 +223,7 @@ export default class User extends Component {
               <AtIcon value="chevron-right" size="20" color="#999" />
             </View>
           </View>
-          <View>
+          <View onClick={this.goHref.bind(this, '07')}>
             <AtIcon
               prefixClass="fa"
               value="superpowers"
