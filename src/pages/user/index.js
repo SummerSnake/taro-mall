@@ -10,7 +10,7 @@ import './index.scss';
   ...user,
   ...loading,
 }))
-export default class User extends Component {
+class User extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -254,3 +254,5 @@ export default class User extends Component {
     );
   }
 }
+
+export default User;

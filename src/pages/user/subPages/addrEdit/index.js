@@ -10,7 +10,7 @@ import './index.scss';
   ...addrEdit,
   ...loading,
 }))
-export default class AddrEdit extends Component {
+class AddrEdit extends Component {
   config = {
     navigationBarTitleText: '收货地址设置',
   };
@@ -247,3 +247,5 @@ export default class AddrEdit extends Component {
     );
   }
 }
+
+export default AddrEdit;

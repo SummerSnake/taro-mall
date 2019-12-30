@@ -11,7 +11,7 @@ import './index.scss';
   ...orderDetail,
   ...loading,
 }))
-export default class OrderDetail extends Component {
+class OrderDetail extends Component {
   config = {
     navigationBarTitleText: '订单详情',
   };
@@ -26,7 +26,8 @@ export default class OrderDetail extends Component {
   };
 
   render() {
-    const { headerInfo, goodsList, couponInfo, effects } = this.props.fetchData;
+    const { headerInfo, goodsList, couponInfo, effects = [] } = this.props.fetchData;
+
     return (
       <View className="orderDetailWrap">
         <OrderHeader headerInfo={headerInfo} />
@@ -42,3 +43,5 @@ export default class OrderDetail extends Component {
     );
   }
 }
+
+export default OrderDetail;

@@ -10,7 +10,7 @@ import './index.scss';
   ...invoiceEdit,
   ...loading,
 }))
-export default class InvoiceEdit extends Component {
+class InvoiceEdit extends Component {
   config = {
     navigationBarTitleText: '增值发票',
   };
@@ -261,3 +261,5 @@ export default class InvoiceEdit extends Component {
     );
   }
 }
+
+export default InvoiceEdit;

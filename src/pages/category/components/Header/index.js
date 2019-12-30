@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Input, Text, Image } from '@tarojs/components';
 import './index.scss';
 
-export default class Header extends Component {
+class Header extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -110,3 +110,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default Header;

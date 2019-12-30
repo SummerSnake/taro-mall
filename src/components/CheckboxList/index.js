@@ -3,7 +3,7 @@ import { View } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import './index.scss';
 
-export default class CheckboxList extends Component {
+class CheckboxList extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -163,3 +163,5 @@ export default class CheckboxList extends Component {
     );
   }
 }
+
+export default CheckboxList;

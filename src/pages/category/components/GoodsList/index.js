@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text, ScrollView } from '@tarojs/components';
 import './index.scss';
 
-export default class GoodsList extends Component {
+class GoodsList extends Component {
   /**
    * 滚动加载
    */
@@ -57,3 +57,5 @@ export default class GoodsList extends Component {
     );
   }
 }
+
+export default GoodsList;

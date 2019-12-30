@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-export default class MidCard extends Component {
+class MidCard extends Component {
   static defaultProps = {
     midCardObj: {},
   };
@@ -74,3 +74,5 @@ export default class MidCard extends Component {
     );
   }
 }
+
+export default MidCard;

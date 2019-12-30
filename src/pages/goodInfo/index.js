@@ -9,7 +9,7 @@ import './index.scss';
   ...goodInfo,
   ...loading,
 }))
-export default class GoodInfo extends Component {
+class GoodInfo extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -270,3 +270,5 @@ export default class GoodInfo extends Component {
     );
   }
 }
+
+export default GoodInfo;

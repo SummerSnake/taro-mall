@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-export default class TopCard extends Component {
+class TopCard extends Component {
   static defaultProps = {
     topCardObj: {},
   };
@@ -74,3 +74,5 @@ export default class TopCard extends Component {
     );
   }
 }
+
+export default TopCard;

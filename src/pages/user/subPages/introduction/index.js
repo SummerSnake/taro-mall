@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
 import './index.scss';
 
-export default class Introduction extends Component {
+class Introduction extends Component {
   config = {
     navigationBarTitleText: '系统介绍',
   };
@@ -56,3 +56,5 @@ export default class Introduction extends Component {
     );
   }
 }
+
+export default Introduction;

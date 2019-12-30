@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import '../../styles/iconfont.scss';
 
-export default class NoData extends Component {
+class NoData extends Component {
   render() {
     const { isVisible } = this.props;
     return (
@@ -23,3 +23,5 @@ export default class NoData extends Component {
     );
   }
 }
+
+export default NoData;

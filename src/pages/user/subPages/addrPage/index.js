@@ -9,7 +9,7 @@ import './index.scss';
   ...addrPage,
   ...loading,
 }))
-export default class AddrPage extends Component {
+class AddrPage extends Component {
   config = {
     navigationBarTitleText: '收货地址',
   };
@@ -132,3 +132,5 @@ export default class AddrPage extends Component {
     );
   }
 }
+
+export default AddrPage;

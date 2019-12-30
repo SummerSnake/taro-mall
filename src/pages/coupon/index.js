@@ -8,7 +8,7 @@ import './index.scss';
   ...coupon,
   ...loading,
 }))
-export default class Coupon extends Component {
+class Coupon extends Component {
   config = {
     navigationBarTitleText: '优惠券',
   };
@@ -110,3 +110,5 @@ export default class Coupon extends Component {
     );
   }
 }
+
+export default Coupon;

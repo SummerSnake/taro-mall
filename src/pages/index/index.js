@@ -12,7 +12,7 @@ import './index.scss';
   ...home,
   ...loading,
 }))
-export default class Index extends Component {
+class Index extends Component {
   config = {
     navigationBarTitleText: '首页',
   };
@@ -49,3 +49,5 @@ export default class Index extends Component {
     );
   }
 }
+
+export default Index;

@@ -11,7 +11,7 @@ import './index.scss';
   ...suggestion,
   ...loading,
 }))
-export default class Suggestion extends Component {
+class Suggestion extends Component {
   config = {
     navigationBarTitleText: '反馈建议',
   };
@@ -131,3 +131,5 @@ export default class Suggestion extends Component {
     );
   }
 }
+
+export default Suggestion;

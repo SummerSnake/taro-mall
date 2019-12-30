@@ -3,7 +3,7 @@ import { View } from '@tarojs/components';
 import { verVal } from '@/utils/api';
 import './index.scss';
 
-export default class Classify extends Component {
+class Classify extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -165,3 +165,5 @@ export default class Classify extends Component {
     );
   }
 }
+
+export default Classify;

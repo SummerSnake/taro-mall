@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
 import './index.scss';
 
-export default class IconList extends Component {
+class IconList extends Component {
   /**
    * 跳转商品列表
    * @param iconId
@@ -35,3 +35,5 @@ export default class IconList extends Component {
     );
   }
 }
+
+export default IconList;

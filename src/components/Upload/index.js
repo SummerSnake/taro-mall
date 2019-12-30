@@ -3,7 +3,7 @@ import { View, Image } from '@tarojs/components';
 import { AtIcon, AtToast } from 'taro-ui';
 import './index.scss';
 
-export default class Upload extends Component {
+class Upload extends Component {
   constructor(props) {
     super(props);
     let imgList = [];
@@ -121,3 +121,5 @@ export default class Upload extends Component {
     );
   }
 }
+
+export default Upload;

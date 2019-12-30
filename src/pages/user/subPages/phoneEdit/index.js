@@ -10,7 +10,7 @@ import './index.scss';
   ...phoneEdit,
   ...loading,
 }))
-export default class PhoneEdit extends Component {
+class PhoneEdit extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -197,3 +197,5 @@ export default class PhoneEdit extends Component {
     );
   }
 }
+
+export default PhoneEdit;

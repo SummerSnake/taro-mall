@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-export default class BotCard extends Component {
+class BotCard extends Component {
   static defaultProps = {
     botCardObj: {},
   };
@@ -62,3 +62,5 @@ export default class BotCard extends Component {
     );
   }
 }
+
+export default BotCard;

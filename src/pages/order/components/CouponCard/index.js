@@ -7,7 +7,7 @@ import './index.scss';
 @connect(({ user }) => ({
   ...user,
 }))
-export default class Coupon extends Component {
+class CouponCard extends Component {
   indexClone = 0;
   constructor() {
     super(...arguments);
@@ -107,3 +107,5 @@ export default class Coupon extends Component {
     );
   }
 }
+
+export default CouponCard;

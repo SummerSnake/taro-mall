@@ -9,7 +9,7 @@ import './index.scss';
   ...orderList,
   ...loading,
 }))
-export default class OrderList extends Component {
+class OrderList extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -126,3 +126,5 @@ export default class OrderList extends Component {
     );
   }
 }
+
+export default OrderList;

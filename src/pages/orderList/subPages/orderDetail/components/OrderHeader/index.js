@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import './index.scss';
 
-export default class OrderHeader extends Component {
+class OrderHeader extends Component {
   render() {
     const { headerInfo } = this.props;
     return (
@@ -28,3 +28,5 @@ export default class OrderHeader extends Component {
     );
   }
 }
+
+export default OrderHeader;

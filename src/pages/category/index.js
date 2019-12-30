@@ -13,7 +13,7 @@ import './index.scss';
   ...category,
   ...loading,
 }))
-export default class Category extends Component {
+class Category extends Component {
   config = {
     navigationBarTitleText: '商品分类',
   };
@@ -96,3 +96,5 @@ export default class Category extends Component {
     );
   }
 }
+
+export default Category;

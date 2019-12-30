@@ -1,5 +1,4 @@
 import Taro, { Component } from '@tarojs/taro';
-import '@tarojs/async-await';
 import { Provider } from '@tarojs/redux';
 import Index from './pages/index';
 import dva from './utils/dva';
@@ -37,7 +36,7 @@ class App extends Component {
     window: {
       navigationBarTitleText: '泰罗商城',
       navigationBarTextStyle: 'black',
-      navigationBarBackgroundColor: 'white',
+      navigationBarBackgroundColor: '#fff',
     },
     tabBar: {
       list: [

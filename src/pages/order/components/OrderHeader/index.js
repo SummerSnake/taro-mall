@@ -9,7 +9,7 @@ import './index.scss';
   ...addrPage,
   ...invoiceEdit,
 }))
-export default class OrderHeader extends Component {
+class OrderHeader extends Component {
   componentDidShow = () => {
     this.props.dispatch({
       type: 'addrPage/load',
@@ -97,3 +97,5 @@ export default class OrderHeader extends Component {
     );
   }
 }
+
+export default OrderHeader;

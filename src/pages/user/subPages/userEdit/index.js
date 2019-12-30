@@ -10,7 +10,7 @@ import './index.scss';
   ...userEdit,
   ...loading,
 }))
-export default class UserEdit extends Component {
+class UserEdit extends Component {
   config = {
     navigationBarTitleText: '个人设置',
   };
@@ -137,3 +137,5 @@ export default class UserEdit extends Component {
     );
   }
 }
+
+export default UserEdit;
