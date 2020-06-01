@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 
-export const apiUrl = 'https://www.easy-mock.com/mock/5c889485cecb1d3ecb3eb7f1/mall';
+export const apiUrl = 'http://rap2.taobao.org:38080/app/mock/256282/mall';
 
 /**
  * POST 请求
@@ -17,10 +17,10 @@ export function postRequest(url, params) {
         'content-type': 'application/json',
       },
     })
-      .then(res => {
+      .then((res) => {
         resolve(res.data);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
@@ -38,10 +38,10 @@ export function getRequest(url, params) {
       },
       method: 'GET',
     })
-      .then(res => {
+      .then((res) => {
         resolve(res.data);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
@@ -64,7 +64,7 @@ export function isObj(obj) {
 /**
  * 延迟执行
  */
-export const delayFunc = timeout =>
-  new Promise(resolve => {
+export const delayFunc = (timeout) =>
+  new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });

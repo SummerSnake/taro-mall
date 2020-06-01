@@ -1,7 +1,5 @@
 import { getRequest } from '@/utils/api';
 
-const homepage = async params => {
-  return await getRequest('/homePage', params);
-};
+const homepage = async (params) => await getRequest('/home', params);
 
 export default homepage;
