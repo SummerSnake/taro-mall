@@ -14,7 +14,7 @@ class Introduction extends Component {
         <View className="introCon">
           <View className="conItem">
             <View className="circle">
-              <Image src="https://gitee.com/summersnake/images/raw/master/others/first_step.png" />
+              <Image src="https://s1.ax1x.com/2020/06/01/tGtsZ4.png" />
             </View>
             <View className="conTitle">泰罗商城</View>
             <View className="conTxt">taro 小程序商城二号</View>
@@ -22,7 +22,7 @@ class Introduction extends Component {
 
           <View className="conItem">
             <View className="circle">
-              <Image src="https://gitee.com/summersnake/images/raw/master/others/process_step.png" />
+              <Image src="https://s1.ax1x.com/2020/06/01/tGtRRx.png" />
             </View>
             <View className="conTitle">开发者</View>
             <View className="conTxt">SummerSnake QingDao China</View>
@@ -30,7 +30,7 @@ class Introduction extends Component {
 
           <View className="conItem">
             <View className="circle">
-              <Image src="https://gitee.com/summersnake/images/raw/master/others/process_step.png" />
+              <Image src="https://s1.ax1x.com/2020/06/01/tGtRRx.png" />
             </View>
             <View className="conTitle">技术栈</View>
             <View className="conTxt">taro react dva scss</View>
@@ -38,7 +38,7 @@ class Introduction extends Component {
 
           <View className="conItem" style={{ border: 'none' }}>
             <View className="circle">
-              <Image src="https://gitee.com/summersnake/images/raw/master/others/last_step.png" />
+              <Image src="https://s1.ax1x.com/2020/06/01/tGtgiR.png" />
             </View>
             <View className="conTitle">2019年5月10日</View>
             <View className="conTxt">完结撒花</View>
@@ -46,7 +46,7 @@ class Introduction extends Component {
 
           <View className="conItem">
             <View className="circle">
-              <Image src="https://gitee.com/summersnake/images/raw/master/others/tip_image.png" />
+              <Image src="https://s1.ax1x.com/2020/06/01/tGt5LD.png" />
             </View>
             <View className="conTitle">欢迎给星星，谢谢！</View>
             <View className="conTxt">希望能对可爱的同行们有所帮助。</View>

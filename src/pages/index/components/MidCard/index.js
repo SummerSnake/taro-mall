@@ -40,17 +40,14 @@ class MidCard extends Component {
           {title}
           <View className="moreArrow right">
             <Text>更多</Text>
-            <Image
-              className="moreArrowImg"
-              src="https://gitee.com/summersnake/images/raw/master/others/arrow_right.png"
-            />
+            <Image className="moreArrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
           </View>
         </View>
         <View className="midCardBanner left">
           <Image src={picture} />
         </View>
         <View className="midItemWrap clearfix">
-          {imgList.map(item => (
+          {imgList.map((item) => (
             <View
               className="midItemDom left"
               key={item.id}

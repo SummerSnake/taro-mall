@@ -37,7 +37,7 @@ class GoodInfo extends Component {
     const goodsList = Taro.getStorageSync('goodsList');
     if (goodsList && goodsList.length > 0) {
       const list = JSON.parse(JSON.stringify(goodsList));
-      list.forEach(item => {
+      list.forEach((item) => {
         if (item.id === this.$router.preload.id) {
           this.setState({
             totalNum: item.num,
@@ -52,7 +52,7 @@ class GoodInfo extends Component {
    * 商品数量按钮事件
    * @param type
    */
-  btnClick = type => {
+  btnClick = (type) => {
     let num = this.state.totalNum;
     num = type === 'add' ? (num += 1) : (num -= 1);
     if (num < 1) {
@@ -69,7 +69,7 @@ class GoodInfo extends Component {
    * tab 点击事件
    * @param value
    */
-  handleTabClick = value => {
+  handleTabClick = (value) => {
     this.setState({
       currentTab: value,
     });
@@ -86,7 +86,7 @@ class GoodInfo extends Component {
       if (goodsList && goodsList.length > 0) {
         const list = JSON.parse(JSON.stringify(goodsList));
         let flag = true;
-        list.forEach(item => {
+        list.forEach((item) => {
           // 如果缓存在该商品，则添加数量
           if (item.id === this.props.goodInfo.id) {
             item.num = this.state.totalNum;
@@ -119,7 +119,7 @@ class GoodInfo extends Component {
    * 跳转页面
    * @param type
    */
-  goHref = type => {
+  goHref = (type) => {
     switch (type) {
       case '01':
         Taro.switchTab({
@@ -227,8 +227,8 @@ class GoodInfo extends Component {
                 currentTab === 0
                   ? goodInfo.goodPic
                   : currentTab === 1
-                  ? 'https://gitee.com/summersnake/images/raw/master/others/saber.jpg'
-                  : 'https://gitee.com/summersnake/images/raw/master/others/saber_logo.jpg'
+                  ? 'https://s1.ax1x.com/2020/06/01/tGtWz6.jpg'
+                  : 'https://s1.ax1x.com/2020/06/01/tGt4sO.jpg'
               }
             />
           </View>

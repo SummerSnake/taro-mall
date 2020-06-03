@@ -23,7 +23,7 @@ class OrderHeader extends Component {
    * 跳转页面
    * @param type
    */
-  goHref = type => {
+  goHref = (type) => {
     Taro.setStorageSync('navType', 'order');
     switch (type) {
       case '01':
@@ -53,7 +53,7 @@ class OrderHeader extends Component {
       addrTxt = addrInfo.address;
     } else {
       // 挂载带出默认地址
-      addrList.forEach(item => {
+      addrList.forEach((item) => {
         if (item.type === 1) {
           addrObj = { ...item };
           addrTxt = `${item.province}${item.city}${item.region}${item.detailAddr}`;
@@ -67,10 +67,7 @@ class OrderHeader extends Component {
             <View>
               <Text>{addrObj.consignee}</Text>
               <Text>{addrObj.phone}</Text>
-              <Image
-                className="imgDom"
-                src="https://haifeng-1258278342.cos.ap-chengdu.myqcloud.com/images/more_arrow.png"
-              />
+              <Image className="imgDom" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
             </View>
             <View>{addrTxt}</View>
           </View>
@@ -78,20 +75,14 @@ class OrderHeader extends Component {
           <View className="addrDom" onClick={this.goHref.bind(this, '01')}>
             <View>
               <Text>请选择地址</Text>
-              <Image
-                className="imgDom"
-                src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
-              />
+              <Image className="imgDom" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
             </View>
           </View>
         )}
         <View className="invoiceDom" onClick={this.goHref.bind(this, '02')}>
           <AtIcon prefixClass="fa" value="files-text-o" size="14" color="#999" />
           <Text>发票信息：{params.company || ''}</Text>
-          <Image
-            className="imgDom right"
-            src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
-          />
+          <Image className="imgDom right" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
         </View>
       </View>
     );

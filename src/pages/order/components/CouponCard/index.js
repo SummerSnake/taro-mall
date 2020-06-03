@@ -25,7 +25,7 @@ class CouponCard extends Component {
     });
   };
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps) => {
     if (nextProps.couponInfo.couponId !== this.props.couponInfo.couponId) {
       this.setState({
         couponName: nextProps.couponInfo.couponName,
@@ -42,7 +42,7 @@ class CouponCard extends Component {
    * 选择积分
    * @param e
    */
-  pickerChange = e => {
+  pickerChange = (e) => {
     const { score } = this.props.fetchData;
     const { scoreArr } = this.state;
     if (scoreArr[parseInt(e.detail.value)] <= score) {
@@ -76,20 +76,14 @@ class CouponCard extends Component {
 
         <View className="couponItem" onClick={this.goCouponList.bind(this)}>
           优惠券
-          <Image
-            className="arrowImg"
-            src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
-          />
+          <Image className="arrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
           <Text className="itemTxt right">{this.state.couponName}</Text>
         </View>
 
         <View className="couponItem">
           积分抵扣金额
           <View>(100积分抵扣10元)</View>
-          <Image
-            className="arrowImg right"
-            src="https://gitee.com/summersnake/images/raw/master/others/more_arrow.png"
-          />
+          <Image className="arrowImg right" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
           <View className="pickDom right">
             <Picker
               onChange={this.pickerChange}

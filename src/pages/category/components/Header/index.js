@@ -15,7 +15,7 @@ class Header extends Component {
   /**
    * 监听搜索框
    */
-  inputValChange = e => {
+  inputValChange = (e) => {
     this.setState({
       inputVal: e.detail.value,
     });
@@ -52,7 +52,7 @@ class Header extends Component {
    * 点击排序
    * @param type
    */
-  sortFunc = type => {
+  sortFunc = (type) => {
     this.setState({
       isReverse: type,
     });
@@ -79,7 +79,7 @@ class Header extends Component {
           <Image
             className="imgDom"
             style={{ display: isVisible && inputVal === '' ? 'block' : 'none' }}
-            src="https://gitee.com/summersnake/images/raw/master/others/search_icon.png"
+            src="https://s1.ax1x.com/2020/06/01/tGthQK.png"
           />
           <Text onClick={this.handleSearch}>搜索</Text>
         </View>
@@ -87,21 +87,21 @@ class Header extends Component {
           <View className="sortItem" onClick={this.sortFunc.bind(this, 0)}>
             <Text>综合</Text>
             <Image
-              src="https://gitee.com/summersnake/images/raw/master/others/arrow_down.png"
+              src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"
               className={isReverse === 0 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>
           <View className="sortItem" onClick={this.sortFunc.bind(this, 1)}>
             <Text>销量</Text>
             <Image
-              src="https://gitee.com/summersnake/images/raw/master/others/arrow_down.png"
+              src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"
               className={isReverse === 1 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>
           <View className="sortItem" onClick={this.sortFunc.bind(this, 2)}>
             <Text>价格</Text>
             <Image
-              src="https://gitee.com/summersnake/images/raw/master/others/arrow_down.png"
+              src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"
               className={isReverse === 2 ? 'sortImgReverse' : 'sortImg'}
             />
           </View>
