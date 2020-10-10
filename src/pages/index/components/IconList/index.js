@@ -9,7 +9,7 @@ class IconList extends Component {
    */
   goGoodList = iconId => {
     this.$preload({ iconId });
-    Taro.navigateTo({
+    Taro.switchTab({
       url: '/pages/category/index',
     });
   };

@@ -81,10 +81,10 @@ export default {
 `;
 
 // service页面模版
-const serviceTep = `import { postRequest } from '../../utils/api';
+const serviceTep = `import { getRequest } from '../../utils/api';
 
 const ${dirName} = async(params) => {
-  return await postRequest('/${dirName}', params);
+  return await getRequest('/${dirName}', params);
 };
 
 export default ${dirName};

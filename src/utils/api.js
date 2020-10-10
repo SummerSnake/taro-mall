@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 
-export const apiUrl = 'http://rap2.taobao.org:38080/app/mock/256282/mall';
+export const apiUrl = 'http://rap2api.taobao.org/app/mock/256282/mall';
 
 /**
  * POST 请求

@@ -1,7 +1,7 @@
-import { postRequest } from '@/utils/api';
+import { getRequest } from '@/utils/api';
 
 const suggestion = async params => {
-  return await postRequest('/submitCallback', params);
+  return await getRequest('/submitCallback', params);
 };
 
 export default suggestion;
