@@ -4,7 +4,7 @@ import { getGoodsListApi, getCategoryListApi } from '@/services/category';
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
 import Header from './components/Header/index';
-import Classify from './components/Category/index';
+import Classify from './components/Classify/index';
 import GoodsList from './components/GoodsList/index';
 
 import './index.scss';
@@ -22,6 +22,8 @@ function Category() {
 
   /**
    * @desc 获取商品列表
+   * @param { object } filters
+   * @param { object } pagination
    * @return { void }
    */
   const fetchGoodsList = async (filters = filters, pagination = pagination) => {
@@ -56,39 +58,41 @@ function Category() {
     fetchCategoryList();
   }, []);
 
-  <View className="categoryWrap">
-    <Header
-      onHeaderCall={(json) => {
-        setFilters({ ...filters, ...json });
-        fetchGoodsList(json);
-      }}
-    />
+  return (
+    <View className="categoryWrap">
+      <Header
+        onHeaderCall={(json) => {
+          setFilters({ ...filters, ...json });
+          fetchGoodsList(json);
+        }}
+      />
 
-    <Classify
-      onClassifyCall={(json) => {
-        setFilters({ ...filters, ...json });
-        fetchGoodsList(json);
-      }}
-      classifyList={categoryList}
-    />
+      <Classify
+        onClassifyCall={(json) => {
+          setFilters({ ...filters, ...json });
+          fetchGoodsList(json);
+        }}
+        classifyList={categoryList}
+      />
 
-    <GoodsList
-      goodsList={goodsList}
-      onGoodsCall={(json) => {
-        if (json.type === 'loading') {
-          setPagination((pagination.current += 1));
-          fetchGoodsList(null, {
-            ...pagination,
-            current: (pagination.current += 1),
-          });
-        }
-      }}
-    />
+      <GoodsList
+        goodsList={goodsList}
+        onGoodsCall={(json) => {
+          if (json.type === 'loading') {
+            setPagination((pagination.current += 1));
+            fetchGoodsList(null, {
+              ...pagination,
+              current: (pagination.current += 1),
+            });
+          }
+        }}
+      />
 
-    <Loading isLoading={loading} />
+      <Loading isLoading={loading} />
 
-    <NoData isVisible={goodsList.length === 0} />
-  </View>;
+      <NoData isVisible={goodsList.length === 0} />
+    </View>
+  );
 }
 
 export default Category;

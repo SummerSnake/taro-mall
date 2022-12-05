@@ -1,111 +1,113 @@
-import Taro, { Component } from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
+import Taro from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
+import { getCouponListApi } from '@/services/coupon';
+
 import Loading from '@/components/Loading/index';
+
 import './index.scss';
 
-@connect(({ coupon, loading }) => ({
-  ...coupon,
-  ...loading,
-}))
-class Coupon extends Component {
-
-  componentDidMount = () => {
-    this.fetchApi(0);
-  };
+function Coupon() {
+  const [couponList, setCouponList] = useState([]);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   /**
-   * tab 点击事件
-   * @param value
+   * @desc 订单页面选择优惠券
+   * @param { string } id
+   * @param { string } couponName
+   * @param { number } amount
+   * @return { void }
    */
-  handleTabClick = value => {
-    this.fetchApi(value);
-  };
-
-  /**
-   * 获取数据
-   * @param current
-   */
-  fetchApi = current => {
-    this.props.dispatch({
-      type: 'coupon/save',
-      payload: {
-        current,
-      },
-    });
-    this.props.dispatch({
-      type: 'coupon/load',
-    });
-  };
-
-  /**
-   * 订单页面选择优惠券
-   * @param id
-   * @param couponName
-   * @param amount
-   */
-  goOrder = (id, couponName, amount) => {
+  const handleRedirectOrder = (id, couponName, amount) => {
     if (Taro.getStorageSync('navType') === 'order') {
       Taro.setStorageSync('couponInfo', {
         couponName,
         couponId: id,
         couponAmount: amount,
       });
+
       Taro.navigateBack();
     }
   };
 
-  render() {
-    const { couponList, current, effects } = this.props;
-    return (
-      <View className="couponWrap">
-        <View className="tabsHeader">
-          <View
-            className={current === 0 ? 'tabTagActive' : 'tabTag'}
-            onClick={this.handleTabClick.bind(this, 0)}
-          >
-            可用优惠券
-          </View>
-          <View
-            className={current === 1 ? 'tabTagActive' : 'tabTag'}
-            onClick={this.handleTabClick.bind(this, 1)}
-          >
-            已失效优惠券
-          </View>
-        </View>
+  /**
+   * @desc 获取商品列表
+   * @return { void }
+   */
+  const fetchCouponList = async () => {
+    setLoading(true);
+    const res = await getCouponListApi();
 
-        <View className="tabsCon">
-          {Array.isArray(couponList) &&
-            couponList.map(item => (
-              <View
-                className="tabsItem"
-                key={item.id}
-                onClick={this.goOrder.bind(this, item.id, item.name, item.amount)}
-              >
-                <View className="tabTitle">
-                  {item.name}
-                  <Text className="right" style={{ color: current === 0 ? '#e80e27' : '#999' }}>
-                    ￥{item.amount}
-                  </Text>
-                </View>
-                <View className="tabCon">适用类型：{item.type}</View>
-                <View className="tabCon">最低消费：{item.minCost}</View>
-                <View className="tabCon">
-                  有效期：{item.startDate}
-                  <Text>至</Text>
-                  {item.endDate}
-                </View>
-                <View className="invalidDom" style={{ display: current === 0 ? 'none' : 'block' }}>
-                  已失效
-                </View>
-              </View>
-            ))}
-        </View>
+    if (res?.status === 200) {
+      const list =
+        tabIndex === 0
+          ? res?.data.filter((item) => new Date() < new Date(Date.parse(item.endDate)))
+          : res?.data.filter((item) => new Date() > new Date(Date.parse(item.endDate)));
 
-        <Loading isLoading={effects['coupon/load']} />
+      setCouponList(list);
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCouponList();
+  }, []);
+
+  return (
+    <View className="couponWrap">
+      <View className="tabsHeader">
+        <View
+          className={tabIndex === 0 ? 'tabTagActive' : 'tabTag'}
+          onClick={() => {
+            setTabIndex(0);
+            fetchCouponList(0);
+          }}
+        >
+          可用优惠券
+        </View>
+        <View
+          className={tabIndex === 1 ? 'tabTagActive' : 'tabTag'}
+          onClick={() => {
+            setTabIndex(1);
+            fetchCouponList(1);
+          }}
+        >
+          已失效优惠券
+        </View>
       </View>
-    );
-  }
+
+      <View className="tabsCon">
+        {Array.isArray(couponList) &&
+          couponList.map((item) => (
+            <View
+              className="tabsItem"
+              key={item.id}
+              onClick={() => handleRedirectOrder(this, item.id, item.name, item.amount)}
+            >
+              <View className="tabTitle">
+                {item.name}
+                <Text className="right" style={{ color: tabIndex === 0 ? '#e80e27' : '#999' }}>
+                  ￥{item.amount}
+                </Text>
+              </View>
+              <View className="tabCon">适用类型：{item.type}</View>
+              <View className="tabCon">最低消费：{item.minCost}</View>
+              <View className="tabCon">
+                有效期：{item.startDate}
+                <Text>至</Text>
+                {item.endDate}
+              </View>
+              <View className="invalidDom" style={{ display: tabIndex === 0 ? 'none' : 'block' }}>
+                已失效
+              </View>
+            </View>
+          ))}
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default Coupon;
