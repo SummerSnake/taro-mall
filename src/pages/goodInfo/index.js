@@ -1,281 +1,250 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
+import { useDidHide } from '@tarojs/taro';
+import { getGoodsListApi } from '@/services/good';
+
 import { View, Text, Image, Button } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
-import { connect } from '@tarojs/redux';
 import Loading from '@/components/Loading/index';
+
 import './index.scss';
 
-@connect(({ goodInfo, loading }) => ({
-  ...goodInfo,
-  ...loading,
-}))
-class GoodInfo extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      currentTab: 0,
-      totalNum: 0,
-      totalMoney: 0,
-    };
-  }
+function GoodInfo() {
+  const {
+    router: { params = {} },
+  } = getCurrentInstance() && getCurrentInstance();
 
-  
-  
+  const [goodInfo, setGoodInfo] = useState({});
+  const [tabIndex, setTabIndex] = useState(0);
+  const [totalNum, setTotalNum] = useState(0);
+  const [totalMoney, setTotalMoney] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  componentDidMount = async () => {
-    const {
-      router: { params = {} },
-    } = getCurrentInstance() && getCurrentInstance();
+  /**
+   * @desc 商品数量按钮点击事件
+   * @param { string } type
+   * @return { void }
+   */
+  const btnClick = (type) => {
+    num = type === 'add' ? (totalNum += 1) : (totalNum -= 1);
 
-    this.props.dispatch({
-      type: 'goodInfo/save',
-      payload: {
-        goodId: params.id,
-      },
-    });
-    await this.props.dispatch({
-      type: 'goodInfo/load',
-    });
-    // 挂载时获取缓存中的商品信息
-    const goodsList = Taro.getStorageSync('goodsList');
-    if (goodsList && goodsList.length > 0) {
-      const list = JSON.parse(JSON.stringify(goodsList));
-      const {
-        router: { params },
-      } = getCurrentInstance() && getCurrentInstance();
-
-      list.forEach((item) => {
-        if (item.id === params.id) {
-          this.setState({
-            totalNum: item.num,
-            totalMoney: (item.num * this.props.goodInfo.price).toFixed(2),
-          });
-        }
-      });
+    if (num < 0) {
+      return;
     }
+
+    setTotalNum(num);
+    setTotalMoney((goodInfo.price * num).toFixed(2));
   };
 
   /**
-   * 商品数量按钮事件
-   * @param type
+   * @desc 跳转页面
+   * @param { string } url
+   * @param { string } action
+   * @return { void }
    */
-  btnClick = (type) => {
-    let num = this.state.totalNum;
-    num = type === 'add' ? (num += 1) : (num -= 1);
-    if (num < 1) {
-      num = 0;
+  handleRedirect = (url, action) => {
+    if (url === '/pages/cart/index' || url === '/pages/order/index') {
+      updateStorage();
     }
-    let money = this.props.goodInfo.price;
-    this.setState({
-      totalNum: num,
-      totalMoney: (money * num).toFixed(2),
-    });
+
+    Taro[action]({ url });
   };
 
   /**
-   * tab 点击事件
-   * @param value
+   * @desc 将商品信息存入缓存
+   * @return { void }
    */
-  handleTabClick = (value) => {
-    this.setState({
-      currentTab: value,
-    });
-  };
-
-  /**
-   * 将商品信息存入缓存
-   */
-  setStore = () => {
-    // 将购买的商品 id, 数量 存到缓存中
-    if (this.state.totalNum > 0) {
-      // 如果缓存中存在 goodsList 字段
+  const updateStorage = () => {
+    if (totalNum > 0) {
+      let list = [];
       const goodsList = Taro.getStorageSync('goodsList');
-      if (goodsList && goodsList.length > 0) {
-        const list = JSON.parse(JSON.stringify(goodsList));
-        let flag = true;
+      if (goodsList) {
+        list = JSON.parse(goodsList);
+        let hasItem = false;
         list.forEach((item) => {
-          // 如果缓存在该商品，则添加数量
-          if (item.id === this.props.goodInfo.id) {
-            item.num = this.state.totalNum;
-            flag = false;
+          // 如果缓存在该 商品信息，则添加数量
+          if (item.id === goodInfo?.id) {
+            item.num = totalNum;
+            hasItem = true;
           }
         });
-        if (flag) {
+        // 如果缓不存在该 商品信息，则加入缓存
+        if (!hasItem) {
           list.push({
-            // 如果缓不存在该商品，则加入缓存
-            ...this.props.goodInfo,
-            num: this.state.totalNum,
+            ...goodInfo,
+            num: totalNum,
           });
         }
-        Taro.setStorageSync('goodsList', list);
       } else {
-        // 如果不存在，则将商品 id 数量 存入缓存中
-        let timeStamp = Date.parse(new Date()) + 2592000000;
-        Taro.setStorageSync('goodsList', [
-          {
-            ...this.props.goodInfo,
-            num: this.state.totalNum,
-          },
-        ]);
-        Taro.setStorageSync('expiration', timeStamp);
+        // 如果不存在，则将 商品信息 存入缓存中
+        list.push({ ...goodInfo, num: totalNum });
       }
+
+      Taro.setStorageSync('goodsList', JSON.stringify(list));
     }
   };
 
   /**
-   * 跳转页面
-   * @param type
+   * @desc 获取商品列表
+   * @param { object } filters
+   * @param { object } pagination
+   * @return { void }
    */
-  goHref = (type) => {
-    switch (type) {
-      case '01':
-        Taro.switchTab({
-          url: '/pages/index/index',
+  const fetchGoodsList = async () => {
+    setLoading(true);
+    const res = await getGoodsListApi({ pagination, filters });
+
+    if (res?.status === 200) {
+      const info = res?.data.filter((item) => item.id === params?.id);
+
+      setGoodInfo(info[0]);
+
+      // 获取缓存中的商品信息
+      const goodsList = Taro.getStorageSync('goodsList');
+      if (goodsList) {
+        const list = JSON.parse(goodsList);
+
+        list.forEach((item) => {
+          if (item.id === params?.id) {
+            setTotalNum(item.num);
+            setTotalMoney((item.num * info[0]?.price).toFixed(2));
+          }
         });
-        break;
-      case '02':
-        Taro.switchTab({
-          url: '/pages/category/index',
-        });
-        break;
-      case '03':
-        this.setStore();
-        Taro.switchTab({
-          url: '/pages/cart/index',
-        });
-        break;
-      case '04':
-        this.setStore();
-        Taro.navigateTo({
-          url: '/pages/order/index',
-        });
-        break;
-      default:
-        Taro.switchTab({
-          url: '/pages/index/index',
-        });
+      }
     }
+
+    setLoading(false);
   };
 
-  componentWillUnmount = () => {
-    this.setStore();
-  };
+  useEffect(() => {
+    fetchGoodsList();
+  }, []);
 
-  render() {
-    const { goodInfo, effects } = this.props;
-    const { currentTab } = this.state;
-    return (
-      <View className="goodsInfoWrap">
-        <View className="bannerWrap">
-          <Image src={goodInfo.goodPic} />
-        </View>
+  useDidHide(() => {
+    updateStorage();
+  });
 
-        <View className="infoTxtWrap">
-          <View className="txtTop">
-            <Text className="ellipsis">{goodInfo.name}</Text>
-          </View>
-          <View className="txtBottom">
-            <Text>￥{goodInfo.price}</Text>
-            <Text className="bottomLast">￥{goodInfo.price}</Text>
-          </View>
-          <View className="txtRight right">
-            <Text>库存：9999</Text>
-            <Text>销量：9999</Text>
-          </View>
-        </View>
-
-        <View className="numWrap">
-          <View className="totalMoney">
-            合计：<Text>{this.state.totalMoney}</Text>
-          </View>
-          <View className="btnGroup right">
-            <View className="subBtn" onClick={this.btnClick.bind(this, 'sub')}>
-              <AtIcon value="subtract-circle" size="20" color="#999" />
-            </View>
-            <View className="totalNum">{this.state.totalNum}</View>
-            <View className="addBtn" onClick={this.btnClick.bind(this, 'add')}>
-              <AtIcon value="add-circle" size="20" color="#999" />
-            </View>
-          </View>
-        </View>
-
-        <View className="tabsWrap">
-          <View className="tabsHeader">
-            <View>
-              <Text
-                className={currentTab === 0 ? 'tabTagActive' : 'tabTag'}
-                onClick={this.handleTabClick.bind(this, 0)}
-              >
-                商品描述
-              </Text>
-            </View>
-            <View>
-              <Text
-                className={currentTab === 1 ? 'tabTagActive' : 'tabTag'}
-                onClick={this.handleTabClick.bind(this, 1)}
-              >
-                规格参数
-              </Text>
-            </View>
-            <View>
-              <Text
-                className={currentTab === 2 ? 'tabTagActive' : 'tabTag'}
-                onClick={this.handleTabClick.bind(this, 2)}
-              >
-                包装售后
-              </Text>
-            </View>
-          </View>
-
-          <View className="tabsCon">
-            <Image
-              mode="widthFix"
-              src={
-                currentTab === 0
-                  ? goodInfo.goodPic
-                  : currentTab === 1
-                  ? 'https://s1.ax1x.com/2020/06/01/tGtWz6.jpg'
-                  : 'https://s1.ax1x.com/2020/06/01/tGt4sO.jpg'
-              }
-            />
-          </View>
-        </View>
-
-        <View className="goodInfoBottom">
-          <View className="bottomIconWrap">
-            <View className="bottomIcon">
-              <AtIcon value="home" size="21" color="#666" onClick={this.goHref.bind(this, '01')} />
-              <View className="iconTxt">首页</View>
-            </View>
-            <View className="bottomIcon" onClick={this.goHref.bind(this, '02')}>
-              <AtIcon value="bullet-list" size="21" color="#666" />
-              <View className="iconTxt">分类</View>
-            </View>
-            <View className="bottomIcon" onClick={this.goHref.bind(this, '03')}>
-              <View
-                className="badgeDom"
-                style={{ display: this.state.totalNum > 0 ? 'block' : 'none' }}
-              >
-                {this.state.totalNum}
-              </View>
-              <AtIcon value="shopping-cart" size="21" color="#666" />
-              <View className="iconTxt">购物车</View>
-            </View>
-          </View>
-          <View className="botBtnWrap">
-            <View className="addToCart" onClick={this.btnClick.bind(this, 'add')}>
-              加入购物车
-            </View>
-            <Button className="goPay" onClick={this.goHref.bind(this, '04')}>
-              去结算
-            </Button>
-          </View>
-        </View>
-
-        <Loading isLoading={effects['goodInfo/load']} />
+  return (
+    <View className="goodsInfoWrap">
+      <View className="bannerWrap">
+        <Image src={goodInfo.goodPic} />
       </View>
-    );
-  }
+
+      <View className="infoTxtWrap">
+        <View className="txtTop">
+          <Text className="ellipsis">{goodInfo.name}</Text>
+        </View>
+        <View className="txtBottom">
+          <Text>￥{goodInfo.price}</Text>
+          <Text className="bottomLast">￥{goodInfo.price}</Text>
+        </View>
+        <View className="txtRight right">
+          <Text>库存：9999</Text>
+          <Text>销量：9999</Text>
+        </View>
+      </View>
+
+      <View className="numWrap">
+        <View className="totalMoney">
+          合计：<Text>{totalMoney}</Text>
+        </View>
+        <View className="btnGroup right">
+          <View className="subBtn" onClick={() => btnClick('sub')}>
+            <AtIcon value="subtract-circle" size="20" color="#999" />
+          </View>
+          <View className="totalNum">{totalNum}</View>
+          <View className="addBtn" onClick={() => btnClick('add')}>
+            <AtIcon value="add-circle" size="20" color="#999" />
+          </View>
+        </View>
+      </View>
+
+      <View className="tabsWrap">
+        <View className="tabsHeader">
+          <View>
+            <Text
+              className={tabIndex === 0 ? 'tabTagActive' : 'tabTag'}
+              onClick={() => setTabIndex(0)}
+            >
+              商品描述
+            </Text>
+          </View>
+          <View>
+            <Text
+              className={tabIndex === 1 ? 'tabTagActive' : 'tabTag'}
+              onClick={() => setTabIndex(1)}
+            >
+              规格参数
+            </Text>
+          </View>
+          <View>
+            <Text
+              className={tabIndex === 2 ? 'tabTagActive' : 'tabTag'}
+              onClick={() => setTabIndex(2)}
+            >
+              包装售后
+            </Text>
+          </View>
+        </View>
+
+        <View className="tabsCon">
+          <Image
+            mode="widthFix"
+            src={
+              tabIndex === 0
+                ? goodInfo.goodPic
+                : tabIndex === 1
+                ? 'https://s1.ax1x.com/2020/06/01/tGtWz6.jpg'
+                : 'https://s1.ax1x.com/2020/06/01/tGt4sO.jpg'
+            }
+          />
+        </View>
+      </View>
+
+      <View className="goodInfoBottom">
+        <View className="bottomIconWrap">
+          <View className="bottomIcon">
+            <AtIcon
+              value="home"
+              size="21"
+              color="#666"
+              onClick={() => handleRedirect('/pages/index/index', 'switchTab')}
+            />
+            <View className="iconTxt">首页</View>
+          </View>
+          <View
+            className="bottomIcon"
+            onClick={() => handleRedirect('/pages/category/index', 'switchTab')}
+          >
+            <AtIcon value="bullet-list" size="21" color="#666" />
+            <View className="iconTxt">分类</View>
+          </View>
+          <View
+            className="bottomIcon"
+            onClick={() => handleRedirect('/pages/cart/index', 'switchTab')}
+          >
+            <View className="badgeDom" style={{ display: totalNum > 0 ? 'block' : 'none' }}>
+              {totalNum}
+            </View>
+            <AtIcon value="shopping-cart" size="21" color="#666" />
+            <View className="iconTxt">购物车</View>
+          </View>
+        </View>
+        <View className="botBtnWrap">
+          <View className="addToCart" onClick={() => btnClick('add')}>
+            加入购物车
+          </View>
+          <Button
+            className="goPay"
+            onClick={() => handleRedirect('/pages/order/index', 'navigateTo')}
+          >
+            去结算
+          </Button>
+        </View>
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default GoodInfo;

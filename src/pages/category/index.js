@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getGoodsListApi, getCategoryListApi } from '@/services/category';
+import { getCategoryListApi } from '@/services/category';
+import { getGoodsListApi } from '@/services/good';
 
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
