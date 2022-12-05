@@ -1,97 +1,94 @@
-import Taro, { Component } from '@tarojs/taro';
-import { View } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
+import React, { useState, useEffect } from 'react';
+import { getGoodsListApi, getCategoryListApi } from '@/services/category';
+
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
-import { isObj } from '@/utils/api';
 import Header from './components/Header/index';
-import Classify from './components/Classify/index';
+import Classify from './components/Category/index';
 import GoodsList from './components/GoodsList/index';
+
 import './index.scss';
 
-@connect(({ category, loading }) => ({
-  ...category,
-  ...loading,
-}))
-class Category extends Component {
+function Category() {
+  const [goodsList, setGoodsList] = useState([]);
+  const [categoryList, setGategoryList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  componentDidMount = async () => {
-    this.props.dispatch({ type: 'category/load' });
-    this.props.dispatch({ type: 'category/loadClassify' });
-  };
+  const [filters, setFilters] = useState({});
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+  });
 
   /**
-   * 头部回调
-   * @param json
+   * @desc 获取商品列表
+   * @return { void }
    */
-  onHeaderCall = json => {
-    if (isObj(json) && Object.keys(json).length > 0) {
-      this.fetchApi(json);
+  const fetchGoodsList = async (filters = filters, pagination = pagination) => {
+    setLoading(true);
+    const res = await getCategoryListApi({ pagination, filters });
+
+    if (res?.status === 200) {
+      const list = pagination.current > 1 ? [...goodsList, ...res?.data] : res?.data;
+      setGoodsList(list);
     }
+
+    setLoading(false);
   };
 
   /**
-   * 分类回调
-   * @param json
+   * @desc 获取商品列表
+   * @return { void }
    */
-  onClassifyCall = json => {
-    if (isObj(json) && Object.keys(json).length > 0) {
-      this.fetchApi(json);
+  const fetchCategoryList = async () => {
+    setLoading(true);
+    const res = await getGoodsListApi();
+
+    if (res?.status === 200) {
+      setGategoryList(res?.data);
     }
+
+    setLoading(false);
   };
 
-  /**
-   * 列表滚动回调
-   * @param json
-   */
-  onGoodsCall = json => {
-    if (json.type === 'loading') {
-      this.fetchApi(null, {
-        current: (this.props.pagination.current += 1),
-      });
-    }
-  };
+  useEffect(() => {
+    fetchGoodsList();
+    fetchCategoryList();
+  }, []);
 
-  /**
-   * 获取数据
-   * @param filters
-   * @param pagination
-   */
-  fetchApi = (filters, pagination) => {
-    this.props.dispatch({
-      type: 'category/save',
-      payload: {
-        filters: {
-          ...this.props.filters,
-          ...filters,
-        },
-        pagination: {
-          ...this.props.pagination,
-          ...pagination,
-        },
-      },
-    });
-    this.props.dispatch({
-      type: 'category/load',
-    });
-  };
+  <View className="categoryWrap">
+    <Header
+      onHeaderCall={(json) => {
+        setFilters({ ...filters, ...json });
+        fetchGoodsList(json);
+      }}
+    />
 
-  render() {
-    const { goodsList, classifyList, effects } = this.props;
-    return (
-      <View className="categoryWrap">
-        <Header onHeaderCall={this.onHeaderCall} />
+    <Classify
+      onClassifyCall={(json) => {
+        setFilters({ ...filters, ...json });
+        fetchGoodsList(json);
+      }}
+      classifyList={categoryList}
+    />
 
-        <Classify onClassifyCall={this.onClassifyCall} classifyList={classifyList} />
+    <GoodsList
+      goodsList={goodsList}
+      onGoodsCall={(json) => {
+        if (json.type === 'loading') {
+          setPagination((pagination.current += 1));
+          fetchGoodsList(null, {
+            ...pagination,
+            current: (pagination.current += 1),
+          });
+        }
+      }}
+    />
 
-        <GoodsList goodsList={goodsList} onGoodsCall={this.onGoodsCall} />
+    <Loading isLoading={loading} />
 
-        <Loading isLoading={effects['category/load']} />
-
-        <NoData isVisible={goodsList.length === 0} />
-      </View>
-    );
-  }
+    <NoData isVisible={goodsList.length === 0} />
+  </View>;
 }
 
 export default Category;

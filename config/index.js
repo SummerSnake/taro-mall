@@ -5,15 +5,17 @@ const config = {
   date: '2019-03-01',
   designWidth: 750,
   deviceRatio: {
-    '640': 2.34 / 2,
-    '750': 1,
-    '828': 1.81 / 2,
+    640: 2.34 / 2,
+    750: 1,
+    828: 1.81 / 2,
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@/services': path.resolve(__dirname, '..', 'src/services'),
+    '@/styles': path.resolve(__dirname, '..', 'src/styles'),
   },
   babel: {
     sourceMap: true,
@@ -84,7 +86,7 @@ const config = {
   },
 };
 
-module.exports = function(merge) {
+module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'));
   }
