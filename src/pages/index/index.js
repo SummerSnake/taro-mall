@@ -13,10 +13,6 @@ import './index.scss';
   ...loading,
 }))
 class Index extends Component {
-  config = {
-    navigationBarTitleText: '首页',
-  };
-
   componentDidMount = () => {
     this.props.dispatch({
       type: 'home/load',

@@ -24,13 +24,14 @@ class OrderList extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '订单列表',
-  };
-
   componentDidMount = async () => {
-    if (this.$router.preload) {
-      const curTab = this.$router.preload.current;
+    
+  const {
+    router: { params = {} },
+  } = getCurrentInstance() && getCurrentInstance();
+  
+    if (params) {
+      const curTab = params.current;
       this.setState({ curTab });
       this.fetchApi(curTab, null);
     }

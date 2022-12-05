@@ -24,10 +24,6 @@ export default class Order extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '确认订单',
-  };
-
   componentDidShow = async () => {
     this.fetchGoodsList();
   };
@@ -41,8 +37,12 @@ export default class Order extends Component {
     if (Array.isArray(list) && list.length > 0) {
       let arr = [];
       // 购物车选择的商品
-      if (isObj(this.$router.preload)) {
-        const { checkedGoods } = this.$router.preload;
+      const {
+        router: { params },
+      } = getCurrentInstance() && getCurrentInstance();
+
+      if (params?.checkedGoods) {
+        const { checkedGoods } = params;
         if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
           arr = list.filter(item => {
             return checkedGoods.includes(item.id);

@@ -19,15 +19,18 @@ class GoodInfo extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '商品详情',
-  };
+  
+  
 
   componentDidMount = async () => {
+    const {
+      router: { params = {} },
+    } = getCurrentInstance() && getCurrentInstance();
+
     this.props.dispatch({
       type: 'goodInfo/save',
       payload: {
-        goodId: this.$router.preload.id,
+        goodId: params.id,
       },
     });
     await this.props.dispatch({
@@ -37,8 +40,12 @@ class GoodInfo extends Component {
     const goodsList = Taro.getStorageSync('goodsList');
     if (goodsList && goodsList.length > 0) {
       const list = JSON.parse(JSON.stringify(goodsList));
+      const {
+        router: { params },
+      } = getCurrentInstance() && getCurrentInstance();
+
       list.forEach((item) => {
-        if (item.id === this.$router.preload.id) {
+        if (item.id === params.id) {
           this.setState({
             totalNum: item.num,
             totalMoney: (item.num * this.props.goodInfo.price).toFixed(2),

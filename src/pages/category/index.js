@@ -14,9 +14,6 @@ import './index.scss';
   ...loading,
 }))
 class Category extends Component {
-  config = {
-    navigationBarTitleText: '商品分类',
-  };
 
   componentDidMount = async () => {
     this.props.dispatch({ type: 'category/load' });

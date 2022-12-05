@@ -16,8 +16,12 @@ class AddrEdit extends Component {
   };
 
   componentDidMount = () => {
-    if (this.$router.preload && this.$router.preload.itemClone) {
-      const itemClone = { ...this.$router.preload.itemClone };
+    const {
+      router: { params },
+    } = getCurrentInstance() && getCurrentInstance();
+
+    if (params?.itemClone) {
+      const itemClone = { ...params?.itemClone };
       this.props.dispatch({
         type: 'addrEdit/save',
         payload: {

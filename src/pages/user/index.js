@@ -19,10 +19,6 @@ class User extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '我的',
-  };
-
   componentDidMount = async () => {
     const userInfo = Taro.getStorageSync('userInfo');
     if (isObj(userInfo) && Object.keys(userInfo).length > 0) {

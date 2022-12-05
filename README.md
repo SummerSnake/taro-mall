@@ -4,7 +4,7 @@
 
 # 技术栈
 
-Taro + Taro-ui + dva + scss
+Taro + Taro-ui + scss
 
 Taro 是一套遵循 React 语法规范的 多端开发 解决方案。
 
@@ -19,6 +19,7 @@ Taro 的语法规则基于 React 规范，它采用与 React 一致的组件化�
 # 部分截图展示
 
 ## 首页 && 分类列表
+
 <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/home.jpg" width="375" height="667" /> <img src="https://github.com/SummerSnake/taro-mall/blob/master/screenshots/category.jpg" width="375" height="667" />
 
 ## 商品详情 && 购物车
@@ -37,18 +38,11 @@ Taro 的语法规则基于 React 规范，它采用与 React 一致的组件化�
 
 ```
 
-git clone https://github.com/SummerSnake/taro-mall.git
-
-cd taro-mall
-
-# 全局安装taro脚手架
-yarn global add @tarojs/cli
-
 # 安装项目依赖
-yarn -i
+npm ci
 
-# 微信小程序
-yarn dev:weapp
+# 启动项目
+npm run dev || npm run start
 
 ```
 

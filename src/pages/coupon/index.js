@@ -9,9 +9,6 @@ import './index.scss';
   ...loading,
 }))
 class Coupon extends Component {
-  config = {
-    navigationBarTitleText: '优惠券',
-  };
 
   componentDidMount = () => {
     this.fetchApi(0);

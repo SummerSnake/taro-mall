@@ -16,10 +16,6 @@ class Cart extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '购物车',
-  };
-
   componentDidShow = async () => {
     this.setState({ isLoading: true });
     // 从缓存中拿当前购买的商品信息
@@ -133,9 +129,8 @@ class Cart extends Component {
    */
   goOrder = () => {
     this.setStore();
-    this.$preload({ checkedGoods: this.state.checkboxIds });
     Taro.navigateTo({
-      url: '/pages/order/index',
+      url: `/pages/order/index?checkedGoods=${this.state.checkboxIds}`,
     });
   };
 
@@ -162,7 +157,7 @@ class Cart extends Component {
     this.setStore();
     this.$preload({ id });
     Taro.navigateTo({
-      url: '/pages/goodInfo/index',
+      url: `/pages/goodInfo/index?id=${id}`,
     });
   };
 

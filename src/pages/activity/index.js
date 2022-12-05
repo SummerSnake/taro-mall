@@ -10,14 +10,14 @@ class Activity extends Component {
     };
   }
 
-  config = {
-    navigationBarTitleText: '活动',
-  };
 
   componentDidMount = () => {
-    const { list } = this.$router.preload;
+    const {
+      router: { params = {} },
+    } = getCurrentInstance() && getCurrentInstance();
+
     if (Array.isArray(list)) {
-      this.setState({ goodsList: list });
+      this.setState({ goodsList: params?.list });
     }
   };
 
@@ -26,9 +26,8 @@ class Activity extends Component {
    * @param id
    */
   goHref = id => {
-    this.$preload({ id });
     Taro.navigateTo({
-      url: '/pages/goodInfo/index',
+      url: `/pages/goodInfo/index?id=${id}`,
     });
   };
 
