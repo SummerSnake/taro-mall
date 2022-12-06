@@ -1,47 +1,50 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
 import { View } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
+import { getOrderInfoApi } from '@/services/good';
+
 import Loading from '@/components/Loading/index';
 import OrderHeader from './components/OrderHeader/index';
 import GoodsCard from './components/GoodsCard/index';
 import CouponCard from './components/CouponCard/index';
+
 import './index.scss';
 
-@connect(({ orderDetail, loading }) => ({
-  ...orderDetail,
-  ...loading,
-}))
-class OrderDetail extends Component {
-  config = {
-    navigationBarTitleText: '订单详情',
+function OrderDetail() {
+  const [orderInfo, setOrderInfo] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  /**
+   * @desc 获取订单列表
+   * @return { void }
+   */
+  const fetchOrderInfo = async () => {
+    setLoading(true);
+    const res = await getOrderInfoApi();
+
+    if (res?.status === 200) {
+      setOrderInfo(res?.data);
+    }
+
+    setLoading(false);
   };
-  static defaultProps = {
-    fetchData: {},
-  };
 
-  componentDidMount = () => {
-    this.props.dispatch({
-      type: 'orderDetail/load',
-    });
-  };
+  useEffect(() => {
+    fetchOrderInfo();
+  }, []);
 
-  render() {
-    const { headerInfo, goodsList, couponInfo, effects = [] } = this.props.fetchData;
+  return (
+    <View className="orderDetailWrap">
+      <OrderHeader headerInfo={orderInfo?.headerInfo} />
 
-    return (
-      <View className="orderDetailWrap">
-        <OrderHeader headerInfo={headerInfo} />
+      <GoodsCard goodsList={orderInfo?.goodsList} />
 
-        <GoodsCard goodsList={goodsList} />
+      <CouponCard couponInfo={orderInfo?.couponInfo} />
 
-        <CouponCard couponInfo={couponInfo} />
+      <View className="orderDetailBottom">返回首页</View>
 
-        <View className="orderDetailBottom">返回首页</View>
-
-        <Loading isLoading={effects['orderDetail/load']} />
-      </View>
-    );
-  }
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default OrderDetail;

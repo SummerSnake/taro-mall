@@ -20,13 +20,11 @@ function Index() {
 
   /**
    * @desc 获取商品列表
-   * @param { object } filters
-   * @param { object } pagination
    * @return { void }
    */
   const fetchGoodsList = async () => {
     setLoading(true);
-    const res = await getHomeDataApi({ pagination, filters });
+    const res = await getHomeDataApi();
 
     if (res?.status === 200) {
       setImgList(res?.data?.imgList);
