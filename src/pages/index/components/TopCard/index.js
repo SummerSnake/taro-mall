@@ -1,57 +1,42 @@
-import Taro, { Component } from '@tarojs/taro';
+import React from 'react';
+import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-class TopCard extends Component {
-  static defaultProps = {
-    topCardObj: {},
-  };
+function TopCard() {
+  const { topCardObj = {} } = props;
+  const imgList = midCardObj?.imgList?.splice(2);
 
-  /**
-   * 跳转活动列表或商品详情
-   * @param type
-   * @param id
-   */
-  goHref = (type, id) => {
-    switch (type) {
-      case '01':
-        this.$preload({ list: this.props.topCardObj.imgList });
-        Taro.navigateTo({
-          url: '/pages/activity/index',
-        });
-        break;
-      case '02':
-        this.$preload({ id });
-        Taro.navigateTo({
-          url: '/pages/goodInfo/index',
-        });
-        break;
-      default:
-    }
-  };
-
-  render() {
-    const { imgList } = this.props.topCardObj;
-    const { picture, title } = this.props.topCardObj;
-    Array.isArray(imgList) && imgList.length > 0 && imgList.splice(2);
-    return (
-      <View className="topCardWrap">
-        <View className="topCardTit" onClick={this.goHref.bind(this, '01')}>
-          {title}
-          <View className="moreArrow right">
-            <Text>更多</Text>
-            <Image className="moreArrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
-          </View>
+  return (
+    <View className="topCardWrap">
+      <View
+        className="topCardTit"
+        onClick={() =>
+          Taro.navigateTo({
+            url: `/pages/activity/index?list=${midCardObj?.imgList}`,
+          })
+        }
+      >
+        {topCardObj?.title}
+        <View className="moreArrow right">
+          <Text>更多</Text>
+          <Image className="moreArrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
         </View>
-        <View className="topCardBanner">
-          <Image src={picture} />
-        </View>
-        <View className="topItemWrap">
-          {imgList.map((item) => (
+      </View>
+      <View className="topCardBanner">
+        <Image src={topCardObj?.picture} />
+      </View>
+      <View className="topItemWrap">
+        {Array.isArray(imgList) &&
+          imgList.map((item) => (
             <View
               className="topItemDom"
               key={item.id}
-              onClick={this.goHref.bind(this, '02', item.id)}
+              onClick={() =>
+                Taro.navigateTo({
+                  url: `/pages/goodInfo/index?id=${item.id}`,
+                })
+              }
             >
               <View className="topItemImgWrap">
                 <Image src={item.goodPic} />
@@ -66,10 +51,9 @@ class TopCard extends Component {
               </View>
             </View>
           ))}
-        </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 export default TopCard;

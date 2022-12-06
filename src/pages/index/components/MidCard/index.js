@@ -1,57 +1,44 @@
-import Taro, { Component } from '@tarojs/taro';
+import React from 'react';
+import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-class MidCard extends Component {
-  static defaultProps = {
-    midCardObj: {},
-  };
+function MidCard(props) {
+  const { midCardObj = {} } = props;
+  const imgList = midCardObj?.imgList?.splice(4);
 
-  /**
-   * 跳转活动列表或商品详情
-   * @param type
-   * @param id
-   */
-  goHref = (type, id) => {
-    switch (type) {
-      case '01':
-        this.$preload({ list: this.props.midCardObj.imgList });
-        Taro.navigateTo({
-          url: '/pages/activity/index',
-        });
-        break;
-      case '02':
-        this.$preload({ id });
-        Taro.navigateTo({
-          url: '/pages/goodInfo/index',
-        });
-        break;
-      default:
-    }
-  };
+  return (
+    <View className="midCardWrap">
+      <View
+        className="midCardTit"
+        onClick={() =>
+          Taro.navigateTo({
+            url: `/pages/activity/index?list=${midCardObj?.imgList}`,
+          })
+        }
+      >
+        {midCardObj?.title}
+        <View className="moreArrow right">
+          <Text>更多</Text>
+          <Image className="moreArrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
+        </View>
+      </View>
 
-  render() {
-    const { imgList } = this.props.midCardObj;
-    const { picture, title } = this.props.midCardObj;
-    Array.isArray(imgList) && imgList.length > 0 && imgList.splice(4);
-    return (
-      <View className="midCardWrap">
-        <View className="midCardTit" onClick={this.goHref.bind(this, '01')}>
-          {title}
-          <View className="moreArrow right">
-            <Text>更多</Text>
-            <Image className="moreArrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
-          </View>
-        </View>
-        <View className="midCardBanner left">
-          <Image src={picture} />
-        </View>
-        <View className="midItemWrap clearfix">
-          {imgList.map((item) => (
+      <View className="midCardBanner left">
+        <Image src={midCardObj?.picture} />
+      </View>
+
+      <View className="midItemWrap clearfix">
+        {Array.isArray(imgList) &&
+          imgList.map((item) => (
             <View
               className="midItemDom left"
               key={item.id}
-              onClick={this.goHref.bind(this, '02', item.id)}
+              onClick={() =>
+                Taro.navigateTo({
+                  url: `/pages/goodInfo/index?id=${item.id}`,
+                })
+              }
             >
               <View className="midItemImgWrap">
                 <Image src={item.goodPic} />
@@ -66,10 +53,9 @@ class MidCard extends Component {
               </View>
             </View>
           ))}
-        </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 export default MidCard;

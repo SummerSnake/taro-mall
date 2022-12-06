@@ -1,49 +1,70 @@
-import Taro, { Component } from '@tarojs/taro';
-import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
+import React, { useState, useEffect } from 'react';
+import { Image, Swiper, SwiperItem } from '@tarojs/components';
+import { getHomeDataApi } from '@/services/good';
+
 import Loading from '@/components/Loading/index';
 import IconList from './components/IconList/index';
 import TopCard from './components/TopCard/index';
 import MidCard from './components/MidCard/index';
 import BotCard from './components/BotCard/index';
+
 import './index.scss';
 
-@connect(({ home, loading }) => ({
-  ...home,
-  ...loading,
-}))
-class Index extends Component {
-  componentDidMount = () => {
-    this.props.dispatch({
-      type: 'home/load',
-    });
+function Index() {
+  const [imgList, setImgList] = useState([]);
+  const [iconList, setIconList] = useState([]);
+  const [topCardObj, setTopCardObj] = useState({});
+  const [midCardObj, setMidCardObj] = useState({});
+  const [botCardObj, setBotCardObj] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  /**
+   * @desc 获取商品列表
+   * @param { object } filters
+   * @param { object } pagination
+   * @return { void }
+   */
+  const fetchGoodsList = async () => {
+    setLoading(true);
+    const res = await getHomeDataApi({ pagination, filters });
+
+    if (res?.status === 200) {
+      setImgList(res?.data?.imgList);
+      setIconList(res?.data?.iconList);
+      setTopCardObj(res?.data?.topCardObj);
+      setMidCardObj(res?.data?.midCardObj);
+      setBotCardObj(res?.data?.botCardObj);
+    }
+
+    setLoading(false);
   };
 
-  render() {
-    const { imgList, iconList, topCardObj, midCardObj, botCardObj, effects } = this.props;
-    return (
-      <View className="homeWrap">
-        <Swiper indicatorColor="#999" indicatorActiveColor="#fff" circular indicatorDots autoplay>
-          {Array.isArray(imgList) &&
-            imgList.map(img => (
-              <SwiperItem key={img.id}>
-                <Image src={img.imgUrl} />
-              </SwiperItem>
-            ))}
-        </Swiper>
+  useEffect(() => {
+    fetchGoodsList();
+  }, []);
 
-        <IconList iconList={iconList} />
+  return (
+    <View className="homeWrap">
+      <Swiper indicatorColor="#999" indicatorActiveColor="#fff" circular indicatorDots autoplay>
+        {Array.isArray(imgList) &&
+          imgList.map((img) => (
+            <SwiperItem key={img.id}>
+              <Image src={img.imgUrl} />
+            </SwiperItem>
+          ))}
+      </Swiper>
 
-        <TopCard topCardObj={topCardObj} />
+      <IconList iconList={iconList} />
 
-        <MidCard midCardObj={midCardObj} />
+      <TopCard topCardObj={topCardObj} />
 
-        <BotCard botCardObj={botCardObj} />
+      <MidCard midCardObj={midCardObj} />
 
-        <Loading isLoading={effects['home/load']} />
-      </View>
-    );
-  }
+      <BotCard botCardObj={botCardObj} />
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default Index;
