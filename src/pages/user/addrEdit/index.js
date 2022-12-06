@@ -4,7 +4,7 @@ import { AtIcon } from 'taro-ui';
 import { updateAddressApi } from '@/services/user';
 
 import Loading from '@/components/Loading/index';
-import { isNotNull } from '@/utils/util';
+import { isNotNull, isObj } from '@/utils/util';
 import { wxToast } from '@/utils/wxApi';
 
 import './index.scss';
@@ -88,7 +88,7 @@ function AddrEdit() {
   };
 
   useEffect(() => {
-    if (params?.itemClone) {
+    if (isObj(params?.itemClone) && Object.keys(params?.itemClone).length > 0) {
       const { itemClone = {} } = params;
 
       setFormData({

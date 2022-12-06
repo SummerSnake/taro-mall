@@ -9,4 +9,7 @@ const getAddressApi = async (params) => await getRequest('/addrPage', params);
 // 修改地址信息
 const updateAddressApi = async (params) => await getRequest('/addrPage', params);
 
-export { getUserInfoApi, getAddressApi, updateAddressApi };
+// 删除地址信息
+const deleteAddressApi = async (params) => await getRequest('/addrPage', params);
+
+export { getUserInfoApi, getAddressApi, updateAddressApi, deleteAddressApi };
