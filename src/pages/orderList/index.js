@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-import { getOrderListApi } from '@/services/good';
+import { getOrderListApi } from '@/services/order';
 
 import NoData from '@/components/NoData/index';
 import Loading from '@/components/Loading/index';
