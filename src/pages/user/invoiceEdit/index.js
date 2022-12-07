@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Input } from '@tarojs/components';
 import { isNotNull } from '@/utils/util';
+import { wxToast } from '@/utils/wxApi';
 import { updateInvoiceApi } from '@/services/user';
 
 import Loading from '@/components/Loading/index';
@@ -37,7 +38,8 @@ function InvoiceEdit() {
   };
 
   /**
-   * 提交
+   * @desc 提交
+   * @return { void }
    */
   const handleSubmit = async () => {
     if (checkInputVal(formData.company, '请输入单位名称')) {
@@ -100,10 +102,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">单位名称：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入单位名称"
               value={formData.company}
               onInput={(e) => handleInputChange(e, 'company')}
-              className="inputNode"
             />
           </View>
         </View>
@@ -111,10 +113,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">纳税人识别码：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入纳税人识别码"
               value={formData.taxpayer}
               onInput={(e) => handleInputChange(e, 'taxpayer')}
-              className="inputNode"
             />
           </View>
         </View>
@@ -122,10 +124,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">注册地址：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入注册地址"
               value={formData.regAddr}
               onInput={(e) => handleInputChange(e, 'regAddr')}
-              className="inputNode"
             />
           </View>
         </View>
@@ -133,10 +135,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">注册电话：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入注册电话"
               value={formData.regPhone}
               onInput={(e) => handleInputChange(e, 'regPhone')}
-              className="inputNode"
             />
           </View>
         </View>
@@ -144,10 +146,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">开户银行：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入开户银行"
               value={formData.bank}
               onInput={(e) => handleInputChange(e, 'bank')}
-              className="inputNode"
             />
           </View>
         </View>
@@ -155,10 +157,10 @@ function InvoiceEdit() {
           <View className="prefixDom left">银行账户：</View>
           <View className="inputDom left">
             <Input
-              type="text"
+              className="inputNode"
+              placeholder="请输入银行账户"
               value={formData.bankAccount}
               onInput={(e) => handleInputChange(e, 'bankAccount')}
-              className="inputNode"
             />
           </View>
         </View>

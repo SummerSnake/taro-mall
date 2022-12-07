@@ -109,10 +109,10 @@ function AddrEdit() {
         <View className="prefixDom left">收货人：</View>
         <View className="inputDom left">
           <Input
+            className="inputNode"
             placeholder="请输入收货人"
             value={params.consignee}
             onInput={(e) => handleInputChange(e, 'consignee')}
-            className="inputNode"
           />
         </View>
       </View>
@@ -120,10 +120,10 @@ function AddrEdit() {
         <View className="prefixDom left">手机号码：</View>
         <View className="inputDom left">
           <Input
+            className="inputNode"
             placeholder="请输入手机号码"
             value={params.phone}
             onInput={(e) => handleInputChange(e, 'phone')}
-            className="inputNode"
           />
         </View>
       </View>
@@ -131,10 +131,10 @@ function AddrEdit() {
         <View className="prefixDom left">所在地区：</View>
         <View className="inputDom left">
           <Picker
+            className="inputNode"
             mode="region"
             onInput={(e) => handleInputChange(e, 'area')}
             value={params.area}
-            className="inputNode"
           >
             <View className="pickerNode ellipsis">
               <Text>{params.area[0]}</Text>
@@ -148,10 +148,10 @@ function AddrEdit() {
         <View className="prefixDom left">详细地址：</View>
         <View className="inputDom left">
           <Input
+            className="inputNode"
             placeholder="请输入详细地址"
             value={params.detailAddr}
             onInput={(e) => handleInputChange(e, 'detailAddr')}
-            className="inputNode"
           />
         </View>
       </View>

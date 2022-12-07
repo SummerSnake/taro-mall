@@ -1,201 +1,167 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
 import { View, Input } from '@tarojs/components';
-import { AtToast } from 'taro-ui';
-import { connect } from '@tarojs/redux';
+import { isNotNull } from '@/utils/util';
+import { wxToast } from '@/utils/wxApi';
+import useCountDown from '@/utils/useCountDown';
+import { getSendSmsCodeApi } from '@/services/common';
+import { updatePhoneApi } from '@/services/user';
+
 import Loading from '@/components/Loading/index';
-import { verVal } from '@/utils/api';
 import './index.scss';
 
-@connect(({ phoneEdit, loading }) => ({
-  ...phoneEdit,
-  ...loading,
-}))
-class PhoneEdit extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      count: 60,
-      btnChange: true,
-    };
-  }
+function PhoneEdit() {
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  config = {
-    navigationBarTitleText: '认证手机',
-  };
+  const { count, run } = useCountDown();
+  const [btnDisabled, setBtnDisabled] = useState(false);
 
   /**
-   * 认证手机输入框
-   * @param e
+   * @desc 输入框 onChange 事件
+   * @param { object } e
+   * @param { string } sign
+   * @return { void }
    */
-  handleOldPhoneChange = async e => {
-    this.props.dispatch({
-      type: 'phoneEdit/save',
-      payload: {
-        oldPhone: e.detail.value,
-      },
+  const handleInputChange = (e, sign) => {
+    setFormData({
+      ...formData,
+      [sign]: e?.target?.value,
     });
   };
 
   /**
-   * 新手机输入框
-   * @param e
+   * @desc 检测输入框值是否为空
+   * @param { string } inputVal
+   * @param { string } toastTxt
+   * @return { boolean }
    */
-  handleNewPhoneChange = async e => {
-    this.props.dispatch({
-      type: 'phoneEdit/save',
-      payload: {
-        newPhone: e.detail.value,
-      },
-    });
-  };
-
-  /**
-   * 新手机验证码输入框
-   * @param e
-   */
-  handleNewSmsCodeChange = async e => {
-    this.props.dispatch({
-      type: 'phoneEdit/save',
-      payload: {
-        newSmsCode: e.detail.value,
-      },
-    });
-  };
-
-  /**
-   * 获取新手机验证码
-   */
-  getSmsCode = async () => {
-    if (!verVal(this.props.newPhone)) {
-      this.toastFunc('请填写新手机号', 'close-circle');
-      return;
-    }
-    if (this.state.btnChange) {
-      this.setState({ btnChange: false });
-      this.props.dispatch({
-        type: 'phoneEdit/sendSmsCode',
-      });
-      this.timer = setInterval(() => {
-        let counter = this.state.count;
-        counter -= 1;
-        if (counter < 1) {
-          this.setState({ btnChange: true });
-          counter = 60;
-          clearInterval(this.timer);
-        }
-        this.setState({ count: counter });
-      }, 1000);
-    }
-  };
-
-  /**
-   * 提交
-   */
-  handleSubmit = async () => {
-    // 输入框非空验证
-    if (this.checkInputVal(this.props.oldPhone, '请输入认证手机')) {
-      return;
-    }
-    if (this.checkInputVal(this.props.newPhone, '请输入新手机号')) {
-      return;
-    }
-    if (this.checkInputVal(this.props.newSmsCode, '请输入新手机号验证码')) {
-      return;
-    }
-    this.props.dispatch({
-      type: 'phoneEdit/submit',
-    });
-  };
-
-  /**
-   * 检测输入框值是否为空
-   */
-  checkInputVal = (inputVal, toastTxt) => {
-    if (inputVal === '') {
-      this.toastFunc(toastTxt, 'close-circle');
+  const checkInputVal = (inputVal, toastTxt) => {
+    if (!isNotNull(inputVal)) {
+      wxToast(toastTxt, 'close-circle');
       return true;
     }
   };
 
   /**
-   * toast 弹出
+   * @desc 获取新手机号验证码
+   * @return { void }
    */
-  toastFunc = (txt, icon) => {
-    this.props.dispatch({
-      type: 'phoneEdit/save',
-      payload: {
-        toastOpen: true,
-        toastTxt: txt,
-        toastIcon: icon,
-      },
-    });
-    setTimeout(() => {
-      this.props.dispatch({
-        type: 'phoneEdit/save',
-        payload: {
-          toastOpen: false,
-        },
-      });
-    }, 2000);
+  const getSmsCode = () => {
+    if (!isNotNull(formData.newPhone)) {
+      wxToast('请填写新手机号', 'close-circle');
+      return;
+    }
+
+    if (!btnDisabled) {
+      setBtnChange(true);
+      fetchSmsCode();
+    }
   };
 
-  render() {
-    const { oldPhone, newPhone, newSmsCode, toastOpen, toastTxt, toastIcon, effects } = this.props;
-    return (
-      <View className="phoneEditWrap">
-        <View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">认证手机：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={oldPhone}
-                onChange={this.handleOldPhoneChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">新手机：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={newPhone}
-                onChange={this.handleNewPhoneChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">验证码：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={newSmsCode}
-                onChange={this.handleNewSmsCodeChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-            <View
-              onClick={this.getSmsCode.bind(this)}
-              className="verBtn right"
-              style={{ backgroundColor: this.state.btnChange ? '#e80e27' : '#ccc' }}
-            >
-              {this.state.btnChange ? '获取验证码' : `重新发送(${this.state.count})`}
-            </View>
+  /**
+   * @desc 提交
+   * @return { void }
+   */
+  handleSubmit = async () => {
+    if (checkInputVal(this.props.oldPhone, '请输入认证手机')) {
+      return;
+    }
+    if (checkInputVal(this.props.newPhone, '请输入新手机号')) {
+      return;
+    }
+    if (checkInputVal(this.props.newSmsCode, '请输入新手机号验证码')) {
+      return;
+    }
+
+    setLoading(true);
+    const res = await updatePhoneApi({
+      ...formData,
+    });
+
+    if (res?.status === 200) {
+      wxToast('设置成功', 'check-circle');
+    }
+
+    setLoading(false);
+    setTimeout(() => {
+      Taro.navigateBack();
+    }, []);
+  };
+
+  /**
+   * @desc 获取验证码
+   * @return { void }
+   */
+  const fetchSmsCode = async () => {
+    setLoading(true);
+    const res = await getSendSmsCodeApi({ smsCode: formData.smsCode });
+
+    if (res?.status === 200) {
+      run();
+      wxToast('发送成功', 'check-circle');
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (count === 0) {
+      setBtnDisabled(false);
+    }
+  }, [count]);
+
+  return (
+    <View className="phoneEditWrap">
+      <View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">认证手机：</View>
+          <View className="inputDom left">
+            <Input
+              className="inputNode"
+              placeholder="请输入认证手机"
+              value={formData.oldPhone}
+              onInput={(e) => handleInputChange(e, 'smsCode')}
+            />
           </View>
         </View>
-
-        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
-          提交
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">新手机：</View>
+          <View className="inputDom left">
+            <Input
+              className="inputNode"
+              placeholder="请输入新手机"
+              value={formData.newPhone}
+              onInput={(e) => handleInputChange(e, 'smsCode')}
+            />
+          </View>
         </View>
-
-        <Loading isLoading={effects['phoneEdit/submit'] || effects['phoneEdit/sendSmsCode']} />
-
-        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">验证码：</View>
+          <View className="inputDom left">
+            <Input
+              className="inputNode"
+              placeholder="请输入验证码"
+              value={formData.smsCode}
+              onInput={(e) => handleInputChange(e, 'smsCode')}
+            />
+          </View>
+          <View
+            className="verBtn right"
+            onClick={getSmsCode}
+            style={{ backgroundColor: btnDisabled ? '#ccc' : '#e80e27' }}
+          >
+            {btnDisabled ? `重新发送(${count})` : '获取验证码'}
+          </View>
+        </View>
       </View>
-    );
-  }
+
+      <View className="submitBtn" onClick={handleSubmit}>
+        提交
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default PhoneEdit;
