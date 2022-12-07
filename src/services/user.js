@@ -12,4 +12,7 @@ const updateAddressApi = async (params) => await getRequest('/addrPage', params)
 // 删除地址信息
 const deleteAddressApi = async (params) => await getRequest('/addrPage', params);
 
-export { getUserInfoApi, getAddressApi, updateAddressApi, deleteAddressApi };
+// 修改发票信息
+const updateInvoiceApi = async (params) => await getRequest('/invoiceEdit', params);
+
+export { getUserInfoApi, getAddressApi, updateAddressApi, deleteAddressApi, updateInvoiceApi };

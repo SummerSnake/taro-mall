@@ -1,265 +1,176 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
 import { View, Input } from '@tarojs/components';
-import { AtToast } from 'taro-ui';
-import { connect } from '@tarojs/redux';
+import { isNotNull } from '@/utils/util';
+import { updateInvoiceApi } from '@/services/user';
+
 import Loading from '@/components/Loading/index';
-import { verVal } from '@/utils/api';
 import './index.scss';
 
-@connect(({ invoiceEdit, loading }) => ({
-  ...invoiceEdit,
-  ...loading,
-}))
-class InvoiceEdit extends Component {
-  config = {
-    navigationBarTitleText: '增值发票',
-  };
+function InvoiceEdit() {
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  componentDidMount = async () => {
-    this.props.dispatch({
-      type: 'invoiceEdit/load',
+  /**
+   * @desc 输入框 onChange 事件
+   * @param { object } e
+   * @param { string } sign
+   * @return { void }
+   */
+  const handleInputChange = (e, sign) => {
+    setFormData({
+      ...formData,
+      [sign]: e?.target?.value,
     });
   };
 
   /**
-   * 单位名称输入框
-   * @param e
+   * @desc 检测输入框值是否为空
+   * @param { string } inputVal
+   * @param { string } toastTxt
+   * @return { boolean }
    */
-  handleCompanyChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          company: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 纳税人识别码输入框
-   * @param e
-   */
-  handleTaxpayerChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          taxpayer: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 注册地址输入框
-   * @param e
-   */
-  handleRegaddrChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          regAddr: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 注册电话输入框
-   * @param e
-   */
-  handleRegPhoneChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          regPhone: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 开户银行输入框
-   * @param e
-   */
-  handleBankChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          bank: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 认证手机输入框
-   * @param e
-   */
-  handleBankAccountChange = async e => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        params: {
-          ...this.props.params,
-          bankAccount: e.detail.value,
-        },
-      },
-    });
-  };
-
-  /**
-   * 提交
-   */
-  handleSubmit = async () => {
-    const { params } = this.props;
-    if (this.checkInputVal(params.company, '请输入单位名称')) {
-      return;
-    }
-    if (this.checkInputVal(params.taxpayer, '请输入纳税人识别码')) {
-      return;
-    }
-    if (this.checkInputVal(params.regAddr, '请输入注册地址')) {
-      return;
-    }
-    if (this.checkInputVal(params.regPhone, '请输入注册电话')) {
-      return;
-    }
-    if (this.checkInputVal(params.bank, '请输入开户银行')) {
-      return;
-    }
-    if (this.checkInputVal(params.bankAccount, '请输入银行账户')) {
-      return;
-    }
-    this.props.dispatch({
-      type: 'invoiceEdit/submit',
-    });
-  };
-
-  /**
-   * 检测输入框值是否为空
-   */
-  checkInputVal = (inputVal, toastTxt) => {
-    if (!verVal(inputVal)) {
-      this.toastFunc(toastTxt, 'close-circle');
+  const checkInputVal = (inputVal, toastTxt) => {
+    if (!isNotNull(inputVal)) {
+      wxToast(toastTxt, 'close-circle');
       return true;
     }
   };
 
   /**
-   * toast 弹出
+   * 提交
    */
-  toastFunc = (txt, icon) => {
-    this.props.dispatch({
-      type: 'invoiceEdit/save',
-      payload: {
-        toastOpen: true,
-        toastTxt: txt,
-        toastIcon: icon,
-      },
+  const handleSubmit = async () => {
+    if (checkInputVal(formData.company, '请输入单位名称')) {
+      return;
+    }
+    if (checkInputVal(formData.taxpayer, '请输入纳税人识别码')) {
+      return;
+    }
+    if (checkInputVal(formData.regAddr, '请输入注册地址')) {
+      return;
+    }
+    if (checkInputVal(formData.regPhone, '请输入注册电话')) {
+      return;
+    }
+    if (checkInputVal(formData.bank, '请输入开户银行')) {
+      return;
+    }
+    if (checkInputVal(formData.bankAccount, '请输入银行账户')) {
+      return;
+    }
+
+    setLoading(true);
+    const res = await updateInvoiceApi({
+      ...formData,
     });
+
+    if (res?.status === 200) {
+      wxToast('设置成功', 'check-circle');
+    }
+
+    setLoading(false);
     setTimeout(() => {
-      this.props.dispatch({
-        type: 'invoiceEdit/save',
-        payload: {
-          toastOpen: false,
-        },
-      });
-    }, 2000);
+      Taro.navigateBack();
+    }, []);
   };
 
-  render() {
-    const { params, toastOpen, toastTxt, toastIcon } = this.props;
-    return (
-      <View className="invoiceEditWrap">
-        <View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">单位名称：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.company}
-                onChange={this.handleCompanyChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">纳税人识别码：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.taxpayer}
-                onChange={this.handleTaxpayerChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">注册地址：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.regAddr}
-                onChange={this.handleRegaddrChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">注册电话：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.regPhone}
-                onChange={this.handleRegPhoneChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">开户银行：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.bank}
-                onChange={this.handleBankChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
-          </View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">银行账户：</View>
-            <View className="inputDom left">
-              <Input
-                type="text"
-                value={params.bankAccount}
-                onChange={this.handleBankAccountChange.bind(this)}
-                className="inputNode"
-              />
-            </View>
+  /**
+   * @desc 获取发票信息
+   * @return { void }
+   */
+  const fetchInvoiceInfo = async () => {
+    setLoading(true);
+    const res = await getAddressApi();
+
+    if (res?.status === 200) {
+      setFormData(res?.data);
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchInvoiceInfo();
+  }, []);
+
+  return (
+    <View className="invoiceEditWrap">
+      <View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">单位名称：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.company}
+              onInput={(e) => handleInputChange(e, 'company')}
+              className="inputNode"
+            />
           </View>
         </View>
-
-        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
-          提交
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">纳税人识别码：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.taxpayer}
+              onInput={(e) => handleInputChange(e, 'taxpayer')}
+              className="inputNode"
+            />
+          </View>
         </View>
-
-        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
-
-        <Loading isLoading={this.state.isLoading} />
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">注册地址：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.regAddr}
+              onInput={(e) => handleInputChange(e, 'regAddr')}
+              className="inputNode"
+            />
+          </View>
+        </View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">注册电话：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.regPhone}
+              onInput={(e) => handleInputChange(e, 'regPhone')}
+              className="inputNode"
+            />
+          </View>
+        </View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">开户银行：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.bank}
+              onInput={(e) => handleInputChange(e, 'bank')}
+              className="inputNode"
+            />
+          </View>
+        </View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">银行账户：</View>
+          <View className="inputDom left">
+            <Input
+              type="text"
+              value={formData.bankAccount}
+              onInput={(e) => handleInputChange(e, 'bankAccount')}
+              className="inputNode"
+            />
+          </View>
+        </View>
       </View>
-    );
-  }
+
+      <View className="submitBtn" onClick={handleSubmit}>
+        提交
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default InvoiceEdit;

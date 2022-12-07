@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
+
 import { getAddressApi, deleteAddressApi } from '@/services/user';
 import { wxToast } from '@/utils/wxApi';
 
@@ -56,21 +57,6 @@ function AddrPage() {
   };
 
   /**
-   * @desc 获取地址信息
-   * @return { void }
-   */
-  const fetchAddrInfo = async () => {
-    setLoading(true);
-    const res = await getAddressApi();
-
-    if (res?.status === 200) {
-      setAddrList(res?.data);
-    }
-
-    setLoading(false);
-  };
-
-  /**
    * 订单页面选择收货地址
    * @param id
    * @param consignee
@@ -91,6 +77,21 @@ function AddrPage() {
       );
       Taro.navigateBack();
     }
+  };
+
+  /**
+   * @desc 获取地址信息
+   * @return { void }
+   */
+  const fetchAddrInfo = async () => {
+    setLoading(true);
+    const res = await getAddressApi();
+
+    if (res?.status === 200) {
+      setAddrList(res?.data);
+    }
+
+    setLoading(false);
   };
 
   useEffect(() => {

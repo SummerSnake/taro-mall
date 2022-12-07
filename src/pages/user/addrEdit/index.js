@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Picker, Input } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
+
+import { isNotNull, isObj } from '@/utils/util';
+import { wxToast } from '@/utils/wxApi';
 import { updateAddressApi } from '@/services/user';
 
 import Loading from '@/components/Loading/index';
-import { isNotNull, isObj } from '@/utils/util';
-import { wxToast } from '@/utils/wxApi';
 
 import './index.scss';
 
