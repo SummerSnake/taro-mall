@@ -1,141 +1,127 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
 import { View, Input, Picker } from '@tarojs/components';
-import { AtToast } from 'taro-ui';
-import { connect } from '@tarojs/redux';
+
+import { isNotNull } from '@/utils/util';
+import { wxToast } from '@/utils/wxApi';
+import { updateUserApi } from '@/services/user';
+
 import Loading from '@/components/Loading/index';
-import { verVal } from '@/utils/api';
 import './index.scss';
 
-@connect(({ userEdit, loading }) => ({
-  ...userEdit,
-  ...loading,
-}))
-class UserEdit extends Component {
-  config = {
-    navigationBarTitleText: '个人设置',
-  };
+function UserEdit() {
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  componentDidMount = async () => {
-    this.props.dispatch({
-      type: 'userEdit/load',
+  /**
+   * @desc 输入框 onChange 事件
+   * @param { object } e
+   * @param { string } sign
+   * @return { void }
+   */
+  const handleInputChange = (e, sign) => {
+    setFormData({
+      ...formData,
+      [sign]: e?.target?.value,
     });
   };
 
   /**
-   * 会员称呼输入框
-   * @param e
+   * @desc 检测输入框值是否为空
+   * @param { string } inputVal
+   * @param { string } toastTxt
+   * @return { boolean }
    */
-  onAppellationChange = async e => {
-    this.props.dispatch({
-      type: 'userEdit/save',
-      payload: {
-        appellation: e.detail.value,
-      },
-    });
-  };
-
-  /**
-   * 出生日期输入框
-   * @param e
-   */
-  onBirthChange = async e => {
-    this.props.dispatch({
-      type: 'userEdit/save',
-      payload: {
-        birth: e.detail.value,
-      },
-    });
-  };
-
-  /**
-   * 检测输入框值是否为空
-   */
-  checkInputVal = (inputVal, toastTxt) => {
-    if (!verVal(inputVal)) {
-      this.toastFunc(toastTxt, 'close-circle');
+  const checkInputVal = (inputVal, toastTxt) => {
+    if (!isNotNull(inputVal)) {
+      wxToast(toastTxt, 'close-circle');
       return true;
     }
   };
 
   /**
-   * 提交
+   * @desc 提交
+   * @return { void }
    */
-  submitEdit = async () => {
-    if (this.checkInputVal(this.props.appellation, '请输入称呼')) {
+  handleSubmit = async () => {
+    if (checkInputVal(formData.appellation, '请输入称呼')) {
       return;
     }
-    if (this.checkInputVal(this.props.birth, '请输入出生日期')) {
+    if (checkInputVal(formData.birth, '请输入出生日期')) {
       return;
     }
-    this.props.dispatch({
-      type: 'userEdit/submit',
+
+    setLoading(true);
+    const res = await updateUserApi({
+      ...formData,
     });
+
+    if (res?.status === 200) {
+      wxToast('操作成功', 'check-circle');
+    }
+
+    setLoading(false);
+    setTimeout(() => {
+      Taro.navigateBack();
+    }, []);
   };
 
   /**
-   * toast 弹出
+   * @desc 获取用户信息
+   * @return { void }
    */
-  toastFunc = (txt, icon) => {
-    this.props.dispatch({
-      type: 'userEdit/save',
-      payload: {
-        toastOpen: true,
-        toastTxt: txt,
-        toastIcon: icon,
-      },
-    });
-    setTimeout(() => {
-      this.props.dispatch({
-        type: 'userEdit/save',
-        payload: {
-          toastOpen: false,
-        },
-      });
-    }, 2000);
+  const fetchUserInfo = async () => {
+    setLoading(true);
+    const res = await updateUserApi();
+
+    if (res?.status === 200) {
+      setFormData(res?.data);
+    }
+
+    setLoading(false);
   };
 
-  render() {
-    const { appellation, birth, toastOpen, toastTxt, toastIcon, effects } = this.props;
-    return (
-      <View className="phoneEditWrap">
-        <View className="infoItem clearfix">
-          <View className="prefixDom left">称呼：</View>
-          <View className="inputDom left">
-            <Input
-              type="text"
-              value={appellation}
-              onChange={this.onAppellationChange.bind(this)}
-              className="inputNode"
-            />
-          </View>
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  return (
+    <View className="phoneEditWrap">
+      <View className="infoItem clearfix">
+        <View className="prefixDom left">称呼：</View>
+        <View className="inputDom left">
+          <Input
+            className="inputNode"
+            placeholder="请输入您的称呼"
+            value={appellation}
+            onInput={(e) => handleInputChange(e, 'appellation')}
+          />
         </View>
-
-        <View>
-          <View className="infoItem clearfix">
-            <View className="prefixDom left">出生日期：</View>
-            <View className="inputDom left">
-              <Picker
-                mode="date"
-                onChange={this.onBirthChange.bind(this)}
-                value={birth}
-                className="inputNode"
-              >
-                <View className="pickerNode ellipsis">{birth}</View>
-              </Picker>
-            </View>
-          </View>
-        </View>
-
-        <View className="submitBtn" onClick={this.submitEdit.bind(this)}>
-          提交
-        </View>
-
-        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
-
-        <Loading isLoading={effects['userEdit/load']} />
       </View>
-    );
-  }
+
+      <View>
+        <View className="infoItem clearfix">
+          <View className="prefixDom left">出生日期：</View>
+          <View className="inputDom left">
+            <Picker
+              className="inputNode"
+              placeholder="请选择出生日期"
+              mode="date"
+              value={formData.birth}
+              onInput={(e) => handleInputChange(e, 'birth')}
+            >
+              <View className="pickerNode ellipsis">{formData.birth}</View>
+            </Picker>
+          </View>
+        </View>
+      </View>
+
+      <View className="submitBtn" onClick={handleSubmit}>
+        提交
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default UserEdit;

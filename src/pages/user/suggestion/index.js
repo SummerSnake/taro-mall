@@ -3,6 +3,7 @@ import { useDidHide } from '@tarojs/taro';
 import { View, Textarea, Text } from '@tarojs/components';
 
 import { isNotNull } from '@/utils/util';
+import { wxToast } from '@/utils/wxApi';
 import { postSuggestionsApi } from '@/services/user';
 
 import Upload from '@/components/Upload/index';
@@ -88,8 +89,8 @@ function Suggestion() {
       <View className="areaWrap">
         <Textarea
           className="areaDom"
-          maxlength="500"
           placeholder="请输入反馈建议，以便我们提供更优质的服务"
+          maxlength="500"
           onInput={(e) => handleInputChange(e, 'suggestionVal')}
         />
         <View className="txtCounter">

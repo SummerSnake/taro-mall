@@ -21,6 +21,9 @@ const updatePhoneApi = async (params) => await getRequest('/addrPage', params);
 // 提交反馈建议
 const postSuggestionsApi = async (params) => await getRequest('/submitCallback', params);
 
+// 提交反馈建议
+const updateUserApi = async (params) => await getRequest('/userEdit', params);
+
 export {
   getUserInfoApi,
   getAddressApi,
@@ -29,4 +32,5 @@ export {
   updateInvoiceApi,
   updatePhoneApi,
   postSuggestionsApi,
+  updateUserApi,
 };
