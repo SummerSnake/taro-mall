@@ -1,135 +1,117 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState } from 'react';
+import { useDidHide } from '@tarojs/taro';
 import { View, Textarea, Text } from '@tarojs/components';
-import { AtToast } from 'taro-ui';
-import { connect } from '@tarojs/redux';
+
+import { isNotNull } from '@/utils/util';
+import { postSuggestionsApi } from '@/services/user';
+
 import Upload from '@/components/Upload/index';
 import Loading from '@/components/Loading/index';
-import { verVal } from '@/utils/api';
 import './index.scss';
 
-@connect(({ suggestion, loading }) => ({
-  ...suggestion,
-  ...loading,
-}))
-class Suggestion extends Component {
-  config = {
-    navigationBarTitleText: '反馈建议',
-  };
+function Suggestion() {
+  const [formData, setFormData] = useState({
+    imgList: [],
+  });
+  const [loading, setLoading] = useState(false);
 
   /**
-   * 反馈建议输入框
-   * @param e
+   * @desc 输入框 onChange 事件
+   * @param { object } e
+   * @param { string } sign
+   * @return { void }
    */
-  handleSuggestionChange = e => {
-    this.props.dispatch({
-      type: 'suggestion/save',
-      payload: {
-        suggestionVal: e.target.value,
-      },
+  const handleInputChange = (e, sign) => {
+    setFormData({
+      ...formData,
+      [sign]: e?.target?.value,
     });
   };
 
   /**
-   * 上传图片回调
-   * @param imgList
+   * @desc 上传图片回调
+   * @param { object[] } imgList
+   * @return { void }
    */
-  onUploadCall = imgList => {
-    this.props.dispatch({
-      type: 'suggestion/save',
-      payload: {
-        imgList: [...imgList],
-      },
+  const onUploadCall = (imgList) => {
+    setFormData({
+      ...formData,
+      imgList,
     });
   };
 
   /**
-   * 检测输入框值是否为空
+   * @desc 检测输入框值是否为空
+   * @param { string } inputVal
+   * @param { string } toastTxt
+   * @return { boolean }
    */
-  checkInputVal = (inputVal, toastTxt) => {
-    if (!verVal(inputVal)) {
-      this.toastFunc(toastTxt, 'close-circle');
+  const checkInputVal = (inputVal, toastTxt) => {
+    if (!isNotNull(inputVal)) {
+      wxToast(toastTxt, 'close-circle');
       return true;
     }
   };
 
   /**
-   * 提交
+   * @desc 提交
+   * @return { void }
    */
   handleSubmit = async () => {
-    if (this.checkInputVal(this.props.suggestionVal, '请输入反馈建议')) {
+    if (checkInputVal(formData.suggestionVal, '请输入反馈建议')) {
       return;
     }
-    this.props.dispatch({
-      type: 'suggestion/submit',
-    });
-  };
 
-  /**
-   * toast 弹出
-   */
-  toastFunc = (txt, icon) => {
-    this.props.dispatch({
-      type: 'suggestion/save',
-      payload: {
-        toastOpen: true,
-        toastTxt: txt,
-        toastIcon: icon,
-      },
+    setLoading(true);
+    const res = await postSuggestionsApi({
+      ...formData,
     });
+
+    if (res?.status === 200) {
+      wxToast('提交成功', 'check-circle');
+    }
+
+    setLoading(false);
     setTimeout(() => {
-      this.props.dispatch({
-        type: 'suggestion/save',
-        payload: {
-          toastOpen: false,
-        },
-      });
-    }, 2000);
+      Taro.navigateBack();
+    }, []);
   };
 
-  componentWillUnmount = () => {
-    this.props.dispatch({
-      type: 'suggestion/save',
-      payload: {
-        suggestionVal: '',
-        imgList: [],
-      },
+  useDidHide(() => {
+    setFormData({
+      imgList: [],
     });
-  };
+  });
 
-  render() {
-    const { suggestionVal, imgList, toastOpen, toastTxt, toastIcon, effects } = this.props;
-    return (
-      <View className="suggestionWrap">
-        <View className="areaWrap">
-          <Textarea
-            onInput={this.handleSuggestionChange.bind(this)}
-            className="areaDom"
-            maxlength="500"
-            placeholder="请输入故障描述，以便我们尽快解决问题"
-          />
-          <View className="txtCounter">
-            {suggestionVal.length}/
-            <Text style={{ color: suggestionVal.length > 500 ? '#f00' : '#666' }}>500</Text>
-          </View>
+  return (
+    <View className="suggestionWrap">
+      <View className="areaWrap">
+        <Textarea
+          className="areaDom"
+          maxlength="500"
+          placeholder="请输入反馈建议，以便我们提供更优质的服务"
+          onInput={(e) => handleInputChange(e, 'suggestionVal')}
+        />
+        <View className="txtCounter">
+          {formData.suggestionVal.length}/
+          <Text style={{ color: formData.suggestionVal.length > 500 ? '#f00' : '#666' }}>500</Text>
         </View>
-
-        <View className="uploadWrap">
-          <View className="uploadTitle">您最多可上传5张，单张图片最大1M</View>
-          <View className="uploaderDom">
-            <Upload onUploadCall={this.onUploadCall} imgList={imgList} />
-          </View>
-        </View>
-
-        <View className="submitBtn" onClick={this.handleSubmit.bind(this)}>
-          提交
-        </View>
-
-        <AtToast isOpened={toastOpen} text={toastTxt} icon={toastIcon} />
-
-        <Loading isLoading={effects['suggestion/submit']} />
       </View>
-    );
-  }
+
+      <View className="uploadWrap">
+        <View className="uploadTitle">您最多可上传5张，单张图片最大1M</View>
+        <View className="uploaderDom">
+          <Upload onUploadCall={onUploadCall} imgList={imgList} />
+        </View>
+      </View>
+
+      <View className="submitBtn" onClick={handleSubmit}>
+        提交
+      </View>
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default Suggestion;

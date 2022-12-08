@@ -72,10 +72,10 @@ function AddrEdit() {
     setLoading(true);
     const res = await updateAddressApi({
       ...formData,
-      province: params.area[0],
-      city: params.area[1],
-      region: params.area[2],
-      type: params.checkedVal ? 1 : 0,
+      province: formData.area[0],
+      city: formData.area[1],
+      region: formData.area[2],
+      type: formData.checkedVal ? 1 : 0,
     });
 
     if (res?.status === 200) {
@@ -111,7 +111,7 @@ function AddrEdit() {
           <Input
             className="inputNode"
             placeholder="请输入收货人"
-            value={params.consignee}
+            value={formData.consignee}
             onInput={(e) => handleInputChange(e, 'consignee')}
           />
         </View>
@@ -122,7 +122,7 @@ function AddrEdit() {
           <Input
             className="inputNode"
             placeholder="请输入手机号码"
-            value={params.phone}
+            value={formData.phone}
             onInput={(e) => handleInputChange(e, 'phone')}
           />
         </View>
@@ -134,12 +134,12 @@ function AddrEdit() {
             className="inputNode"
             mode="region"
             onInput={(e) => handleInputChange(e, 'area')}
-            value={params.area}
+            value={formData.area}
           >
             <View className="pickerNode ellipsis">
-              <Text>{params.area[0]}</Text>
-              <Text>{params.area[1]}</Text>
-              <Text>{params.area[2]}</Text>
+              <Text>{formData.area[0]}</Text>
+              <Text>{formData.area[1]}</Text>
+              <Text>{formData.area[2]}</Text>
             </View>
           </Picker>
         </View>
@@ -150,7 +150,7 @@ function AddrEdit() {
           <Input
             className="inputNode"
             placeholder="请输入详细地址"
-            value={params.detailAddr}
+            value={formData.detailAddr}
             onInput={(e) => handleInputChange(e, 'detailAddr')}
           />
         </View>
@@ -159,10 +159,10 @@ function AddrEdit() {
         <View className="prefixDom left">设为默认地址：</View>
         <View className="inputDom left">
           <View
-            className={params.checkedVal ? 'cardCheckActive' : 'cardCheck'}
+            className={formData.checkedVal ? 'cardCheckActive' : 'cardCheck'}
             onInput={(e) => handleInputChange(e, 'checkedVal')}
           >
-            <View style={{ display: params.checkedVal ? 'block' : 'none' }}>
+            <View style={{ display: formData.checkedVal ? 'block' : 'none' }}>
               <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
             </View>
           </View>
