@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-function TopCard() {
+function TopCard(props) {
   const { topCardObj = {} } = props;
   const imgList = midCardObj?.imgList?.splice(2);
 

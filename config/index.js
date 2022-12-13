@@ -21,6 +21,9 @@ const config = {
     '@/styles': path.resolve(__dirname, '..', 'src/styles'),
   },
   mini: {
+    miniCssExtractPluginOption: {
+      ignoreOrder: true,
+    },
     postcss: {
       pxtransform: {
         enable: true,

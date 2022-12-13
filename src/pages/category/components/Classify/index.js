@@ -1,74 +1,69 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState } from 'react';
 import { View } from '@tarojs/components';
 import { isNotNull } from '@/utils/util';
 import './index.scss';
 
-class Classify extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      titleArr: [
-        { id: 1, title: '沉鱼落雁' },
-        { id: 2, title: '蕙质兰心' },
-        { id: 3, title: '绝代佳人' },
-        { id: 4, title: '风姿卓约' },
-      ],
-      selectArr: [], // 当前选择的分类数组
-      selectId: 0, // 当前点击的分类 id
-      shadeVisible: false, // 子列表显示与否
-      listItemActive: '', // 子列表所选项
-      filter: null, // 筛选状态
-    };
-  }
+function Classify(props) {
+  const { classifyList = [], onClassifyCall = () => {} } = props;
 
-  static defaultProps = {
-    classifyList: [],
-  };
+  const [titleArr, setTitleArr] = useState([
+    { id: 1, title: '沉鱼落雁' },
+    { id: 2, title: '蕙质兰心' },
+    { id: 3, title: '绝代佳人' },
+    { id: 4, title: '风姿卓约' },
+  ]);
+  const [selectedArr, setSelectedArr] = useState([]); // 当前选择的分类数组
+  const [selectId, setSelectId] = useState(0); // 当前点击的分类 id
+  const [shadeVisible, setShadeVisible] = useState(0); // 子列表显示与否
+  const [listItemActive, setListItemActive] = useState(0); // 子列表所选项
+  const [filter, setFilter] = useState(null); // 筛选状态
 
   /**
-   * 分类选择
-   * @param id
+   * @desc 分类选择
+   * @param { number } id
+   * @return { void }
    */
-  selectTitle = async (id) => {
-    const arr = [...this.state.selectArr];
+  const handleClassifySelected = async (id) => {
+    const arr = [...selectedArr];
     if (!arr.includes(id)) {
       arr.push(id);
     }
-    this.setState({
-      selectArr: arr,
-      selectId: id,
-      shadeVisible: true,
-    });
+    setSelectedArr(arr);
+    setSelectId(id);
+    setShadeVisible(true);
   };
 
   /**
-   * 分类列表项点击事件
-   * @param id
-   * @param title
-   * @param e
+   * @desc 分类列表项点击事件
+   * @param { number } id
+   * @param { string } title
+   * @param { object } e
+   * @return { void }
    */
-  listItemClick = async (id, title, e) => {
+  const handleItemClick = async (id, title, e) => {
     e.stopPropagation();
-    const arr = [...this.state.titleArr];
+    const arr = [...titleArr];
+
     arr.forEach((item) => {
-      if (this.state.selectId === item.id) {
+      if (selectId === item.id) {
         item.title = title;
       }
     });
-    this.setState({
-      filter: id,
-      listItemActive: id.toString(),
-    });
+
+    setTitleArr(arr);
+    setFilter(id);
+    setListItemActive(id);
   };
 
   /**
-   * 分类列表取消
-   * @param e
+   * @desc 分类列表取消
+   * @param { object } e
+   * @return { void }
    */
-  handleCancel = (e) => {
+  const handleCancel = (e) => {
     e.stopPropagation();
-    const arr = [...this.state.titleArr];
-    const { selectId } = this.state;
+    const arr = [...titleArr];
+
     // 修改选中标题文字
     arr.forEach((item) => {
       if (selectId === item.id) {
@@ -82,88 +77,80 @@ class Classify extends Component {
             : '风姿卓约';
       }
     });
+
     // 取消选中状态
-    const selectedArr = [...this.state.selectArr];
     const newArr = selectedArr.filter((item) => item !== selectId);
-    this.setState({
-      selectArr: newArr,
-      listItemActive: '',
-      shadeVisible: false,
-    });
+
+    setTitleArr(arr);
+    setSelectedArr(newArr);
+    setListItemActive(0);
+    setShadeVisible(false);
   };
 
   /**
-   * 分类列表确定
-   * @param e
+   * @desc 分类列表确定
+   * @param { object } e
+   * @return { void }
    */
-  handleSelect = (e) => {
+  const handleSelect = (e) => {
     e.stopPropagation();
-    if (isNotNull(this.state.filter)) {
+
+    if (isNotNull(filter)) {
       // 筛选
-      const json = {
-        classifyFilter: this.state.filter,
-      };
-      this.props.onClassifyCall(json);
+      onClassifyCall({ classifyFilter: filter });
     } else {
       // 未筛选取消选中状态
-      const selectedArr = [...this.state.selectArr];
-      const newArr = selectedArr.filter((item) => item !== this.state.selectId);
-      this.setState({
-        selectArr: newArr,
-      });
+      const newArr = selectedArr.filter((item) => item !== selectId);
+      setSelectedArr(newArr);
     }
-    this.setState({
-      shadeVisible: false,
-    });
+
+    setShadeVisible(false);
   };
 
-  render() {
-    const { classifyList } = this.props;
-    const { titleArr, selectArr, listItemActive, shadeVisible } = this.state;
-    return (
-      <View className="classifyWrap">
-        <View className="classifySelect">
-          {titleArr.map((item) => (
+  return (
+    <View className="classifyWrap">
+      <View className="classifySelect">
+        {Array.isArray(titleArr) &&
+          titleArr.map((item) => (
             <View
               key={item.id}
-              className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
-              onClick={this.selectTitle.bind(this, item.id)}
+              className={selectedArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
+              onClick={() => handleClassifySelected(item.id)}
             >
               {item.title}
             </View>
           ))}
-        </View>
+      </View>
 
-        <View
-          className="shadeDom"
-          style={{ display: shadeVisible ? 'block' : 'none' }}
-          onClick={this.handleCancel}
-        >
-          <View className="classifyList clearfix">
-            {classifyList.map((item) => (
+      <View
+        className="shadeDom"
+        style={{ display: shadeVisible ? 'block' : 'none' }}
+        onClick={handleCancel}
+      >
+        <View className="classifyList clearfix">
+          {Array.isArray(classifyList) &&
+            classifyList.map((item) => (
               <View
                 key={item.id}
-                className={
-                  item.id.toString() === `${listItemActive}` ? 'listItemActive' : 'listItem'
-                }
-                onClick={this.listItemClick.bind(this, item.id, item.title)}
+                className={item.id === listItemActive ? 'listItemActive' : 'listItem'}
+                onClick={() => handleItemClick(item.id, item.title)}
               >
                 {item.title}
               </View>
             ))}
-            <View className="btnGroup">
-              <View className="cancelDom" onClick={this.handleCancel}>
-                取消
-              </View>
-              <View className="submitDom" onClick={this.handleSelect}>
-                确定
-              </View>
+
+          <View className="btnGroup">
+            <View className="cancelDom" onClick={handleCancel}>
+              取消
+            </View>
+            <View className="submitDom" onClick={handleSelect}>
+              确定
             </View>
           </View>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 export default Classify;

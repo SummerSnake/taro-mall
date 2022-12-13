@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
-import { getHomeDataApi } from '@/services/good';
+import { getHomeDataApi } from '@/services/home';
 
 import Loading from '@/components/Loading/index';
 import IconList from './components/IconList/index';
@@ -22,7 +22,7 @@ function Index() {
    * @desc 获取商品列表
    * @return { void }
    */
-  const fetchGoodsList = async () => {
+  const fetchHomeData = async () => {
     setLoading(true);
     const res = await getHomeDataApi();
 
@@ -38,7 +38,7 @@ function Index() {
   };
 
   useEffect(() => {
-    fetchGoodsList();
+    fetchHomeData();
   }, []);
 
   return (

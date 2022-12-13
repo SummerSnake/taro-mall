@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View } from '@tarojs/components';
-import { getOrderInfoApi } from '@/services/good';
+import { getOrderInfoApi } from '@/services/order';
 
 import Loading from '@/components/Loading/index';
 import OrderHeader from './components/OrderHeader/index';

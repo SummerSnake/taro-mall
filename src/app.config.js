@@ -44,7 +44,7 @@ export default {
         selectedIconPath: './assets/tabbar_icon03_active.png',
       },
       {
-        pagePath: 'pages/user/index',
+        pagePath: 'pages/user/userInfo/index',
         text: '我的',
         iconPath: './assets/tabbar_icon04.png',
         selectedIconPath: './assets/tabbar_icon04_active.png',

@@ -1,10 +1,11 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
+
+import { isObj, isNotNull } from '@/utils/util';
 import OrderHeader from './components/OrderHeader/index';
 import GoodsCard from './components/GoodsCard/index';
 import CouponCard from './components/CouponCard/index';
-import { isObj, verVal } from '../../utils/api';
 import './index.scss';
 
 export default class Order extends Component {
@@ -44,7 +45,7 @@ export default class Order extends Component {
       if (params?.checkedGoods) {
         const { checkedGoods } = params;
         if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
-          arr = list.filter(item => {
+          arr = list.filter((item) => {
             return checkedGoods.includes(item.id);
           });
         }
@@ -53,7 +54,7 @@ export default class Order extends Component {
       }
       // 计算总价
       let totalMoney = 0;
-      arr.map(item => {
+      arr.map((item) => {
         totalMoney += parseFloat(item.num) * parseFloat(item.price);
       });
       this.setState({
@@ -69,17 +70,17 @@ export default class Order extends Component {
    * 选择地址、选择优惠券
    * @param totalMoney
    */
-  selectCallback = async totalMoney => {
+  selectCallback = async (totalMoney) => {
     let addrInfo = Taro.getStorageSync('addrInfo');
     // 选择地址
-    if (isObj(addrInfo) && verVal(addrInfo.addrId)) {
+    if (isObj(addrInfo) && isNotNull(addrInfo.addrId)) {
       this.setState({
         addrInfo: { ...addrInfo },
       });
     }
     // 选择优惠券
     let couponInfo = Taro.getStorageSync('couponInfo');
-    if (isObj(couponInfo) && verVal(couponInfo.couponId)) {
+    if (isObj(couponInfo) && isNotNull(couponInfo.couponId)) {
       let actualMoney = 0;
       const { integralDiscount } = this.state;
       // 优惠券金额小于等于总金额减去积分优惠金额
@@ -100,12 +101,12 @@ export default class Order extends Component {
    * 选择积分回调
    * @param score
    */
-  onScoreCall = score => {
+  onScoreCall = (score) => {
     const integralDiscount = score / 10; // 积分抵扣规则
     let actualMoney = 0;
     const { totalMoney, couponInfo } = this.state;
     // 如果已选择优惠券
-    if (isObj(couponInfo) && verVal(couponInfo.couponAmount)) {
+    if (isObj(couponInfo) && isNotNull(couponInfo.couponAmount)) {
       // 积分金额小于等于总金额减去优惠券抵扣金额
       if (integralDiscount <= totalMoney - couponInfo.couponAmount) {
         // 实付金额等于总金额减去优惠券金额与积分优惠金额
@@ -147,8 +148,8 @@ export default class Order extends Component {
     const goodsArr = JSON.parse(JSON.stringify(this.state.goodsList));
 
     let arr = [];
-    arr = goodsList.filter(item => {
-      let arr1 = goodsArr.map(good => good.id);
+    arr = goodsList.filter((item) => {
+      let arr1 = goodsArr.map((good) => good.id);
       return !arr1.includes(item.id);
     });
     await Taro.removeStorageSync('goodsList');
@@ -156,7 +157,7 @@ export default class Order extends Component {
     this.$preload({
       current: 1,
     });
-    setTimeout(function() {
+    setTimeout(function () {
       Taro.redirectTo({
         url: '/pages/orderList/index',
       });
@@ -188,12 +189,12 @@ export default class Order extends Component {
       package: '',
       signType: '',
       paySign: '',
-      success: function() {
+      success: function () {
         that.toastFunc('支付成功', 'check-circle');
         that.removeStorage();
         Taro.removeStorageSync('couponInfo');
       },
-      fail: function() {
+      fail: function () {
         that.toastFunc('支付失败', 'close-circle');
         Taro.removeStorageSync('couponInfo');
       },
