@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import { verVal } from '@/utils/api';
+import { isNotNull } from '@/utils/util';
 import './index.scss';
 
 class Classify extends Component {
@@ -29,7 +29,7 @@ class Classify extends Component {
    * 分类选择
    * @param id
    */
-  selectTitle = async id => {
+  selectTitle = async (id) => {
     const arr = [...this.state.selectArr];
     if (!arr.includes(id)) {
       arr.push(id);
@@ -50,7 +50,7 @@ class Classify extends Component {
   listItemClick = async (id, title, e) => {
     e.stopPropagation();
     const arr = [...this.state.titleArr];
-    arr.forEach(item => {
+    arr.forEach((item) => {
       if (this.state.selectId === item.id) {
         item.title = title;
       }
@@ -65,12 +65,12 @@ class Classify extends Component {
    * 分类列表取消
    * @param e
    */
-  handleCancel = e => {
+  handleCancel = (e) => {
     e.stopPropagation();
     const arr = [...this.state.titleArr];
     const { selectId } = this.state;
     // 修改选中标题文字
-    arr.forEach(item => {
+    arr.forEach((item) => {
       if (selectId === item.id) {
         item.title =
           selectId === 1
@@ -84,7 +84,7 @@ class Classify extends Component {
     });
     // 取消选中状态
     const selectedArr = [...this.state.selectArr];
-    const newArr = selectedArr.filter(item => item !== selectId);
+    const newArr = selectedArr.filter((item) => item !== selectId);
     this.setState({
       selectArr: newArr,
       listItemActive: '',
@@ -96,9 +96,9 @@ class Classify extends Component {
    * 分类列表确定
    * @param e
    */
-  handleSelect = e => {
+  handleSelect = (e) => {
     e.stopPropagation();
-    if (verVal(this.state.filter)) {
+    if (isNotNull(this.state.filter)) {
       // 筛选
       const json = {
         classifyFilter: this.state.filter,
@@ -107,7 +107,7 @@ class Classify extends Component {
     } else {
       // 未筛选取消选中状态
       const selectedArr = [...this.state.selectArr];
-      const newArr = selectedArr.filter(item => item !== this.state.selectId);
+      const newArr = selectedArr.filter((item) => item !== this.state.selectId);
       this.setState({
         selectArr: newArr,
       });
@@ -123,7 +123,7 @@ class Classify extends Component {
     return (
       <View className="classifyWrap">
         <View className="classifySelect">
-          {titleArr.map(item => (
+          {titleArr.map((item) => (
             <View
               key={item.id}
               className={selectArr.includes(item.id) ? 'itemActive' : 'classifyItem'}
@@ -140,7 +140,7 @@ class Classify extends Component {
           onClick={this.handleCancel}
         >
           <View className="classifyList clearfix">
-            {classifyList.map(item => (
+            {classifyList.map((item) => (
               <View
                 key={item.id}
                 className={

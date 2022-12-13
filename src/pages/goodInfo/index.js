@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDidHide } from '@tarojs/taro';
+import { View, Text, Image, Button } from '@tarojs/components';
 import { getGoodsListApi } from '@/services/good';
 
-import { View, Text, Image, Button } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import Loading from '@/components/Loading/index';
 

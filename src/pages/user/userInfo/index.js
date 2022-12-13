@@ -65,6 +65,7 @@ function UserInfo() {
 
     if (isObj(userObj) && Object.keys(userObj).length > 0) {
       setUserInfo(userObj);
+    } else {
       fetchUserInfo();
     }
   }, []);

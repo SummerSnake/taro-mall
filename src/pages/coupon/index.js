@@ -1,5 +1,6 @@
-import Taro from '@tarojs/taro';
 import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
+import { View } from '@tarojs/components';
 import { getCouponListApi } from '@/services/coupon';
 
 import Loading from '@/components/Loading/index';

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { View } from '@tarojs/components';
 import { getCategoryListApi } from '@/services/category';
 import { getGoodsListApi } from '@/services/good';
 

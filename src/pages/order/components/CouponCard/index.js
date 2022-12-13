@@ -1,12 +1,8 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image, Picker } from '@tarojs/components';
 import { AtToast } from 'taro-ui';
-import { connect } from '@tarojs/redux';
 import './index.scss';
 
-@connect(({ user }) => ({
-  ...user,
-}))
 class CouponCard extends Component {
   indexClone = 0;
   constructor() {
@@ -18,12 +14,6 @@ class CouponCard extends Component {
       toastOpen: false,
     };
   }
-
-  componentDidMount = () => {
-    this.props.dispatch({
-      type: 'user/load',
-    });
-  };
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.couponInfo.couponId !== this.props.couponInfo.couponId) {

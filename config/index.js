@@ -11,38 +11,15 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
+  framework: 'react',
+  plugins: [],
+  defineConstants: {},
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/services': path.resolve(__dirname, '..', 'src/services'),
     '@/styles': path.resolve(__dirname, '..', 'src/styles'),
   },
-  babel: {
-    sourceMap: true,
-    presets: [
-      [
-        'env',
-        {
-          modules: false,
-        },
-      ],
-    ],
-    plugins: [
-      'transform-decorators-legacy',
-      'transform-class-properties',
-      'transform-object-rest-spread',
-      [
-        'transform-runtime',
-        {
-          helpers: false,
-          polyfill: false,
-          regenerator: true,
-          moduleName: 'babel-runtime',
-        },
-      ],
-    ],
-  },
-  defineConstants: {},
   mini: {
     postcss: {
       pxtransform: {
@@ -52,7 +29,7 @@ const config = {
       url: {
         enable: true,
         config: {
-          limit: 10240, // 设定转换尺寸上限
+          limit: 1024, // 设定转换尺寸上限
         },
       },
       cssModules: {

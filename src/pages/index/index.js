@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Swiper, SwiperItem } from '@tarojs/components';
+import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
 import { getHomeDataApi } from '@/services/good';
 
 import Loading from '@/components/Loading/index';
