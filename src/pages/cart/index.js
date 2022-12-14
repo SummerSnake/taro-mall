@@ -1,94 +1,70 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { useState, useEffect } from 'react';
+import Taro, { useDidHide } from '@tarojs/taro';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
+
 import Loading from '@/components/Loading/index';
 import NoData from '@/components/NoData/index';
 import './index.scss';
 
-class Cart extends Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      list: [],
-      checkboxIds: [],
-      totalMoney: 0,
-      isSelectAll: false,
-    };
-  }
-
-  componentDidShow = async () => {
-    this.setState({ isLoading: true });
-    // 从缓存中拿当前购买的商品信息
-    const goodsList = Taro.getStorageSync('goodsList');
-    if (Array.isArray(goodsList) && goodsList.length > 0) {
-      const checkboxIds = [];
-      const list = JSON.parse(JSON.stringify(goodsList));
-      list.forEach(item => {
-        // 存储 checkboxIds 数组供 checkbox 使用
-        checkboxIds.push(item.id);
-      });
-      // 计算总价
-      let totalMoney = 0;
-      list.forEach(item => {
-        totalMoney += parseFloat(item.num) * parseFloat(item.price);
-      });
-      this.setState({
-        list,
-        checkboxIds,
-        totalMoney: totalMoney.toFixed(2),
-        isSelectAll: true,
-      });
-    }
-    this.setState({ isLoading: false });
-  };
+function Cart() {
+  const [goodsList, setGoodsList] = useState([]);
+  const [checkboxIds, setCheckboxIds] = useState([]);
+  const [totalMoney, setTotalMoney] = useState(0);
+  const [isCheckedAll, setIsCheckedAll] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   /**
-   * 商品数量按钮事件
-   * @param id
-   * @param type
-   * @param e
+   * @desc 商品数量按钮事件
+   * @param { number } id
+   * @param { string } type
+   * @param { object } e
+   * @return { void }
    */
-  btnClick = (id, type, e) => {
+  const handleChangeNum = (id, type, e) => {
     e.stopPropagation();
-    const { list } = this.state;
-    list.forEach(item => {
+
+    const list = JSON.parse(JSON.stringify(goodsList));
+    let totalMoney = 0;
+    list.forEach((item) => {
       if (item.id === id) {
+        // 计算总价
+        totalMoney += parseFloat(item.num) * parseFloat(item.price);
+        // 数量加减
         item.num = type === 'add' ? (item.num += 1) : (item.num -= 1);
         if (item.num < 1) {
           item.num = 0;
         }
       }
     });
-    // 计算总价
-    let totalMoney = 0;
-    list.forEach(item => {
-      totalMoney += parseFloat(item.num) * parseFloat(item.price);
-    });
-    this.setState({
-      list,
-      totalMoney: totalMoney.toFixed(2),
-    });
+
+    setGoodsList(list);
+    setTotalMoney(totalMoney.toFixed(2));
   };
 
   /**
-   * 商品 checkbox
-   * @param id
-   * @param e
+   * @desc 商品 checkbox 点击事件
+   * @param { number } id
+   * @param { object } e
+   * @return { void }
    */
-  checkboxClick = (id, e) => {
+  const handleChecked = (id, e) => {
     e.stopPropagation();
-    const { checkboxIds } = this.state;
-    if (checkboxIds.includes(id)) {
-      // checkboxIds 数组中是否存在当前点击的 checkbox id
-      checkboxIds.splice(checkboxIds.indexOf(id), 1); // 如果有，则删除
+
+    const checkboxIdArr = [...checkboxIds];
+    if (checkboxIdArr.includes(id)) {
+      // checkboxIds 数组中是否存在当前点击的 checkbox id，如果有，则删除
+      checkboxIdArr.splice(checkboxIdArr.indexOf(id), 1);
     } else {
-      checkboxIds.push(id); // 如果 childIds 数组中不存在当前点击的 checkbox id，则将其加入数组
+      // 如果 childIds 数组中不存在当前点击的 checkbox id，则将其加入数组
+      checkboxIdArr.push(id);
     }
+
     let flag = true;
     let totalMoney = 0;
-    const { list } = this.state;
-    list.forEach(item => {
-      if (checkboxIds.includes(item.id)) {
+    const list = JSON.parse(JSON.stringify(goodsList));
+    list.forEach((item) => {
+      if (checkboxIdArr.includes(item.id)) {
         // 计算总价
         totalMoney += parseFloat(item.num) * parseFloat(item.price);
       } else {
@@ -96,149 +72,137 @@ class Cart extends Component {
         flag = false;
       }
     });
-    this.setState({
-      checkboxIds,
-      totalMoney: totalMoney.toFixed(2),
-      isSelectAll: flag,
-    });
+
+    setCheckboxIds(checkboxIdArr);
+    setTotalMoney(totalMoney.toFixed(2));
+    setIsCheckedAll(flag);
   };
 
   /**
-   * 全选 checkbox
+   * @desc 全选 checkbox
    */
-  selectAll = () => {
-    const { checkboxIds, list } = this.state;
-    if (this.state.isSelectAll) {
-      this.setState({
-        checkboxIds: [],
-        isSelectAll: false,
-      });
+  const handleCheckedAll = () => {
+    const checkboxIdArr = [...checkboxIds];
+    const list = JSON.parse(JSON.stringify(goodsList));
+
+    if (isCheckedAll) {
+      setCheckboxIds([]);
+      setIsCheckedAll(false);
     } else {
-      list.forEach(item => {
-        checkboxIds.push(item.id);
-      });
-      this.setState({
-        checkboxIds,
-        isSelectAll: true,
-      });
+      list.forEach((item) => checkboxIdArr.push(item.id));
+      setCheckboxIds(checkboxIdArr);
+      setIsCheckedAll(true);
     }
   };
 
-  /**
-   * 跳转订单页面
-   */
-  goOrder = () => {
-    this.setStore();
-    Taro.navigateTo({
-      url: `/pages/order/index?checkedGoods=${this.state.checkboxIds}`,
-    });
-  };
+  useEffect(() => {
+    setLoading(true);
+    // 从缓存中拿当前购买的商品信息
+    let list = Taro.getStorageSync('goodsList');
+    if (list) {
+      list = JSON.parse(list);
 
-  /**
-   * 将商品信息存入缓存
-   */
-  setStore = () => {
-    Taro.removeStorageSync('goodsList');
-    const { list } = this.state;
-    const arr = [];
-    list.forEach(item => {
-      arr.push({
-        ...item,
+      const checkboxIdArr = [];
+      let totalMoney = 0;
+      list.forEach((item) => {
+        // 存储 checkboxIds 数组供 checkbox 使用
+        checkboxIdArr.push(item.id);
+        // 计算总价
+        totalMoney += parseFloat(item.num) * parseFloat(item.price);
       });
-    });
-    Taro.setStorageSync('goodsList', arr);
-  };
 
-  /**
-   * 跳转商品详情
-   * @param id
-   */
-  goGoodInfo = id => {
-    this.setStore();
-    this.$preload({ id });
-    Taro.navigateTo({
-      url: `/pages/goodInfo/index?id=${id}`,
-    });
-  };
+      setGoodsList(list);
+      setCheckboxIds(checkboxIds);
+      setTotalMoney(totalMoney.toFixed(2));
+      setIsCheckedAll(true);
+    }
 
-  componentWillUnmount = () => {
-    this.setStore();
-  };
+    setLoading(false);
+  }, []);
 
-  render() {
-    const { list, checkboxIds, isSelectAll } = this.state;
-    return (
-      <View className="cartWrap">
-        {Array.isArray(list) &&
-          list.map(item => (
-            <View
-              className="cardItemWrap clearfix"
-              key={item.id}
-              onClick={this.goGoodInfo.bind(this, item.id)}
-            >
-              <View
-                style={{ margin: '28px 10px 0' }}
-                className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
-                onClick={this.checkboxClick.bind(this, item.id)}
-              >
-                <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
-                  <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
-                </View>
-              </View>
-              <View className="cartItemImgWrap left">
-                <Image src={item.goodPic} />
-              </View>
-              <View className="cartItemTxtWrap left">
-                <View className="ellipsis">{item.name}</View>
-                <View>￥{item.price}</View>
-              </View>
-              <View className="btnGroup">
-                <View className="subBtn" onClick={this.btnClick.bind(this, item.id, 'sub')}>
-                  <AtIcon value="subtract-circle" size="23" color="#999" />
-                </View>
-                <View className="numDom">{item.num}</View>
-                <View className="addBtn" onClick={this.btnClick.bind(this, item.id, 'add')}>
-                  <AtIcon value="add-circle" size="23" color="#999" />
-                </View>
-              </View>
-            </View>
-          ))}
+  useDidHide(() => Taro.setStorage('goodsList', JSON.stringify(goodsList)));
 
-        <View className="statisticWrap">
+  return (
+    <View className="cartWrap">
+      {Array.isArray(goodsList) &&
+        goodsList.map((item) => (
           <View
-            style={{ margin: '12px 4px 0 8px' }}
-            className={isSelectAll ? 'cardCheckActive' : 'cardCheck'}
-            onClick={this.selectAll}
+            className="cardItemWrap clearfix"
+            key={item.id}
+            onClick={() => {
+              Taro.setStorageSync('goodsList', JSON.stringify(goodsList));
+              Taro.navigateTo({
+                url: `/pages/goodInfo/index?id=${item.id}`,
+              });
+            }}
           >
-            <View style={{ display: isSelectAll ? 'block' : 'none' }}>
-              <AtIcon
-                style={{ display: isSelectAll ? 'block' : 'none' }}
-                prefixClass="fa"
-                value="checked"
-                size="16"
-                color="#fff"
-              />
+            <View
+              style={{ margin: '28px 10px 0' }}
+              className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
+              onClick={() => handleChecked(item.id)}
+            >
+              <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
+                <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
+              </View>
+            </View>
+            <View className="cartItemImgWrap left">
+              <Image src={item.goodPic} />
+            </View>
+            <View className="cartItemTxtWrap left">
+              <View className="ellipsis">{item.name}</View>
+              <View>￥{item.price}</View>
+            </View>
+            <View className="btnGroup">
+              <View className="subBtn" onClick={() => handleChangeNum(item.id, 'sub')}>
+                <AtIcon value="subtract-circle" size="23" color="#999" />
+              </View>
+              <View className="numDom">{item.num}</View>
+              <View className="addBtn" onClick={() => handleChangeNum(item.id, 'add')}>
+                <AtIcon value="add-circle" size="23" color="#999" />
+              </View>
             </View>
           </View>
-          <Text className="selectTxt">全选</Text>
-          <View className="totalNum">
-            合计：<Text>￥{this.state.totalMoney}</Text>
+        ))}
+
+      <View className="statisticWrap">
+        <View
+          style={{ margin: '12px 4px 0 8px' }}
+          className={isCheckedAll ? 'cardCheckActive' : 'cardCheck'}
+          onClick={handleCheckedAll}
+        >
+          <View style={{ display: isCheckedAll ? 'block' : 'none' }}>
+            <AtIcon
+              style={{ display: isCheckedAll ? 'block' : 'none' }}
+              prefixClass="fa"
+              value="checked"
+              size="16"
+              color="#fff"
+            />
           </View>
-          <Button
-            className="createOrder right"
-            onClick={this.goOrder.bind(this)}
-            openType="getUserInfo"
-          >
-            下单({checkboxIds.length})
-          </Button>
         </View>
-
-        <NoData isVisible={Array.isArray(list) && list.length === 0} />
-
-        <Loading isLoading={this.state.isLoading} />
+        <Text className="selectTxt">全选</Text>
+        <View className="totalNum">
+          合计：<Text>￥{totalMoney}</Text>
+        </View>
+        <Button
+          className="createOrder right"
+          onClick={() => {
+            Taro.setStorageSync('goodsList', JSON.stringify(goodsList));
+            Taro.navigateTo({
+              url: `/pages/order/index?checkedGoods=${checkboxIds}`,
+            });
+          }}
+          openType="getUserInfo"
+        >
+          下单({checkboxIds.length})
+        </Button>
       </View>
-    );
-  }
+
+      <NoData isVisible={Array.isArray(goodsList) && goodsList.length === 0} />
+
+      <Loading isLoading={loading} />
+    </View>
+  );
 }
 
 export default Cart;
