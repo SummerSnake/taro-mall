@@ -4,9 +4,9 @@ import { getHomeDataApi } from '@/services/home';
 
 import Loading from '@/components/Loading/index';
 import IconList from './components/IconList/index';
-import TopCard from './components/TopCard/index';
-import MidCard from './components/MidCard/index';
-import BotCard from './components/BotCard/index';
+import Banner from './components/Banner/index';
+import CardList from './components/CardList/index';
+import GoodList from './components/GoodList/index';
 
 import './index.scss';
 
@@ -54,11 +54,11 @@ function Index() {
 
       <IconList iconList={iconList} />
 
-      <TopCard topCardObj={topCardObj} />
+      <Banner topCardObj={topCardObj} />
 
-      <MidCard midCardObj={midCardObj} />
+      <CardList midCardObj={midCardObj} />
 
-      <BotCard botCardObj={botCardObj} />
+      <GoodList botCardObj={botCardObj} />
 
       <Loading isLoading={loading} />
     </View>

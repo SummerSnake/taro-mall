@@ -3,9 +3,8 @@ import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-function MidCard(props) {
+function CardList(props) {
   const { midCardObj = {} } = props;
-  const imgList = midCardObj?.imgList?.splice(4);
 
   return (
     <View className="midCardWrap">
@@ -29,8 +28,8 @@ function MidCard(props) {
       </View>
 
       <View className="midItemWrap clearfix">
-        {Array.isArray(imgList) &&
-          imgList.map((item) => (
+        {Array.isArray(midCardObj?.imgList) &&
+          midCardObj?.imgList.map((item) => (
             <View
               className="midItemDom left"
               key={item.id}
@@ -58,4 +57,4 @@ function MidCard(props) {
   );
 }
 
-export default MidCard;
+export default CardList;

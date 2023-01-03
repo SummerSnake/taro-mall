@@ -3,9 +3,8 @@ import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-function TopCard(props) {
+function Banner(props) {
   const { topCardObj = {} } = props;
-  const imgList = midCardObj?.imgList?.splice(2);
 
   return (
     <View className="topCardWrap">
@@ -13,7 +12,7 @@ function TopCard(props) {
         className="topCardTit"
         onClick={() =>
           Taro.navigateTo({
-            url: `/pages/activity/index?list=${midCardObj?.imgList}`,
+            url: `/pages/activity/index?list=${topCardObj?.imgList}`,
           })
         }
       >
@@ -27,8 +26,8 @@ function TopCard(props) {
         <Image src={topCardObj?.picture} />
       </View>
       <View className="topItemWrap">
-        {Array.isArray(imgList) &&
-          imgList.map((item) => (
+        {Array.isArray(topCardObj?.imgList) &&
+          topCardObj?.imgList.map((item) => (
             <View
               className="topItemDom"
               key={item.id}
@@ -56,4 +55,4 @@ function TopCard(props) {
   );
 }
 
-export default TopCard;
+export default Banner;

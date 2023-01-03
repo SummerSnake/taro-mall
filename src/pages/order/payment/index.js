@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Taro, { useDidHide } from '@tarojs/taro';
+import Taro, { useDidHide, getCurrentInstance } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 
 import { isObj, isNotNull } from '@/utils/util';

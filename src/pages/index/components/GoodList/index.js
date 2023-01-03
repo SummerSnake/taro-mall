@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import './index.scss';
 
-function BotCard(props) {
+function GoodList(props) {
   const { botCardObj = {} } = props;
 
   return (
@@ -47,4 +47,4 @@ function BotCard(props) {
   );
 }
 
-export default BotCard;
+export default GoodList;

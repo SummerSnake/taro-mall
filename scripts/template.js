@@ -35,7 +35,7 @@ export default ${titleCase(dirName)};
 `;
 
 // scss文件模版
-const scssTep = `@import "../../styles/base";
+const scssTep = `@import "@/styles/base";
 
 .${dirName}Wrap {
   @include wh(100%, 100%);

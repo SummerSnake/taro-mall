@@ -9,7 +9,7 @@ import CouponCard from './components/CouponCard/index';
 
 import './index.scss';
 
-function OrderDetail() {
+function OrderInfo() {
   const [orderInfo, setOrderInfo] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -47,4 +47,4 @@ function OrderDetail() {
   );
 }
 
-export default OrderDetail;
+export default OrderInfo;

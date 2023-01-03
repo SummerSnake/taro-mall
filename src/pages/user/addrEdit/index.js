@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Taro, { getCurrentInstance } from '@tarojs/taro';
 import { View, Text, Picker, Input } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 

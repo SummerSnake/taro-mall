@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDidHide } from '@tarojs/taro';
+import { useDidHide, getCurrentInstance } from '@tarojs/taro';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { getGoodsListApi } from '@/services/good';
 
