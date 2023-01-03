@@ -14,11 +14,11 @@ function Header(props) {
    * @param { number } type
    * @return { void }
    */
-  const sortFunc = (type) => {
+  const handleSort = (type) => {
     setIsReverse(type);
 
     onHeaderCall({
-      searchVal: this.state.inputVal,
+      searchVal: inputVal,
       type,
     });
   };
@@ -30,7 +30,6 @@ function Header(props) {
           className="inputDom"
           placeholder-class="placeClass"
           placeholder="请输入商品名称"
-          value={inputVal}
           onInput={(e) => setInputVal(e?.target?.value)}
           onFocus={() => setIsVisible(false)}
           onBlur={() => setIsVisible(true)}
@@ -40,25 +39,25 @@ function Header(props) {
           style={{ display: isVisible && inputVal === '' ? 'block' : 'none' }}
           src="https://s1.ax1x.com/2020/06/01/tGthQK.png"
         />
-        <Text onClick={onHeaderCall({ pdFullName: inputVal })}>搜索</Text>
+        <Text onClick={() => onHeaderCall({ searchVal: inputVal })}>搜索</Text>
       </View>
 
       <View className="sortDom">
-        <View className="sortItem" onClick={() => sortFunc(0)}>
+        <View className="sortItem" onClick={() => handleSort(0)}>
           <Text>综合</Text>
           <Image
             src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"
             className={isReverse === 0 ? 'sortImgReverse' : 'sortImg'}
           />
         </View>
-        <View className="sortItem" onClick={() => sortFunc(1)}>
+        <View className="sortItem" onClick={() => handleSort(1)}>
           <Text>销量</Text>
           <Image
             src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"
             className={isReverse === 1 ? 'sortImgReverse' : 'sortImg'}
           />
         </View>
-        <View className="sortItem" onClick={() => sortFunc(2)}>
+        <View className="sortItem" onClick={() => handleSort(2)}>
           <Text>价格</Text>
           <Image
             src="https://s1.ax1x.com/2020/06/01/tGtdzV.png"

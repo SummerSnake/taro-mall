@@ -12,7 +12,7 @@ function Banner(props) {
         className="topCardTit"
         onClick={() =>
           Taro.navigateTo({
-            url: `/pages/activity/index?list=${topCardObj?.imgList}`,
+            url: `/pages/activity/index?list=${JSON.stringify(topCardObj?.imgList)}`,
           })
         }
       >

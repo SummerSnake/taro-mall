@@ -7,6 +7,7 @@ function GoodsList(props) {
 
   /**
    * @desc 滚动加载
+   * @return { void }
    */
   const handleScroll = () => {
     onGoodsCall({ type: 'loading' });

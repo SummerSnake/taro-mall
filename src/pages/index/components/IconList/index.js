@@ -13,11 +13,7 @@ function IconList(props) {
           <View
             className="iconItem left"
             key={icon.id}
-            onClick={() =>
-              Taro.switchTab({
-                url: `/pages/category/index?iconId=${icon.id}`,
-              })
-            }
+            onClick={() => Taro.switchTab({ url: '/pages/category/index' })}
           >
             <View className="iconWrap">
               <Image src={icon.imgUrl} />

@@ -17,20 +17,20 @@ function Category() {
   const [loading, setLoading] = useState(false);
 
   const [filters, setFilters] = useState({});
-  const [pagination, setPagination] = useState({
+  const [pager, setPager] = useState({
     current: 1,
     pageSize: 5,
   });
 
   /**
    * @desc 获取商品列表
-   * @param { object } filters
+   * @param { object } filter
    * @param { object } pagination
    * @return { void }
    */
-  const fetchGoodsList = async (filters = filters, pagination = pagination) => {
+  const fetchGoodsList = async (filter = {}, pagination = {}) => {
     setLoading(true);
-    const res = await getCategoryListApi({ pagination, filters });
+    const res = await getGoodsListApi({ ...filter, ...pagination });
 
     if (res?.status === 200) {
       const list = pagination.current > 1 ? [...goodsList, ...res?.data] : res?.data;
@@ -46,7 +46,7 @@ function Category() {
    */
   const fetchCategoryList = async () => {
     setLoading(true);
-    const res = await getGoodsListApi();
+    const res = await getCategoryListApi();
 
     if (res?.status === 200) {
       setGategoryList(res?.data);
@@ -56,7 +56,7 @@ function Category() {
   };
 
   useEffect(() => {
-    fetchGoodsList();
+    fetchGoodsList(filters, pager);
     fetchCategoryList();
   }, []);
 
@@ -64,15 +64,15 @@ function Category() {
     <View className="categoryWrap">
       <Header
         onHeaderCall={(json) => {
+          fetchGoodsList({ ...filters, ...json });
           setFilters({ ...filters, ...json });
-          fetchGoodsList(json);
         }}
       />
 
       <Classify
         onClassifyCall={(json) => {
+          fetchGoodsList({ ...filters, ...json });
           setFilters({ ...filters, ...json });
-          fetchGoodsList(json);
         }}
         classifyList={categoryList}
       />
@@ -81,10 +81,13 @@ function Category() {
         goodsList={goodsList}
         onGoodsCall={(json) => {
           if (json.type === 'loading') {
-            setPagination((pagination.current += 1));
-            fetchGoodsList(null, {
-              ...pagination,
-              current: (pagination.current += 1),
+            fetchGoodsList(filters, {
+              ...pager,
+              current: pager.current + 1,
+            });
+            setPager({
+              ...pager,
+              current: pager.current + 1,
             });
           }
         }}

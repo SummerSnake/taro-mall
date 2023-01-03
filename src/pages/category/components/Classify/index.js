@@ -35,12 +35,12 @@ function Classify(props) {
 
   /**
    * @desc 分类列表项点击事件
+   * @param { object } e
    * @param { number } id
    * @param { string } title
-   * @param { object } e
    * @return { void }
    */
-  const handleItemClick = async (id, title, e) => {
+  const handleItemClick = async (e, id, title) => {
     e.stopPropagation();
     const arr = [...titleArr];
 
@@ -97,7 +97,7 @@ function Classify(props) {
 
     if (isNotNull(filter)) {
       // 筛选
-      onClassifyCall({ classifyFilter: filter });
+      onClassifyCall({ classifyType: filter });
     } else {
       // 未筛选取消选中状态
       const newArr = selectedArr.filter((item) => item !== selectId);
@@ -133,7 +133,7 @@ function Classify(props) {
               <View
                 key={item.id}
                 className={item.id === listItemActive ? 'listItemActive' : 'listItem'}
-                onClick={() => handleItemClick(item.id, item.title)}
+                onClick={(e) => handleItemClick(e, item.id, item.title)}
               >
                 {item.title}
               </View>

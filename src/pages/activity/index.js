@@ -7,12 +7,13 @@ function Activity() {
   const {
     router: { params = {} },
   } = getCurrentInstance() && getCurrentInstance();
+  const goodsList = params.list ? JSON.parse(params?.list) : [];
 
   return (
     <View className="activityWrap">
       <View className="topItemWrap">
-        {Array.isArray(params?.goodsList) &&
-          params?.goodsList.map((item) => (
+        {Array.isArray(goodsList) &&
+          goodsList.map((item) => (
             <View
               className="botCardItemWrap clearfix"
               key={item.id}

@@ -6,7 +6,7 @@ function NoData(props) {
   return (
     <View
       style={{
-        display: isVisible ? 'block' : 'none',
+        display: props.isVisible ? 'block' : 'none',
         position: 'absolute',
         top: '50%',
         left: '50%',

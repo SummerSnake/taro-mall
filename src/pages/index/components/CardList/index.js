@@ -12,7 +12,7 @@ function CardList(props) {
         className="midCardTit"
         onClick={() =>
           Taro.navigateTo({
-            url: `/pages/activity/index?list=${midCardObj?.imgList}`,
+            url: `/pages/activity/index?list=${JSON.stringify(midCardObj?.imgList)}`,
           })
         }
       >
