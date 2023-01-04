@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
 import { View, Input } from '@tarojs/components';
 import { isNotNull } from '@/utils/util';
 import { wxToast } from '@/utils/wxApi';
@@ -53,7 +54,7 @@ function PhoneEdit() {
     }
 
     if (!btnDisabled) {
-      setBtnChange(true);
+      setBtnDisabled(true);
       fetchSmsCode();
     }
   };
@@ -62,14 +63,14 @@ function PhoneEdit() {
    * @desc 提交
    * @return { void }
    */
-  handleSubmit = async () => {
-    if (checkInputVal(this.props.oldPhone, '请输入认证手机')) {
+  const handleSubmit = async () => {
+    if (checkInputVal(formData.oldPhone, '请输入认证手机')) {
       return;
     }
-    if (checkInputVal(this.props.newPhone, '请输入新手机号')) {
+    if (checkInputVal(formData.newPhone, '请输入新手机号')) {
       return;
     }
-    if (checkInputVal(this.props.newSmsCode, '请输入新手机号验证码')) {
+    if (checkInputVal(formData.smsCode, '请输入验证码')) {
       return;
     }
 
@@ -85,7 +86,7 @@ function PhoneEdit() {
     setLoading(false);
     setTimeout(() => {
       Taro.navigateBack();
-    }, []);
+    }, 2000);
   };
 
   /**
@@ -119,8 +120,7 @@ function PhoneEdit() {
             <Input
               className="inputNode"
               placeholder="请输入认证手机"
-              value={formData.oldPhone}
-              onInput={(e) => handleInputChange(e, 'smsCode')}
+              onInput={(e) => handleInputChange(e, 'oldPhone')}
             />
           </View>
         </View>
@@ -130,8 +130,7 @@ function PhoneEdit() {
             <Input
               className="inputNode"
               placeholder="请输入新手机"
-              value={formData.newPhone}
-              onInput={(e) => handleInputChange(e, 'smsCode')}
+              onInput={(e) => handleInputChange(e, 'newPhone')}
             />
           </View>
         </View>
@@ -141,7 +140,6 @@ function PhoneEdit() {
             <Input
               className="inputNode"
               placeholder="请输入验证码"
-              value={formData.smsCode}
               onInput={(e) => handleInputChange(e, 'smsCode')}
             />
           </View>

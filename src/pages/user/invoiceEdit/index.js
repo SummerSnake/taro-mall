@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
 import { View, Input } from '@tarojs/components';
 import { isNotNull } from '@/utils/util';
 import { wxToast } from '@/utils/wxApi';
@@ -73,7 +74,7 @@ function InvoiceEdit() {
     setLoading(false);
     setTimeout(() => {
       Taro.navigateBack();
-    }, []);
+    }, 2000);
   };
 
   /**
@@ -82,7 +83,7 @@ function InvoiceEdit() {
    */
   const fetchInvoiceInfo = async () => {
     setLoading(true);
-    const res = await getAddressApi();
+    const res = await updateInvoiceApi();
 
     if (res?.status === 200) {
       setFormData(res?.data);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
 import { View, Input, Picker } from '@tarojs/components';
 
 import { isNotNull } from '@/utils/util';
@@ -62,7 +63,7 @@ function UserEdit() {
     setLoading(false);
     setTimeout(() => {
       Taro.navigateBack();
-    }, []);
+    }, 2000);
   };
 
   /**

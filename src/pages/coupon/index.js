@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
-import { View } from '@tarojs/components';
+import { View, Text } from '@tarojs/components';
 import { getCouponListApi } from '@/services/coupon';
 
 import Loading from '@/components/Loading/index';
@@ -33,15 +33,16 @@ function Coupon() {
 
   /**
    * @desc 获取商品列表
+   * @param { number } tab
    * @return { void }
    */
-  const fetchCouponList = async () => {
+  const fetchCouponList = async (tab) => {
     setLoading(true);
     const res = await getCouponListApi();
 
     if (res?.status === 200) {
       const list =
-        tabIndex === 0
+        tab === 0
           ? res?.data.filter((item) => new Date() < new Date(Date.parse(item.endDate)))
           : res?.data.filter((item) => new Date() > new Date(Date.parse(item.endDate)));
 
@@ -52,7 +53,7 @@ function Coupon() {
   };
 
   useEffect(() => {
-    fetchCouponList();
+    fetchCouponList(0);
   }, []);
 
   return (

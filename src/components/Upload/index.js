@@ -9,7 +9,7 @@ function Upload(props) {
   const { onUploadCall = () => {} } = props;
 
   const [imgList, setImgList] = useState(props.imgList || []);
-  const [isAddIconShow, setIsAddIconShow] = useState(false);
+  const [isAddIconShow, setIsAddIconShow] = useState(true);
 
   /**
    * @desc 上传图片
@@ -19,7 +19,7 @@ function Upload(props) {
   const handleUpload = async (e) => {
     e.stopPropagation();
 
-    const res = await Taro.handleUpload({
+    const res = await Taro.chooseImage({
       count: 5, // 可上传数量
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
@@ -44,11 +44,11 @@ function Upload(props) {
 
   /**
    * @desc 删除图片
-   * @param { number } index
    * @param { object } e
+   * @param { number } index
    * @return { void }
    */
-  const handleRemove = (index, e) => {
+  const handleRemove = (e, index) => {
     e.stopPropagation();
 
     const list = JSON.parse(JSON.stringify(imgList));
@@ -65,9 +65,7 @@ function Upload(props) {
       setImgList(props.imgList);
 
       if (props.imgList.length > 4) {
-        this.setState({
-          isVisible: false,
-        });
+        setIsAddIconShow(false);
       }
     }
   }, [props.imgList]);
@@ -79,7 +77,7 @@ function Upload(props) {
           return (
             <View className="imgDom left" key={index.toString()}>
               <Image src={item} />
-              <View className="cancelIcon" onClick={() => handleRemove(index)}>
+              <View className="cancelIcon" onClick={(e) => handleRemove(e, index)}>
                 <AtIcon value="close-circle" size="12" />
               </View>
             </View>

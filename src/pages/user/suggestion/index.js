@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDidHide } from '@tarojs/taro';
+import Taro, { useDidHide } from '@tarojs/taro';
 import { View, Textarea, Text } from '@tarojs/components';
 
 import { isNotNull } from '@/utils/util';
@@ -12,6 +12,7 @@ import './index.scss';
 
 function Suggestion() {
   const [formData, setFormData] = useState({
+    suggestionVal: '',
     imgList: [],
   });
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ function Suggestion() {
    * @desc 提交
    * @return { void }
    */
-  handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (checkInputVal(formData.suggestionVal, '请输入反馈建议')) {
       return;
     }
@@ -75,11 +76,12 @@ function Suggestion() {
     setLoading(false);
     setTimeout(() => {
       Taro.navigateBack();
-    }, []);
+    }, 2000);
   };
 
   useDidHide(() => {
     setFormData({
+      suggestionVal: '',
       imgList: [],
     });
   });
@@ -102,7 +104,7 @@ function Suggestion() {
       <View className="uploadWrap">
         <View className="uploadTitle">您最多可上传5张，单张图片最大1M</View>
         <View className="uploaderDom">
-          <Upload onUploadCall={onUploadCall} imgList={imgList} />
+          <Upload onUploadCall={onUploadCall} imgList={formData.imgList} />
         </View>
       </View>
 
