@@ -34,7 +34,7 @@ function AddrEdit() {
   const handleInputChange = (e, sign) => {
     setFormData({
       ...formData,
-      [sign]: e?.target?.value,
+      [sign]: sign === 'checkedVal' ? !formData.checkedVal : e?.target?.value,
     });
   };
 
@@ -55,7 +55,7 @@ function AddrEdit() {
    * @desc 提交
    * @return { void }
    */
-  handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (checkInputVal(formData.consignee, '请输入收货人')) {
       return;
     }
@@ -63,7 +63,7 @@ function AddrEdit() {
       return;
     }
     if (formData.area.length === 0) {
-      toastFunc('请选择所在地区', 'close-circle');
+      wxToast('请选择所在地区', 'close-circle');
       return;
     }
     if (checkInputVal(formData.detailAddr, '请输入详细地址')) {
@@ -80,26 +80,25 @@ function AddrEdit() {
     });
 
     if (res?.status === 200) {
-      wxToast('设置成功', 'check-circle');
+      wxToast('操作成功', 'check-circle');
     }
 
     setLoading(false);
     setTimeout(() => {
       Taro.navigateBack();
-    }, []);
+    }, 2000);
   };
 
   useEffect(() => {
-    if (isObj(params?.itemClone) && Object.keys(params?.itemClone).length > 0) {
-      const { itemClone = {} } = params;
-
+    const initFormData = params.initFormData ? JSON.parse(params.initFormData) : null;
+    if (isObj(initFormData) && Object.keys(initFormData).length > 0) {
       setFormData({
         ...formData,
-        consignee: itemClone.consignee,
-        phone: itemClone.phone,
-        area: [itemClone.province, itemClone.city, itemClone.region],
-        detailAddr: itemClone.detailAddr,
-        checkedVal: itemClone.type === 1,
+        consignee: initFormData.consignee,
+        phone: initFormData.phone,
+        area: [initFormData.province, initFormData.city, initFormData.region],
+        detailAddr: initFormData.detailAddr,
+        checkedVal: initFormData.type === 1,
       });
     }
   }, []);
@@ -134,8 +133,8 @@ function AddrEdit() {
           <Picker
             className="inputNode"
             mode="region"
-            onInput={(e) => handleInputChange(e, 'area')}
             value={formData.area}
+            onChange={(e) => handleInputChange(e, 'area')}
           >
             <View className="pickerNode ellipsis">
               <Text>{formData.area[0]}</Text>
@@ -161,7 +160,7 @@ function AddrEdit() {
         <View className="inputDom left">
           <View
             className={formData.checkedVal ? 'cardCheckActive' : 'cardCheck'}
-            onInput={(e) => handleInputChange(e, 'checkedVal')}
+            onClick={(e) => handleInputChange(e, 'checkedVal')}
           >
             <View style={{ display: formData.checkedVal ? 'block' : 'none' }}>
               <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />

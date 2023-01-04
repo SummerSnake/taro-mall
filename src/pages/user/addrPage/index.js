@@ -33,24 +33,24 @@ function AddrPage() {
     }
 
     Taro.navigateTo({
-      url: `/pages/user/addrEdit/index?itemClone=${itemClone}`,
+      url: `/pages/user/addrEdit/index?initFormData=${JSON.stringify(itemClone)}`,
     });
   };
 
   /**
    * @desc 删除地址
-   * @param { number } id
    * @param { object } e
+   * @param { number } id
    * @return { void }
    */
-  const deleteAddr = async (id, e) => {
+  const deleteAddr = async (e, id) => {
     e.stopPropagation();
 
     setLoading(true);
-    const res = await deleteAddressApi();
+    const res = await deleteAddressApi({ id });
 
     if (res?.status === 200) {
-      wxToast(toastTxt, 'check-circle');
+      wxToast('删除成功', 'check-circle');
     }
 
     setLoading(false);
@@ -126,7 +126,7 @@ function AddrPage() {
               <View className="editIcon" onClick={(e) => updateAddr(item.id, e)}>
                 <AtIcon value="edit" size="20" color="#666" />
               </View>
-              <View className="deleteIcon" onClick={(e) => deleteAddr(item.id, e)}>
+              <View className="deleteIcon" onClick={(e) => deleteAddr(e, item.id)}>
                 <AtIcon value="close-circle" size="20" color="#666" />
               </View>
             </View>

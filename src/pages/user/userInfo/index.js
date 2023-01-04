@@ -23,8 +23,8 @@ function UserInfo() {
     Taro.getUserInfo({
       success: (res) => {
         setMiniUserInfo(res.userInfo);
+        Taro.setStorageSync('miniUserInfo', JSON.stringify(res.userInfo));
         setIsModalShow(false);
-        Taro.setStorageSync('userInfo', JSON.stringify(res.userInfo));
       },
     });
   };
@@ -34,7 +34,7 @@ function UserInfo() {
    * @param { string } url
    * @return { void }
    */
-  handleRedirect = (url) => {
+  const handleRedirect = (url) => {
     Taro.setStorageSync('navType', 'user');
     Taro.navigateTo({ url });
   };
@@ -48,26 +48,23 @@ function UserInfo() {
     const res = await getUserInfoApi();
 
     if (res?.status === 200) {
-      const arr =
-        tabIndex === '00'
-          ? [...res?.data]
-          : res?.data.filter((item) => item.orderState === tabIndex);
-
-      setTabPaneList(arr);
+      setUserInfo(res?.data);
     }
 
     setLoading(false);
   };
 
   useEffect(() => {
-    const userInfo = Taro.getStorageSync('userInfo');
-    const userObj = JSON.parse(userInfo);
+    const miniInfo = Taro.getStorageSync('miniUserInfo');
+    if (miniInfo) {
+      const infoJson = JSON.parse(miniInfo);
 
-    if (isObj(userObj) && Object.keys(userObj).length > 0) {
-      setUserInfo(userObj);
-    } else {
-      fetchUserInfo();
+      if (isObj(infoJson) && Object.keys(infoJson).length > 0) {
+        setMiniUserInfo(infoJson);
+      }
     }
+
+    fetchUserInfo();
   }, []);
 
   return (
@@ -120,7 +117,7 @@ function UserInfo() {
         <View
           onClick={() => {
             Taro.navigateTo({
-              url: `/pages/orderList/index?current=00`,
+              url: `/pages/order/orderList/index?current=00`,
             });
           }}
         >
@@ -133,7 +130,7 @@ function UserInfo() {
           <View
             onClick={() => {
               Taro.navigateTo({
-                url: `/pages/orderList/index?current=00`,
+                url: `/pages/order/orderList/index?current=00`,
               });
             }}
           >
@@ -141,27 +138,33 @@ function UserInfo() {
             <View>全部订单</View>
           </View>
           <View
-            onClick={Taro.navigateTo({
-              url: `/pages/orderList/index?current=01`,
-            })}
+            onClick={() => {
+              Taro.navigateTo({
+                url: `/pages/order/orderList/index?current=01`,
+              });
+            }}
           >
             <Image className="orderImg_02" src="https://s1.ax1x.com/2020/06/01/tGtoee.png" />
             <View>待付款</View>
             <View className="badgeDom">{userInfo.unPay}</View>
           </View>
           <View
-            onClick={Taro.navigateTo({
-              url: `/pages/orderList/index?current=02`,
-            })}
+            onClick={() => {
+              Taro.navigateTo({
+                url: `/pages/order/orderList/index?current=02`,
+              });
+            }}
           >
             <Image className="orderImg_03" src="https://s1.ax1x.com/2020/06/01/tGtDLF.png" />
             <View>待发货</View>
             <View className="badgeDom">{userInfo.unSend}</View>
           </View>
           <View
-            onClick={Taro.navigateTo({
-              url: `/pages/orderList/index?current=03`,
-            })}
+            onClick={() => {
+              Taro.navigateTo({
+                url: `/pages/order/orderList/index?current=03`,
+              });
+            }}
           >
             <Image className="orderImg_04" src="https://s1.ax1x.com/2020/06/01/tGtUGq.png" />
             <View>已完成</View>
