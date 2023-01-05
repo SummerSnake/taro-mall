@@ -28,15 +28,13 @@ function OrderList() {
    * @desc 获取订单列表
    * @return { void }
    */
-  const fetchOrderList = async () => {
+  const fetchOrderList = async (tab) => {
     setLoading(true);
     const res = await getOrderListApi();
 
     if (res?.status === 200) {
       const arr =
-        tabIndex === '00'
-          ? [...res?.data]
-          : res?.data.filter((item) => item.orderState === tabIndex);
+        tab === '00' ? [...res?.data] : res?.data.filter((item) => item.orderState === tab);
 
       setTabPaneList(arr);
     }
@@ -46,20 +44,20 @@ function OrderList() {
 
   useEffect(() => {
     setTabIndex(params.current);
-    fetchOrderList();
+    fetchOrderList(params.current);
   }, []);
 
   return (
     <View className="orderListWrap">
       <View className="tabsHeader">
-        {Arrays.isArray(tabList) &&
+        {Array.isArray(tabList) &&
           tabList.map((item) => (
             <View key={item.id}>
               <Text
                 className={item.id === tabIndex ? 'tabTagActive' : 'tabTag'}
                 onClick={() => {
-                  setTabIndex(params.current);
-                  fetchOrderList();
+                  setTabIndex(item.id);
+                  fetchOrderList(item.id);
                 }}
               >
                 {item.title}
@@ -76,7 +74,7 @@ function OrderList() {
               key={item.id}
               onClick={() =>
                 Taro.navigateTo({
-                  url: '/pages/orderList/subPages/orderDetail/index',
+                  url: `/pages/order/orderInfo/index?id=${item.id}`,
                 })
               }
             >
@@ -103,7 +101,7 @@ function OrderList() {
           ))}
       </View>
 
-      <NoData isVisible={tabList.length === 0} />
+      <NoData isVisible={tabPaneList.length === 0} />
 
       <Loading isLoading={loading} />
     </View>

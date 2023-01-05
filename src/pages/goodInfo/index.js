@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDidHide, getCurrentInstance } from '@tarojs/taro';
+import Taro, { getCurrentInstance } from '@tarojs/taro';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { getGoodsListApi } from '@/services/good';
 
@@ -25,7 +25,8 @@ function GoodInfo() {
    * @return { void }
    */
   const btnClick = (type) => {
-    num = type === 'add' ? (totalNum += 1) : (totalNum -= 1);
+    let total = totalNum;
+    const num = type === 'add' ? (total += 1) : (total -= 1);
 
     if (num < 0) {
       return;
@@ -41,33 +42,30 @@ function GoodInfo() {
    * @param { string } action
    * @return { void }
    */
-  handleRedirect = (url, action) => {
-    if (url === '/pages/cart/index' || url === '/pages/order/index') {
-      updateStorage();
-    }
-
+  const handleRedirect = (url, action) => {
+    updateStorage();
     Taro[action]({ url });
   };
 
   /**
-   * @desc 将商品信息存入缓存
+   * @desc 将商品信息存入购物车缓存
    * @return { void }
    */
   const updateStorage = () => {
     if (totalNum > 0) {
       let list = [];
-      const goodsList = Taro.getStorageSync('goodsList');
-      if (goodsList) {
-        list = JSON.parse(goodsList);
+      const cartList = Taro.getStorageSync('cartList');
+      if (cartList) {
+        list = JSON.parse(cartList);
         let hasItem = false;
         list.forEach((item) => {
-          // 如果缓存在该 商品信息，则添加数量
-          if (item.id === goodInfo?.id) {
+          // 如果 购物车缓存 存在该商品信息，则添加数量
+          if (item.id === Number(params?.id)) {
             item.num = totalNum;
             hasItem = true;
           }
         });
-        // 如果缓不存在该 商品信息，则加入缓存
+        // 如果 购物车缓存 不存在该商品信息，则加入购物车缓存
         if (!hasItem) {
           list.push({
             ...goodInfo,
@@ -75,36 +73,34 @@ function GoodInfo() {
           });
         }
       } else {
-        // 如果不存在，则将 商品信息 存入缓存中
+        // 如果不存在，则将 商品信息 存入购物车缓存中
         list.push({ ...goodInfo, num: totalNum });
       }
 
-      Taro.setStorageSync('goodsList', JSON.stringify(list));
+      Taro.setStorageSync('cartList', JSON.stringify(list));
     }
   };
 
   /**
    * @desc 获取商品列表
-   * @param { object } filters
-   * @param { object } pagination
    * @return { void }
    */
   const fetchGoodsList = async () => {
     setLoading(true);
-    const res = await getGoodsListApi({ pagination, filters });
+    const res = await getGoodsListApi();
 
     if (res?.status === 200) {
-      const info = res?.data.filter((item) => item.id === params?.id);
+      const info = res?.data.filter((item) => item.id === Number(params?.id));
 
       setGoodInfo(info[0]);
 
       // 获取缓存中的商品信息
-      const goodsList = Taro.getStorageSync('goodsList');
-      if (goodsList) {
-        const list = JSON.parse(goodsList);
+      const cartList = Taro.getStorageSync('cartList');
+      if (cartList) {
+        const list = JSON.parse(cartList);
 
         list.forEach((item) => {
-          if (item.id === params?.id) {
+          if (item.id === Number(params?.id)) {
             setTotalNum(item.num);
             setTotalMoney((item.num * info[0]?.price).toFixed(2));
           }
@@ -118,10 +114,6 @@ function GoodInfo() {
   useEffect(() => {
     fetchGoodsList();
   }, []);
-
-  useDidHide(() => {
-    updateStorage();
-  });
 
   return (
     <View className="goodsInfoWrap">
@@ -235,7 +227,7 @@ function GoodInfo() {
           </View>
           <Button
             className="goPay"
-            onClick={() => handleRedirect('/pages/order/index', 'navigateTo')}
+            onClick={() => handleRedirect('/pages/order/orderList/index?current=01', 'navigateTo')}
           >
             去结算
           </Button>

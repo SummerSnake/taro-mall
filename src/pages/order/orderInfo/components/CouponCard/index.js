@@ -2,7 +2,7 @@ import { View, Text } from '@tarojs/components';
 import './index.scss';
 
 function CouponCard(props) {
-  const { couponInfo } = props;
+  const { couponInfo = {} } = props;
 
   return (
     <View className="couponWrap">
@@ -10,7 +10,7 @@ function CouponCard(props) {
         订单金额<Text className="itemTxt right">{couponInfo.orderMoney}</Text>
       </View>
 
-      <View className="couponItem" onClick={this.goCouponList.bind(this)}>
+      <View className="couponItem">
         优惠券
         <Text className="itemTxt right">{couponInfo.couponName}</Text>
       </View>

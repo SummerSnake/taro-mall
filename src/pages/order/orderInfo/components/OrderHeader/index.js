@@ -3,7 +3,7 @@ import { AtIcon } from 'taro-ui';
 import './index.scss';
 
 function OrderHeader(props) {
-  const { headerInfo } = props;
+  const { headerInfo = {} } = props;
 
   return (
     <View className="orderHeader">
@@ -19,7 +19,7 @@ function OrderHeader(props) {
           {headerInfo.detailAddr}
         </View>
       </View>
-      <View className="invoiceDom" onClick={this.goHref.bind(this, '02')}>
+      <View className="invoiceDom">
         <AtIcon prefixClass="fa" value="files-text-o" size="14" color="#999" />
         <Text>发票信息：{headerInfo.company}</Text>
       </View>

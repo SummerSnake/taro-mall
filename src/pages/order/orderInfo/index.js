@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getCurrentInstance } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { getOrderInfoApi } from '@/services/order';
 
@@ -10,6 +11,10 @@ import CouponCard from './components/CouponCard/index';
 import './index.scss';
 
 function OrderInfo() {
+  const {
+    router: { params = {} },
+  } = getCurrentInstance() && getCurrentInstance();
+
   const [orderInfo, setOrderInfo] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -19,10 +24,10 @@ function OrderInfo() {
    */
   const fetchOrderInfo = async () => {
     setLoading(true);
-    const res = await getOrderInfoApi();
+    const res = await getOrderInfoApi({ id: params?.id });
 
     if (res?.status === 200) {
-      setOrderInfo(res?.data);
+      setOrderInfo(res.data);
     }
 
     setLoading(false);
