@@ -57,24 +57,14 @@ function AddrPage() {
   };
 
   /**
-   * 订单页面选择收货地址
-   * @param id
-   * @param consignee
-   * @param phone
-   * @param address
+   * @desc 订单页面选择收货地址
+   * @param { object } addrJson
+   * @return { void }
    */
-  const handleAddrClick = async (id, consignee, phone, address) => {
+  const handleAddrClick = async (addrJson) => {
     const navType = Taro.getStorageSync('navType');
     if (navType === 'order') {
-      Taro.setStorageSync(
-        'addrInfo',
-        JSON.stringify({
-          addrId: id,
-          consignee,
-          phone,
-          address,
-        })
-      );
+      Taro.setStorageSync('addrInfo', JSON.stringify(addrJson));
       Taro.navigateBack();
     }
   };
@@ -105,14 +95,18 @@ function AddrPage() {
           const phoneVal = `${item.phone.toString().slice(0, 3)}****${item.phone
             .toString()
             .slice(7)}`;
-          const addrVal = `${item.province}${item.city}${item.region}${item.detailAddr}`;
+          const addrJson = {
+            addrId: item.id,
+            consignee: item.consignee,
+            phone: item.phone,
+            province: item.province,
+            city: item.city,
+            region: item.region,
+            detailAddr: item.detailAddr,
+          };
 
           return (
-            <View
-              className="addrWrap"
-              key={item.id}
-              onClick={() => handleAddrClick(item.id, item.consignee, item.phone, addrVal)}
-            >
+            <View className="addrWrap" key={item.id} onClick={() => handleAddrClick(addrJson)}>
               <View className="addrTop">
                 <Text>{item.consigneeName}</Text>
                 <View>
@@ -122,7 +116,9 @@ function AddrPage() {
                   </Text>
                 </View>
               </View>
-              <View className="addrBottom ellipsis">{addrVal}</View>
+              <View className="addrBottom ellipsis">
+                {`${item.province}${item.city}${item.region}${item.detailAddr}`}
+              </View>
               <View className="editIcon" onClick={(e) => updateAddr(item.id, e)}>
                 <AtIcon value="edit" size="20" color="#666" />
               </View>

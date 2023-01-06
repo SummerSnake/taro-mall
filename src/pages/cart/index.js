@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Taro, { useDidHide } from '@tarojs/taro';
+import React, { useState } from 'react';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { View, Text, Image, Button } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 
@@ -16,39 +16,43 @@ function Cart() {
 
   /**
    * @desc 商品数量按钮事件
+   * @param { object } e
    * @param { number } id
    * @param { string } type
-   * @param { object } e
    * @return { void }
    */
-  const handleChangeNum = (id, type, e) => {
+  const handleNumChange = (e, id, type) => {
     e.stopPropagation();
 
     const list = JSON.parse(JSON.stringify(goodsList));
-    let totalMoney = 0;
+    let total = 0;
     list.forEach((item) => {
       if (item.id === id) {
-        // 计算总价
-        totalMoney += parseFloat(item.num) * parseFloat(item.price);
         // 数量加减
-        item.num = type === 'add' ? (item.num += 1) : (item.num -= 1);
+        item.num = type === 'add' ? item.num + 1 : item.num - 1;
         if (item.num < 1) {
           item.num = 0;
         }
       }
+      // 计算总价
+      total += parseFloat(item.num) * parseFloat(item.price);
     });
 
     setGoodsList(list);
-    setTotalMoney(totalMoney.toFixed(2));
+    setTotalMoney(total.toFixed(2));
+
+    // 更新缓存
+    const cartList = list.filter((item) => item.num > 0);
+    Taro.setStorageSync('cartList', JSON.stringify(cartList));
   };
 
   /**
    * @desc 商品 checkbox 点击事件
-   * @param { number } id
    * @param { object } e
+   * @param { number } id
    * @return { void }
    */
-  const handleChecked = (id, e) => {
+  const handleChecked = (e, id) => {
     e.stopPropagation();
 
     const checkboxIdArr = [...checkboxIds];
@@ -80,6 +84,7 @@ function Cart() {
 
   /**
    * @desc 全选 checkbox
+   * @return { void }
    */
   const handleCheckedAll = () => {
     const checkboxIdArr = [...checkboxIds];
@@ -95,10 +100,10 @@ function Cart() {
     }
   };
 
-  useEffect(() => {
+  useDidShow(() => {
     setLoading(true);
     // 从缓存中拿当前购买的商品信息
-    let list = Taro.getStorageSync('goodsList');
+    let list = Taro.getStorageSync('cartList');
     if (list) {
       list = JSON.parse(list);
 
@@ -112,15 +117,13 @@ function Cart() {
       });
 
       setGoodsList(list);
-      setCheckboxIds(checkboxIds);
+      setCheckboxIds(checkboxIdArr);
       setTotalMoney(totalMoney.toFixed(2));
       setIsCheckedAll(true);
     }
 
     setLoading(false);
-  }, []);
-
-  useDidHide(() => Taro.setStorage('goodsList', JSON.stringify(goodsList)));
+  });
 
   return (
     <View className="cartWrap">
@@ -139,7 +142,7 @@ function Cart() {
             <View
               style={{ margin: '28px 10px 0' }}
               className={checkboxIds.includes(item.id) ? 'cardCheckActive' : 'cardCheck'}
-              onClick={() => handleChecked(item.id)}
+              onClick={(e) => handleChecked(e, item.id)}
             >
               <View style={{ display: checkboxIds.includes(item.id) ? 'block' : 'none' }}>
                 <AtIcon prefixClass="fa" value="checked" size="16" color="#fff" />
@@ -153,11 +156,11 @@ function Cart() {
               <View>￥{item.price}</View>
             </View>
             <View className="btnGroup">
-              <View className="subBtn" onClick={() => handleChangeNum(item.id, 'sub')}>
+              <View className="subBtn" onClick={(e) => handleNumChange(e, item.id, 'sub')}>
                 <AtIcon value="subtract-circle" size="23" color="#999" />
               </View>
               <View className="numDom">{item.num}</View>
-              <View className="addBtn" onClick={() => handleChangeNum(item.id, 'add')}>
+              <View className="addBtn" onClick={(e) => handleNumChange(e, item.id, 'add')}>
                 <AtIcon value="add-circle" size="23" color="#999" />
               </View>
             </View>
@@ -189,7 +192,7 @@ function Cart() {
           onClick={() => {
             Taro.setStorageSync('goodsList', JSON.stringify(goodsList));
             Taro.navigateTo({
-              url: `/pages/order/index?checkedGoods=${checkboxIds}`,
+              url: `/pages/order/payment/index?checkedGoods=${checkboxIds}`,
             });
           }}
           openType="getUserInfo"

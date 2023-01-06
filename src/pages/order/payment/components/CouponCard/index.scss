@@ -28,6 +28,8 @@
     margin: 32px 0 0 32px;
   }
   .pickDom {
+    width: 200px;
+    text-align: right;
     .inputNode {
       .scoreTxt {
         @include wh(92px, 92px);

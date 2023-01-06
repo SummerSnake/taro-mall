@@ -1,4 +1,5 @@
 import React from 'react';
+import Taro from '@tarojs/taro';
 import { View, Image, Text, ScrollView } from '@tarojs/components';
 import './index.scss';
 

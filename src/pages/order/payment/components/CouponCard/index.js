@@ -45,7 +45,7 @@ function CouponCard(props) {
         }}
       >
         优惠券
-        <Image className="arrowImg" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
+        <Image className="arrowImg right" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
         <Text className="itemTxt right">{couponName}</Text>
       </View>
 

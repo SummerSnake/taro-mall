@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { isObj } from '@/utils/util';
-import { getAddressApi } from '@/services/user';
+import { getAddressApi, updateInvoiceApi } from '@/services/user';
 import './index.scss';
 
-function OrderHeader(props) {
-  const { addrInfo } = props;
-
-  const [addrObj, setAddrObj] = useState({});
-  const [addrTxt, setAddrTxt] = useState('');
-  const [invoiceInfo, setInvoiceInfo] = useState([]);
+function OrderHeader() {
+  const [addrInfo, setAddrInfo] = useState({});
+  const [invoiceInfo, setInvoiceInfo] = useState({});
 
   /**
    * @desc 跳转页面
    * @param { string } url
    * @return { void }
    */
-  handleRedirect = (url) => {
+  const handleRedirect = (url) => {
     Taro.setStorageSync('navType', 'order');
     Taro.navigateTo({ url });
   };
@@ -31,9 +29,9 @@ function OrderHeader(props) {
 
     if (res?.status === 200 && Array.isArray(res?.data)) {
       res?.data.forEach((item) => {
+        // 默认地址
         if (item.type === 1) {
-          setAddrObj(item);
-          setAddrTxt(`${item.province}${item.city}${item.region}${item.detailAddr}`);
+          setAddrInfo(item);
         }
       });
     }
@@ -44,43 +42,44 @@ function OrderHeader(props) {
    * @return { void }
    */
   const fetchInvoiceInfo = async () => {
-    const res = await getAddressApi();
+    const res = await updateInvoiceApi();
 
     if (res?.status === 200) {
       setInvoiceInfo(res?.data);
     }
   };
 
-  useEffect(() => {
-    if (isObj(addrInfo) && addrInfo.addrId > 0) {
-      // 选择收货地址
-      setAddrObj(addrInfo);
-      setAddrTxt(addrInfo.address);
+  useDidShow(() => {
+    const selectedAddr = Taro.getStorageSync('addrInfo');
+    if (selectedAddr) {
+      setAddrInfo(JSON.parse(selectedAddr));
     } else {
       // 挂载带出默认地址
       fetchAddrInfo();
     }
 
     // 获取发票信息
-    fetchInvoiceInfo();
-  }, []);
+    if (isObj(invoiceInfo) && Object.keys(invoiceInfo).length < 1) {
+      fetchInvoiceInfo();
+    }
+  });
 
   return (
     <View className="orderHeader">
-      {isObj(addrObj) && Object.keys(addrObj).length > 0 ? (
+      {isObj(addrInfo) && Object.keys(addrInfo).length > 0 ? (
         <View className="addrDom" onClick={() => handleRedirect('/pages/user/addrPage/index')}>
           <View>
-            <Text>{addrObj.consignee}</Text>
-            <Text>{addrObj.phone}</Text>
-            <Image className="imgDom" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
+            <Text>{addrInfo.consignee}</Text>
+            <Text>{addrInfo.phone}</Text>
+            <Image className="imgDom right" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
           </View>
-          <View>{addrTxt}</View>
+          <View>{`${addrInfo.province}${addrInfo.city}${addrInfo.region}${addrInfo.detailAddr}`}</View>
         </View>
       ) : (
         <View className="addrDom" onClick={() => handleRedirect('/pages/user/addrPage/index')}>
           <View>
             <Text>请选择地址</Text>
-            <Image className="imgDom" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
+            <Image className="imgDom right" src="https://s1.ax1x.com/2020/06/01/tGtBsU.png" />
           </View>
         </View>
       )}
