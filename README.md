@@ -56,11 +56,14 @@ npm run dev || npm run start
     │   ├── index.js               // 默认配置
     │   └── prod.js                // 打包时配置
     ├── src                    // 源码目录
+    │   ├── assets                 // 静态文件 - 字体、图片
     │   ├── components             // 组件
     │   ├── pages                  // 页面文件目录
     │   │   └── index
     │   │       ├── index.js           // 页面逻辑
     │   │       ├── index.scss         // 页面样式
+    │   ├── services           // 接口
+    │   ├── styles             // 公共样式
     │   ├── utils              // 常用工具类
     │   ├── app.js             // 入口文件
     │   └── index.html

@@ -43,8 +43,8 @@ function UserEdit() {
    * @desc 提交
    * @return { void }
    */
-  handleSubmit = async () => {
-    if (checkInputVal(formData.appellation, '请输入称呼')) {
+  const handleSubmit = async () => {
+    if (checkInputVal(formData.nickName, '请输入称呼')) {
       return;
     }
     if (checkInputVal(formData.birth, '请输入出生日期')) {
@@ -93,8 +93,8 @@ function UserEdit() {
           <Input
             className="inputNode"
             placeholder="请输入您的称呼"
-            value={appellation}
-            onInput={(e) => handleInputChange(e, 'appellation')}
+            value={formData.nickName}
+            onInput={(e) => handleInputChange(e, 'nickName')}
           />
         </View>
       </View>
