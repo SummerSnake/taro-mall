@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Taro, { useDidHide, getCurrentInstance } from '@tarojs/taro';
+import React, { useState } from 'react';
+import Taro, { useDidShow, getCurrentInstance } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 
 import { isObj, isNotNull } from '@/utils/util';
@@ -21,7 +21,6 @@ function Order() {
   const [actualMoney, setActualMoney] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
   const [integralDiscount, setIntegralDiscount] = useState(0);
-  const [pickerChange, setPickerChange] = useState(false);
   const [loading, setLoading] = useState(false);
 
   /**
@@ -71,7 +70,6 @@ function Order() {
 
         setIntegralDiscount(integralDiscountRule);
         setActualMoney(calcActualMoney.toFixed(2));
-        setPickerChange(true);
       } else {
         wxToast('积分抵用金额不能大于实付金额', 'close-circle');
       }
@@ -83,22 +81,17 @@ function Order() {
 
         setIntegralDiscount(integralDiscountRule);
         setActualMoney(calcActualMoney.toFixed(2));
-        setPickerChange(true);
       } else {
         wxToast('积分抵用金额不能大于实付金额', 'close-circle');
       }
     }
-
-    setTimeout(() => {
-      setPickerChange(false);
-    }, 500);
   };
 
   /**
    * @desc 支付成功删除商品
    * @return { void }
    */
-  const removeStorage = async () => {
+  const removeStorage = () => {
     const goodsArr = JSON.parse(JSON.stringify(goodsList));
 
     let arr = [];
@@ -107,10 +100,10 @@ function Order() {
       return !arr1.includes(item.id);
     });
 
-    Taro.setStorageSync('goodsList', JSON.stringify(arr));
+    Taro.setStorageSync('cartList', JSON.stringify(arr));
     setTimeout(function () {
       Taro.redirectTo({
-        url: `/pages/orderList/index?current=${1}`,
+        url: `/pages/order/orderList/index?current=00`,
       });
     }, 2000);
   };
@@ -154,16 +147,16 @@ function Order() {
   const getGoodsList = () => {
     setLoading(true);
     // 从缓存中获取当前购买的商品信息
-    let goodsListStr = Taro.getStorageSync('goodsList');
+    let goodsListStr = Taro.getStorageSync('cartList');
     if (goodsListStr) {
       const list = JSON.parse(goodsListStr);
       let arr = [];
 
       // 购物车选择的商品
       if (params?.checkedGoods) {
-        const { checkedGoods } = params;
-        if (Array.isArray(checkedGoods) && checkedGoods.length > 0) {
-          arr = list.filter((item) => checkedGoods.includes(item.id));
+        const checkboxIds = JSON.parse(params.checkedGoods);
+        if (Array.isArray(checkboxIds) && checkboxIds.length > 0) {
+          arr = list.filter((item) => checkboxIds.includes(item.id));
         }
       } else {
         arr = [...list];
@@ -184,11 +177,9 @@ function Order() {
     }
   };
 
-  useEffect(() => {
+  useDidShow(() => {
     getGoodsList();
-  }, []);
-
-  useDidHide(() => Taro.removeStorageSync('couponInfo'));
+  });
 
   return (
     <View className="orderWrap">
@@ -196,12 +187,7 @@ function Order() {
 
       <GoodsCard goodsList={goodsList} />
 
-      <CouponCard
-        totalMoney={totalMoney}
-        couponInfo={couponInfo}
-        pickerChange={pickerChange}
-        onScoreCall={onScoreCall}
-      />
+      <CouponCard totalMoney={totalMoney} couponInfo={couponInfo} onScoreCall={onScoreCall} />
 
       <View className="orderBottom">
         <View>

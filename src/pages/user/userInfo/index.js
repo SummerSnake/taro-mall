@@ -49,6 +49,7 @@ function UserInfo() {
 
     if (res?.status === 200) {
       setUserInfo(res?.data);
+      Taro.setStorageSync('userInfo', JSON.stringify(res?.data));
     }
 
     setLoading(false);

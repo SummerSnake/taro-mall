@@ -192,7 +192,7 @@ function Cart() {
           onClick={() => {
             Taro.setStorageSync('goodsList', JSON.stringify(goodsList));
             Taro.navigateTo({
-              url: `/pages/order/payment/index?checkedGoods=${checkboxIds}`,
+              url: `/pages/order/payment/index?checkedGoods=${JSON.stringify(checkboxIds)}`,
             });
           }}
           openType="getUserInfo"

@@ -21,11 +21,14 @@ function Coupon() {
    */
   const handleRedirectOrder = (id, couponName, amount) => {
     if (Taro.getStorageSync('navType') === 'order') {
-      Taro.setStorageSync('couponInfo', {
-        couponName,
-        couponId: id,
-        couponAmount: amount,
-      });
+      Taro.setStorageSync(
+        'couponInfo',
+        JSON.stringify({
+          couponName,
+          couponId: id,
+          couponAmount: amount,
+        })
+      );
 
       Taro.navigateBack();
     }
@@ -85,7 +88,7 @@ function Coupon() {
             <View
               className="tabsItem"
               key={item.id}
-              onClick={() => handleRedirectOrder(this, item.id, item.name, item.amount)}
+              onClick={() => handleRedirectOrder(item.id, item.name, item.amount)}
             >
               <View className="tabTitle">
                 {item.name}

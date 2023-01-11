@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
 import { View, Text, Image, Picker } from '@tarojs/components';
+import { wxToast } from '@/utils/wxApi';
 import './index.scss';
 
 function CouponCard(props) {
@@ -15,7 +16,12 @@ function CouponCard(props) {
    * @return { void }
    */
   const handlePickerChange = (e) => {
-    if (scoreArr[parseInt(e?.target?.value)] <= props.couponInfo?.score) {
+    let userInfo = Taro.getStorageSync('userInfo');
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo);
+    }
+
+    if (scoreArr[parseInt(e?.target?.value)] <= userInfo?.score) {
       props.onScoreCall(scoreArr[parseInt(e?.target?.value)]);
       setPickerIndex(parseInt(e?.target?.value));
     } else {
@@ -26,10 +32,6 @@ function CouponCard(props) {
   useEffect(() => {
     setCouponName(props.couponInfo?.couponName);
   }, [props.couponInfo]);
-
-  useEffect(() => {
-    setPickerIndex(0);
-  }, [props.pickerChange]);
 
   return (
     <View className="couponWrap">
